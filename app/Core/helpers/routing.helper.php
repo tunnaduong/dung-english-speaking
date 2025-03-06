@@ -23,7 +23,6 @@ function handleRouting(): void
     app_log("Response dispatched for $method $uri", 'info');
 
     echo $response;
-
   } catch (Phroute\Phroute\Exception\HttpRouteNotFoundException $e) {
     app_log("404 Not Found: {$e->getMessage()} | URI: $uri", 'error');
     http_response_code(404);
@@ -38,10 +37,12 @@ function handleRouting(): void
 
     // Hiển thị lỗi chi tiết nếu ở chế độ debug
     $data = env('APP_DEBUG', false)
-      ? ['message' => 'Lỗi hệ thống',
+      ? [
+        'message' => 'Lỗi hệ thống',
         'error' => $e->getMessage(),
         'file' => $e->getFile(),
-        'line' => $e->getLine()]
+        'line' => $e->getLine()
+      ]
       : ['message' => 'Có lỗi xảy ra, vui lòng thử lại sau'];
 
     echo viewError('500', $data);
@@ -50,13 +51,13 @@ function handleRouting(): void
 
 function redirect(string $url): never
 {
-  header('Location: '.$url);
+  header('Location: ' . $url);
   exit();
 }
 
 function back(): never
 {
-  header('Location: '.($_SERVER['HTTP_REFERER'] ?? env('APP_URL', '/')));
+  header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? env('APP_URL', '/')));
   exit();
 }
 
@@ -81,8 +82,8 @@ function route(string $path = '', array $params = []): string
   // Chuẩn hóa APP_URL (loại bỏ dấu / ở cuối)
   $baseUrl = rtrim($appUrl, '/');
 
-  // Chuyển dấu chấm thành dấu gạch chéo và chuẩn hóa đường dẫn
-  $normalizedPath = str_replace('.', '/', trim($path, '/'));
+  // Chuẩn hóa đường dẫn
+  $normalizedPath = trim($path, '/');
 
   // Kết hợp base URL và path
   $fullPath = $normalizedPath ? "$baseUrl/$normalizedPath" : $baseUrl;
@@ -98,5 +99,5 @@ function route(string $path = '', array $params = []): string
 
 function asset(string $path): string
 {
-  return route("assets.$path");
+  return route("img/$path");
 }

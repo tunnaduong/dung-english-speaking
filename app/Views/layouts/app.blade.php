@@ -8,13 +8,21 @@
 
     @stack('meta')
     <link href="/css/bootstrap-5.3.3/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/fonts.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
     @stack('styles')
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-4 shadow-sm">
+        <div class="container">
+            <img src="{{ asset('logo.png') }}" alt="DungES Logo">
+        </div>
+    </nav>
     @yield('content')
 
     <script src="/js/bootstrap-5.3.3/bootstrap.min.js"></script>
+    {{-- <script src="//cdn.tailwindcss.com"></script> --}}
     @stack('scripts')
 </body>
 

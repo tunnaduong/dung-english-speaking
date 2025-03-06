@@ -1,0 +1,42 @@
+:root {
+  --bg-color: #e9effd;
+  --primary-color: #ff3b30;
+}
+
+* {
+  font-family: "Fz Poppins", sans-serif;
+}
+
+.container-auth {
+  max-width: 1135px;
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.bg-color {
+  background-color: var(--bg-color);
+}
+
+.bg-primary {
+  background-color: var(--primary-color) !important;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 23rem;
+}
+
+.auth-input {
+  border: 1px solid #bdbdbd;
+  background-color: #f9f9f9;
+  font-size: 16px;
+  padding: 0.7rem 1rem;
+}
+
+.auth-icon {
+  position: absolute;
+  top: 12px;
+  right: 7px;
+  pointer-events: none;
+}
