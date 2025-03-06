@@ -23,6 +23,11 @@
 
     <script src="/js/bootstrap-5.3.3/bootstrap.min.js"></script>
     {{-- <script src="//cdn.tailwindcss.com"></script> --}}
+    <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
     @stack('scripts')
 </body>
 

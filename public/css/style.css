@@ -22,6 +22,10 @@
   background-color: var(--primary-color) !important;
 }
 
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
 .login-container {
   width: 100%;
   max-width: 23rem;
@@ -39,4 +43,22 @@
   top: 12px;
   right: 7px;
   pointer-events: none;
+}
+
+.modal-header,
+.modal-body,
+.modal-footer {
+  border: none; /* Removes the border */
+}
+
+.dismiss-btn {
+  width: 230px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem;
+  margin: 0.5rem;
 }

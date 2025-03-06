@@ -5,7 +5,7 @@
             @if (is_array($error))
                 <!-- Mảng đa chiều: Lặp qua các lỗi của field -->
                 @foreach ($error as $message)
-                    <p><strong>Lỗi{{ is_numeric($key) ? '' : " $key" }}:</strong> {{ $message }}</p>
+                    <p><strong>Lỗi{{ is_numeric($key) ? " $key" : '' }}:</strong> {{ $message }}</p>
                 @endforeach
             @else
                 <!-- Mảng một chiều hoặc chuỗi -->

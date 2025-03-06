@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Lấy giá trị từ session với key, trả về default nếu không tồn tại
  */

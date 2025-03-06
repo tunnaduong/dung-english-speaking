@@ -7,7 +7,8 @@ use App\Controllers\HomeController;
 use App\Core\Asset\Asset;
 
 $route->get('/', [HomeController::class, 'index']);
-$route->get('/login', [AuthController::class, 'login']);
+$route->any('/login', [AuthController::class, 'login']);
+$route->any('/forgot-password', [AuthController::class, 'forgotPassword']);
 
 // Route for serving images ( DON'T REMOVE THIS LINE )
 $route->get('/assets/uploads/{fileName}', function ($fileName) {

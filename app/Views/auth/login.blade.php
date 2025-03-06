@@ -18,16 +18,28 @@
                             <label for="email" class="form-label">Email</label>
                             <div class="position-relative">
                                 <input type="email" placeholder="Enter your Email"
-                                    class="auth-input form-control form-control-lg" id="email" name="email" required>
-                                <img src="{{ asset('lock.png') }}" class="auth-icon">
+                                    class="auth-input form-control form-control-lg {{ $errors['email'] ?? null ? 'is-invalid' : '' }}"
+                                    id="email" name="email" value="{{ $_POST['email'] }}">
+                                @if (isset($errors['email']))
+                                    <div class="invalid-feedback">{{ $errors['email'] }}</div>
+                                @endif
+                                @if (!isset($errors['email']))
+                                    <img src="{{ asset('lock.png') }}" class="auth-icon">
+                                @endif
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
                             <div class="position-relative">
                                 <input type="password" placeholder="Enter your Password"
-                                    class="auth-input form-control form-control-lg" id="password" name="password" required>
-                                <img src="{{ asset('lock.png') }}" class="auth-icon">
+                                    class="auth-input form-control form-control-lg {{ $errors['password'] ?? null ? 'is-invalid' : '' }}"
+                                    id="password" name="password" value="{{ $_POST['password'] }}">
+                                @if (isset($errors['password']))
+                                    <div class="invalid-feedback">{{ $errors['password'] }}</div>
+                                @endif
+                                @if (!isset($errors['password']))
+                                    <img src="{{ asset('lock.png') }}" class="auth-icon">
+                                @endif
                             </div>
                         </div>
                         <div class="mb-3">
