@@ -22,8 +22,14 @@
                             <label for="email" class="form-label">Email</label>
                             <div class="position-relative">
                                 <input type="email" placeholder="Enter Email"
-                                    class="auth-input form-control form-control-lg" id="email" name="email">
-                                <img src="{{ asset('lock.png') }}" class="auth-icon">
+                                    class="auth-input form-control form-control-lg {{ $errors['email'] ?? null ? 'is-invalid' : '' }}"
+                                    id="email" name="email" value="{{ $_POST['email'] }}">
+                                @if (isset($errors['email']))
+                                    <div class="invalid-feedback">{{ $errors['email'] }}</div>
+                                @endif
+                                @if (!isset($errors['email']))
+                                    <img src="{{ asset('lock.png') }}" class="auth-icon">
+                                @endif
                             </div>
                         </div>
                         <div class="container">
@@ -48,7 +54,7 @@
                         aria-label="Close"></button>
                     <img src="{{ asset('check.svg') }}" class="my-3">
                     <h4 class="fw-bold">Link was sent</h4>
-                    <p class="mb-0">Please, check your inbox for a password reset link.</p>
+                    <p class="mb-0">{{ $success['success'] ?? '' }}</p>
                 </div>
                 <div class="modal-footer justify-content-center">
                     <button type="button" class="btn btn-danger bg-primary dismiss-btn"
@@ -58,7 +64,7 @@
         </div>
     </div>
 
-    @if (hasFlash('success'))
+    @if (isset($success['success']))
         <!-- JavaScript to Show Modal Automatically -->
         <script>
             document.addEventListener("DOMContentLoaded", function() {
