@@ -52,6 +52,18 @@
         if (window.history.replaceState) {
             window.history.replaceState(null, null, window.location.href);
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            let sidebar = document.getElementById("offcanvasSidebar");
+            let close = sidebar.querySelector(`[aria-label="Close Sidebar"]`); // Select all links inside sidebar
+
+            close.addEventListener("click", function() {
+                let bsOffcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+                if (bsOffcanvas) {
+                    bsOffcanvas.hide(); // Close the sidebar
+                }
+            });
+        });
     </script>
     @stack('scripts')
 </body>

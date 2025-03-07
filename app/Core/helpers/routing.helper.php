@@ -51,7 +51,7 @@ function handleRouting(): void
 
 function redirect(string $url): never
 {
-  header('Location: ' . $url);
+  header('Location: ' . env('APP_URL', '/') . $url);
   exit();
 }
 

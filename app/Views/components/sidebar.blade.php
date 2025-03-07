@@ -3,7 +3,7 @@
     tabindex="-1">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title">Menu</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button type="button" class="btn-close text-reset" aria-label="Close Sidebar"></button>
     </div>
     <div class="offcanvas-body d-block">
         <div class="d-flex flex-row align-items-center mb-3">

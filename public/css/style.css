@@ -82,6 +82,10 @@
   color: black;
 }
 
+.nav-item {
+  padding: 0.5rem 0;
+}
+
 .nav-link {
   border-top-left-radius: 0.375rem !important;
   border-bottom-left-radius: 0.375rem !important;
@@ -172,11 +176,41 @@ main {
 .hero-img {
   width: auto;
   height: calc(100% - 20px);
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .hero-content {
   width: 100%;
   max-width: 47rem;
   height: 100%;
+}
+
+.line-bottom {
+  width: 230px;
+  height: 4px;
+  background-color: var(--primary-color);
+}
+
+.border-line {
+  border: 1px solid #bdbdbd;
+}
+
+.fs-09 {
+  font-size: 0.9rem;
+}
+
+.btn-update {
+  border: 1px solid #bdbdbd;
+  width: 115px;
+  font-family: "Fz Poppins Med", sans-serif;
+  color: #968f8f;
+}
+
+select[multiple] {
+  overflow-y: hidden; /* Hides vertical scrollbar */
+  height: 150px; /* Set fixed height */
+}
+
+.rounded-35 {
+  border-radius: 0.7rem;
 }
