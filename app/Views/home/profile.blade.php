@@ -80,8 +80,8 @@
             <h4 class="fw-bold">Learning Outcomes</h4>
             <div class="line-bottom"></div>
         </div>
-        <div class="row mt-3">
-            <div class="col-3">
+        <div class="row">
+            <div class="col-12 col-sm-3 mt-3">
                 <div>Listening</div>
                 <select class="form-select rounded-35" multiple>
                     <option>Test 1:</option>
@@ -89,7 +89,7 @@
                     <option>Test 3:</option>
                 </select>
             </div>
-            <div class="col-3">
+            <div class="col-12 col-sm-3 mt-3">
                 <div>Speaking</div>
                 <select class="form-select rounded-35" multiple>
                     <option>Test 1:</option>
@@ -97,7 +97,7 @@
                     <option>Test 3:</option>
                 </select>
             </div>
-            <div class="col-3">
+            <div class="col-12 col-sm-3 mt-3">
                 <div>Reading</div>
                 <select class="form-select rounded-35" multiple>
                     <option>Test 1:</option>
@@ -105,7 +105,7 @@
                     <option>Test 3:</option>
                 </select>
             </div>
-            <div class="col-3">
+            <div class="col-12 col-sm-3 mt-3">
                 <div>Writing</div>
                 <select class="form-select rounded-35" multiple>
                     <option>Test 1:</option>

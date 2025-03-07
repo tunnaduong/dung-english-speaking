@@ -208,7 +208,7 @@ main {
 
 select[multiple] {
   overflow-y: hidden; /* Hides vertical scrollbar */
-  height: 150px; /* Set fixed height */
+  height: fit-content; /* Set fixed height */
 }
 
 .rounded-35 {
