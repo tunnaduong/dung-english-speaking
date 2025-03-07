@@ -60,16 +60,16 @@
             @include('components.sidebar', [
                 'title' => 'Admin Panel',
                 'links' => [
-                    'Dashboard' => '/admin',
-                    'Users' => '/admin/users',
-                    'Products' => '/admin/products',
-                    'Categories' => '/admin/categories',
-                    'Orders' => '/admin/orders',
+                    'My Profile' => ['/', 'face.svg'],
+                    'My Courses' => ['/admin/users', 'library_books.svg'],
+                    'Exercises' => ['/admin/products', 'menu_book.svg'],
+                    'Absence' => ['/admin/categories', 'notifications_off.svg'],
+                    'Log Out' => ['/admin/orders', 'logout.svg'],
                 ],
             ])
 
             <!-- Main Content -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <main class="col-md-8 ms-sm-auto col-lg-9 px-md-4">
                 <!-- Header -->
                 <header class="d-flex justify-content-between align-items-center py-3 mb-3 border-bottom">
                     <h1 class="h2">Admin Panel</h1>

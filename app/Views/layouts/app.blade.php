@@ -14,11 +14,12 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light py-4 shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-4 shadow-sm position-relative z-2">
         <div class="container">
             <img src="{{ asset('logo.png') }}" alt="DungES Logo">
         </div>
     </nav>
+
     @yield('content')
 
     <script src="/js/bootstrap-5.3.3/bootstrap.min.js"></script>

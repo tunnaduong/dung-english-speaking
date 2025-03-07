@@ -1,11 +1,16 @@
 <?php
+
 namespace App\Controllers;
 
 class HomeController extends Controller
 {
   public function index()
   {
-    $title = 'Home page';
-    return viewPage('welcome', compact('title'));
+    return redirect('/profile');
+  }
+
+  public function profile()
+  {
+    return view('home.profile');
   }
 }

@@ -26,6 +26,12 @@ class AuthController extends Controller
                 // return back();
             }
 
+            if (empty($errors)) {
+                // Authenticate user
+                // ...
+                return redirect('/');
+            }
+
             $errors = getFlash('error');
             return view('auth.login', compact('errors'));
         }
@@ -64,5 +70,41 @@ class AuthController extends Controller
         }
         $errors = getFlash('error');
         return view('auth.forgot-password');
+    }
+
+    public function resetPassword($token)
+    {
+        // If POST request
+        $errors = [];
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Validate the form data
+            if (empty($_POST['password'])) {
+                $errors['password'] = 'Password is required';
+            }
+            if (empty($_POST['confirm_password'])) {
+                $errors['confirm_password'] = 'Confirm password is required';
+            }
+            if ($_POST['password'] !== $_POST['confirm_password']) {
+                $errors['confirm_password'] = 'Password and confirm password must match';
+            }
+
+            // Store errors in session and redirect
+            if (!empty($errors)) {
+                flashError($errors);
+            }
+
+            if (empty($errors)) {
+                // Reset password
+                // ...
+                flashSuccess(['success' => 'Password has been reset successfully.']);
+                // return redirect('/login');
+            }
+
+            $success = getFlash('success');
+            $errors = getFlash('error');
+            return view('auth.reset-password', compact('errors', 'success'));
+        }
+        $errors = getFlash('error');
+        return view('auth.reset-password');
     }
 }
