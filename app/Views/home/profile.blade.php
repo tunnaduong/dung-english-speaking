@@ -1,6 +1,6 @@
 @extends('layouts.home')
 
-@section('title', 'Home | DungES')
+@section('title', 'My Profile | DungES')
 
 @section('content')
     <div class="w-100 mt-4 bg-primary home-hero rounded-4 d-flex align-items-center justify-content-center px-3">
