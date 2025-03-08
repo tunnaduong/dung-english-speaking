@@ -13,13 +13,10 @@
         </div>
         <h5 class="my-4 sidebar-title">Menu</h5>
         <ul class="nav nav-pills flex-column">
-            @php
-                $request_uri = request()->uri();
-            @endphp
             @if (isset($links))
                 @foreach ($links as $label => $link)
                     <li class="nav-item">
-                        <a class="nav-link {{ $link[0] == $request_uri ? 'active-link' : '' }}"
+                        <a class="nav-link {{ $loop->index === $active ? 'active-link' : '' }}"
                             href="{{ $link[0] }}"><img src="{{ asset($link[1]) }}">{{ $label }}</a>
                     </li>
                 @endforeach

@@ -1,4 +1,4 @@
-@extends('layouts.home')
+@extends('layouts.home', ['active' => 1])
 
 @section('title', 'Courses | DungES')
 

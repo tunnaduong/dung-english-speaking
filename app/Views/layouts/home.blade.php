@@ -38,6 +38,7 @@
                         'Absence' => ['/absence', 'notifications_off.svg'],
                         'Log Out' => ['/logout', 'logout.svg'],
                     ],
+                    'active' => $active ?? null,
                 ])
                 <main class="col px-md-4">
                     @yield('content')

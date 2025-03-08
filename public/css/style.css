@@ -192,7 +192,7 @@ main {
 }
 
 .border-line {
-  border: 1px solid #bdbdbd;
+  border: 1px solid #bdbdbd !important;
 }
 
 .fs-09 {
@@ -289,6 +289,57 @@ select[multiple] {
 }
 
 .btn-start:active {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+}
+
+.fs-14 {
+  font-size: 14px;
+}
+
+.bg-gray {
+  background-color: #eaeaea;
+}
+
+.accordion-button:not(.collapsed),
+.accordion-button:focus {
+  outline: none;
+  border-color: transparent;
+  box-shadow: none;
+  background-color: #efefef;
+  color: black !important;
+}
+
+.accordion-button {
+  background-color: #efefef;
+  padding: 10px;
+}
+
+.accordion-button::after {
+  order: -1;
+  margin-right: 0.5rem;
+  margin-left: 0;
+}
+
+.fw-semi {
+  font-family: "Fz Poppins SemBd", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.btn-more {
+  width: 100%;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 10px;
+}
+
+.btn-more:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-more:active {
   background-color: var(--primary-color) !important;
   color: white !important;
 }
