@@ -214,3 +214,81 @@ select[multiple] {
 .rounded-35 {
   border-radius: 0.7rem;
 }
+
+.progress-bar {
+  background-color: #6dd65d;
+  border-radius: 5px;
+}
+
+.progress {
+  height: 0.5rem;
+}
+
+.progress-text {
+  font-size: 12px;
+  text-align: right;
+  margin-top: 25px;
+}
+
+.exercise-duration {
+  font-size: 14px;
+  color: #858383;
+}
+
+.calendar-container {
+  border-radius: 10px;
+  background: white;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.calendar-day {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 22px;
+  cursor: pointer;
+}
+
+.day-green {
+  background-color: #00966d;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+
+.day-blue {
+  background-color: #2f80ed;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+
+.btn-start {
+  background-color: #fec9cc;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  font-weight: bold;
+  border-radius: 20px;
+  font-size: 14px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.btn-start:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-start:active {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+}

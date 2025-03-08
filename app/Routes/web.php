@@ -8,6 +8,7 @@ use App\Core\Asset\Asset;
 
 $route->get('/', [HomeController::class, 'index']);
 $route->get('/profile', [HomeController::class, 'profile']);
+$route->get('/courses', [HomeController::class, 'courses']);
 $route->any('/login', [AuthController::class, 'login']);
 $route->any('/forgot-password', [AuthController::class, 'forgotPassword']);
 $route->any('/password/reset/{token}', [AuthController::class, 'resetPassword']);

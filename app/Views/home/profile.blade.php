@@ -28,7 +28,7 @@
                 <div class="fs-09 text-truncate">0392323232</div>
             </div>
         </div>
-        <form action="{{ route('profile/store') }}" method="POST" class="m-0 mt-3">
+        <form action="{{ route('profile/update') }}" method="POST" class="m-0 mt-3">
             @csrf
             <div class="row g-3 mb-3">
                 <div class="col-12 col-sm-6">
