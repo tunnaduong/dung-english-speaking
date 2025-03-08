@@ -110,4 +110,14 @@ class HomeController extends Controller
   {
     return view('home.exercise');
   }
+
+  public function homework()
+  {
+    return view('exercises.homework');
+  }
+
+  public function test()
+  {
+    return view('exercises.test');
+  }
 }
