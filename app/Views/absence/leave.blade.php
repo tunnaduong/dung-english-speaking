@@ -6,8 +6,8 @@
     <div class="w-100 mt-4 bg-primary home-hero rounded-4 d-flex align-items-center justify-content-center px-3">
         <div class="hero-content d-flex align-items-center justify-content-between">
             <div class="flex-fill text-white">
-                <h2 class="fw-bold">Hi {{ getLastWord(session('user')['name']) }}, Good Afternoon!</h2>
-                <p class="m-0">You've learned 70% of your goal this week!<br>
+                <h2 class="fw-bold zoom">Hi {{ getLastWord(session('user')['name']) }}, Good Afternoon!</h2>
+                <p class="m-0 zoom">You've learned 70% of your goal this week!<br>
                     Keep it up and improve your progress.</p>
             </div>
             <div>

@@ -154,6 +154,10 @@ main {
   .table-big th {
     padding: 7px !important;
   }
+
+  .zoom {
+    zoom: 0.8;
+  }
 }
 
 @media (min-width: 991.98px) {
@@ -175,8 +179,9 @@ main {
 }
 
 .home-hero {
-  min-height: 160px;
-  padding: 20px 0;
+  height: 100%;
+  max-height: 160px;
+  padding: 20px;
 }
 
 .hero-img {
