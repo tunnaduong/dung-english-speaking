@@ -343,3 +343,23 @@ select[multiple] {
   background-color: var(--primary-color) !important;
   color: white !important;
 }
+
+.exercise-menu {
+  min-height: calc(100vh - 103px - 160px - (1.5rem * 3));
+}
+
+.btn-exercise {
+  width: 100%;
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  text-align: left;
+  padding: 1.3rem 1rem;
+}
+
+.btn-exercise:hover {
+  background-color: var(--bg-color);
+}
+
+.btn-exercise:active {
+  background-color: var(--bg-color) !important;
+}

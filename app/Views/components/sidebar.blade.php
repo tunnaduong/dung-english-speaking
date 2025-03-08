@@ -6,10 +6,9 @@
         <button type="button" class="btn-close text-reset" aria-label="Close Sidebar"></button>
     </div>
     <div class="offcanvas-body d-block">
-        <div class="d-flex flex-row align-items-center mb-3">
+        <div class="d-flex flex-row align-items-center mb-3 overflow-hidden">
             <img src="{{ asset('person.svg') }}" class="img-fluid mt-3 img-user">
-            <h5 class="fw-bold mx-3 text-truncate" style="width: 200px; white-space: nowrap; overflow: hidden;">Hai My
-            </h5>
+            <h5 class="fw-bold mx-3 text-truncate">{{ getLastTwoWords(session('user')['name']) }}</h5>
         </div>
         <h5 class="my-4 sidebar-title">Menu</h5>
         <ul class="nav nav-pills flex-column">

@@ -6,7 +6,7 @@
     <div class="w-100 mt-4 bg-primary home-hero rounded-4 d-flex align-items-center justify-content-center px-3">
         <div class="hero-content d-flex align-items-center justify-content-between">
             <div class="flex-fill">
-                <h2 class="text-white fw-bold">Hi My, Good Afternoon!</h2>
+                <h2 class="text-white fw-bold">Hi {{ getLastWord(session('user')['name']) }}, Good Afternoon!</h2>
                 <p>&nbsp;</p>
             </div>
             <div>
@@ -164,7 +164,7 @@
             let daysToHighlight = highlightedDays[monthKey] || {};
 
             for (let row = 0; row < 6; row++) {
-                calendarHTML += '<div class="row text-center mt-1 g-0">';
+                calendarHTML += '<div class="row text-center mt-1 g-0 flex-nowrap">';
                 for (let col = 0; col < 7; col++) {
                     if ((row === 0 && col < firstDay) || dayCounter > daysInMonth) {
                         calendarHTML += '<div class="col d-flex justify-content-center"></div>';

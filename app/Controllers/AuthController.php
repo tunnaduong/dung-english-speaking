@@ -29,6 +29,11 @@ class AuthController extends Controller
             if (empty($errors)) {
                 // Authenticate user
                 // ...
+                session_set('user', [
+                    'id' => 1,
+                    'name' => 'Nguyen Thi Hai My',
+                    'email' => $_POST['email'],
+                ]);
                 return redirect('/');
             }
 
@@ -106,5 +111,11 @@ class AuthController extends Controller
         }
         $errors = getFlash('error');
         return view('auth.reset-password');
+    }
+
+    public function logout()
+    {
+        session_delete('user');
+        return redirect('/login');
     }
 }

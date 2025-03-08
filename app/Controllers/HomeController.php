@@ -4,8 +4,18 @@ namespace App\Controllers;
 
 class HomeController extends Controller
 {
+  public function __construct()
+  {
+    if (!session('user')) {
+      return redirect('/login');
+    }
+  }
+
   public function index()
   {
+    if (!session('user')) {
+      return redirect('/login');
+    }
     return redirect('/profile');
   }
 
@@ -94,5 +104,10 @@ class HomeController extends Controller
       ],
     ];
     return view('courses.detail', compact('courseContent'));
+  }
+
+  public function exercise()
+  {
+    return view('home.exercise');
   }
 }

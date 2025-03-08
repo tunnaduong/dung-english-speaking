@@ -6,7 +6,7 @@
     <div class="w-100 mt-4 bg-primary home-hero rounded-4 d-flex align-items-center justify-content-center px-3">
         <div class="hero-content d-flex align-items-center justify-content-between">
             <div class="flex-fill">
-                <h2 class="text-white fw-bold">Hi My, Good Afternoon!</h2>
+                <h2 class="text-white fw-bold">Hi {{ getLastWord(session('user')['name']) }}, Good Afternoon!</h2>
                 <p>&nbsp;</p>
             </div>
             <div>
@@ -22,7 +22,7 @@
         <div class="rounded-4 border-line mt-3 p-3 px-4 d-flex align-items-center">
             <img src="{{ asset('person.svg') }}" class="img-fluid img-user me-3">
             <div class="flex-fill overflow-hidden">
-                <h5 class="fw-bold">Hai My</h5>
+                <h5 class="fw-bold">{{ getLastTwoWords(session('user')['name']) }}</h5>
                 <div class="fs-09 mb-2 text-truncate">
                     myhainguyen02@gmail.com</div>
                 <div class="fs-09 text-truncate">0392323232</div>
