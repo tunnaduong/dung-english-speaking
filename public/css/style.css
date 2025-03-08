@@ -495,4 +495,6 @@ select option:checked {
     linear-gradient(0deg, var(--primary-color) 0%, var(--primary-color) 100%);
 }
 
-/* test commit 1 */
+.w-200 {
+  width: 200px;
+}

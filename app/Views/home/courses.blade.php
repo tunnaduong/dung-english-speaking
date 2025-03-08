@@ -9,7 +9,7 @@
                 <h2 class="text-white fw-bold zoom">Hi {{ getLastWord(session('user')['name']) }}, Good Afternoon!</h2>
                 <p>&nbsp;</p>
             </div>
-            <div>
+            <div class="w-200">
                 <img src="{{ asset('hero.png') }}" class="hero-img img-fluid">
             </div>
         </div>

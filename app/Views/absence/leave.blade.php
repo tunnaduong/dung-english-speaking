@@ -10,7 +10,7 @@
                 <p class="m-0 zoom">You've learned 70% of your goal this week!<br>
                     Keep it up and improve your progress.</p>
             </div>
-            <div>
+            <div class="w-200">
                 <img src="{{ asset('hero.png') }}" class="hero-img img-fluid">
             </div>
         </div>

@@ -10,7 +10,7 @@
                 <p class="m-0 zoom">You can do your homeworks and tests here.<br>
                     Keep it up and improve your progress.</p>
             </div>
-            <div>
+            <div class="w-200">
                 <img src="{{ asset('hero.png') }}" class="hero-img img-fluid">
             </div>
         </div>
