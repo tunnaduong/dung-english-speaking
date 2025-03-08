@@ -9,7 +9,7 @@
                 <img src="{{ asset('girl.png') }}" style="max-height: 50vw; width: 100%; object-fit: cover;"
                     class="h-auto img-fluid">
             </div>
-            <div class="col-12 col-lg-6 bg-color p-5 d-flex align-items-center justify-content-center">
+            <div class="col-12 col-lg-6 bg-color p-3 d-flex align-items-center justify-content-center">
                 <div class="login-container">
                     <h1 class="fw-bolder">Reset Password</h1>
                     <div class="my-4">
