@@ -3,9 +3,9 @@
 @section('title', 'Forgot Password | DungES')
 
 @section('content')
-    <div class="container-auth my-5 d-flex flex-column">
+    <div class="container-auth mt-5 mb-3 d-flex flex-column">
         <div class="row g-0 rounded-4 overflow-hidden">
-            <div class="col-lg-6 d-none d-lg-block" style="max-height: 630px; overflow: hidden;">
+            <div class="col-lg-6 d-none d-lg-block" style="max-height: 560px; overflow: hidden;">
                 <img src="{{ asset('girl.png') }}" style="max-height: 50vw; width: 100%; object-fit: cover;"
                     class="h-auto img-fluid">
             </div>

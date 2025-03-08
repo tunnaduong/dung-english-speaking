@@ -53,7 +53,7 @@
             <div class="row g-3 mb-3">
                 <div class="col-12 col-sm-6">
                     <div>
-                        <label for="email" class="form-label fs-09"><img src="{{ asset('mail.svg') }}">
+                        <label for="email" class="form-label fs-09"><img src="{{ asset('mail.svg') }}" class="ms-1 me-1">
                             Email</label>
                         <input disabled type="text" name="email" id="email" class="form-control"
                             value="myhainguyen02@gmail.com">
@@ -83,7 +83,7 @@
         <div class="row">
             <div class="col-12 col-sm-3 mt-3">
                 <div>Listening</div>
-                <select class="form-select rounded-35" multiple>
+                <select class="form-select rounded-35 custom-select" multiple>
                     <option>Test 1:</option>
                     <option>Test 2:</option>
                     <option>Test 3:</option>
@@ -91,7 +91,7 @@
             </div>
             <div class="col-12 col-sm-3 mt-3">
                 <div>Speaking</div>
-                <select class="form-select rounded-35" multiple>
+                <select class="form-select rounded-35 custom-select" multiple>
                     <option>Test 1:</option>
                     <option>Test 2:</option>
                     <option>Test 3:</option>
@@ -99,7 +99,7 @@
             </div>
             <div class="col-12 col-sm-3 mt-3">
                 <div>Reading</div>
-                <select class="form-select rounded-35" multiple>
+                <select class="form-select rounded-35 custom-select" multiple>
                     <option>Test 1:</option>
                     <option>Test 2:</option>
                     <option>Test 3:</option>
@@ -107,7 +107,7 @@
             </div>
             <div class="col-12 col-sm-3 mt-3">
                 <div>Writing</div>
-                <select class="form-select rounded-35" multiple>
+                <select class="form-select rounded-35 custom-select" multiple>
                     <option>Test 1:</option>
                     <option>Test 2:</option>
                     <option>Test 3:</option>

@@ -65,4 +65,36 @@ class AbsenceController extends Controller
         ];
         return view('absence.make-up', compact('makeUpData'));
     }
+
+    public function history()
+    {
+        $historyData = [
+            [
+                'date' => '2025-01-01',
+                'shift' => 'Ca 1',
+                'reason' => 'Bị ốm',
+            ],
+            [
+                'date' => '2025-01-01',
+                'shift' => 'Ca 2',
+                'reason' => 'Bị lười',
+            ],
+            [
+                'date' => '2025-01-01',
+                'shift' => 'Ca 3',
+                'reason' => 'Bị ốm',
+            ],
+            [
+                'date' => '2025-01-01',
+                'shift' => 'Ca 4',
+                'reason' => 'Bị ốm',
+            ],
+            [
+                'date' => '2025-01-02',
+                'shift' => 'Ca 1',
+                'reason' => 'Bị ốm',
+            ]
+        ];
+        return view('absence.history', compact('historyData'));
+    }
 }

@@ -16,6 +16,7 @@ $route->get('/exercises/homeworks', [HomeController::class, 'homework']);
 $route->get('/exercises/tests', [HomeController::class, 'test']);
 $route->get('/absence', [HomeController::class, 'absence']);
 $route->get('/absence/leave', [AbsenceController::class, 'leave']);
+$route->get('/absence/history', [AbsenceController::class, 'history']);
 $route->post('/absence/leave/store', [AbsenceController::class, 'store']);
 $route->get('/absence/leave/make-up', [AbsenceController::class, 'makeUp']);
 $route->any('/login', [AuthController::class, 'login']);
