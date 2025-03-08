@@ -19,29 +19,31 @@
         <a class="text-decoration-none btn-back underline-hover fs-5" href="{{ route('exercises') }}">
             < Exercises</a>
                 <div class="btn-exercise mt-4">Tests</div>
-                <table class="table table-custom">
-                    <thead class="overflow-hidden">
-                        <tr>
-                            <th>Name</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Scores</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Test 1</td>
-                            <td>03/03/2025</td>
-                            <td>Not done</td>
-                            <td>-/-</td>
-                        </tr>
-                        <tr>
-                            <td>Test 2</td>
-                            <td>10/03/2025</td>
-                            <td>Not done</td>
-                            <td>-/-</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-custom">
+                        <thead class="overflow-hidden">
+                            <tr>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Scores</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Test 1</td>
+                                <td>03/03/2025</td>
+                                <td>Not done</td>
+                                <td>-/-</td>
+                            </tr>
+                            <tr>
+                                <td>Test 2</td>
+                                <td>10/03/2025</td>
+                                <td>Not done</td>
+                                <td>-/-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
     </div>
 @endsection

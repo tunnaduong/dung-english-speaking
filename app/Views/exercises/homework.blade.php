@@ -19,35 +19,37 @@
         <a class="text-decoration-none btn-back underline-hover fs-5" href="{{ route('exercises') }}">
             < Exercises</a>
                 <div class="btn-exercise mt-4">Homeworks</div>
-                <table class="table table-custom">
-                    <thead class="overflow-hidden">
-                        <tr>
-                            <th>Name</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Scores</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Homework 1</td>
-                            <td>14/02/2025</td>
-                            <td>Done</td>
-                            <td>90/100</td>
-                        </tr>
-                        <tr>
-                            <td>Homework 2</td>
-                            <td>21/02/2025</td>
-                            <td>Done</td>
-                            <td>80/100</td>
-                        </tr>
-                        <tr>
-                            <td>Homework 3</td>
-                            <td>28/02/2025</td>
-                            <td>Not done</td>
-                            <td>-/-</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-custom table-responsive">
+                        <thead class="overflow-hidden">
+                            <tr>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Scores</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Homework 1</td>
+                                <td>14/02/2025</td>
+                                <td>Done</td>
+                                <td>90/100</td>
+                            </tr>
+                            <tr>
+                                <td>Homework 2</td>
+                                <td>21/02/2025</td>
+                                <td>Done</td>
+                                <td>80/100</td>
+                            </tr>
+                            <tr>
+                                <td>Homework 3</td>
+                                <td>28/02/2025</td>
+                                <td>Not done</td>
+                                <td>-/-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
     </div>
 @endsection

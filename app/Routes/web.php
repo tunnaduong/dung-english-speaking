@@ -2,6 +2,7 @@
 
 /** @var Phroute\Phroute\RouteCollector $route */
 
+use App\Controllers\AbsenceController;
 use App\Controllers\AuthController;
 use App\Controllers\HomeController;
 use App\Core\Asset\Asset;
@@ -14,6 +15,8 @@ $route->get('/exercises', [HomeController::class, 'exercise']);
 $route->get('/exercises/homeworks', [HomeController::class, 'homework']);
 $route->get('/exercises/tests', [HomeController::class, 'test']);
 $route->get('/absence', [HomeController::class, 'absence']);
+$route->get('/absence/leave', [AbsenceController::class, 'leave']);
+$route->post('/absence/leave/store', [AbsenceController::class, 'store']);
 $route->any('/login', [AuthController::class, 'login']);
 $route->any('/forgot-password', [AuthController::class, 'forgotPassword']);
 $route->any('/password/reset/{token}', [AuthController::class, 'resetPassword']);

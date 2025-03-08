@@ -45,9 +45,9 @@
   pointer-events: none;
 }
 
-.modal-header,
-.modal-body,
-.modal-footer {
+#myModal .modal-header,
+#myModal .modal-body,
+#myModal .modal-footer {
   border: none; /* Removes the border */
 }
 
@@ -410,7 +410,29 @@ select[multiple] {
 .table-custom th:first-child {
   border-radius: 10px 0 0 10px;
 }
+
 .table-custom td:last-child,
 .table-custom th:last-child {
   border-radius: 0 10px 10px 0;
+}
+
+.btn-send {
+  width: 220px;
+}
+
+.btn-confirm {
+  background-color: #3497f9;
+  color: white;
+  width: 150px;
+  border-radius: 10px;
+}
+
+.btn-confirm:hover {
+  background-color: #2f80ed;
+  color: white;
+}
+
+.btn-confirm:active {
+  background-color: #2f80ed !important;
+  color: white !important;
 }
