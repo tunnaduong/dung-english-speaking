@@ -6,17 +6,31 @@ class AbsenceController extends Controller
 {
     public function leave()
     {
+        session_delete('leave');
         return view('absence.leave');
     }
 
     public function store()
     {
         // Handle store absence request...
-        return redirect('/absence/leave/make-up');
+        session_set('leave', request()->input('token'));
+        return redirect('/absence/leave/make-up?page=1&token=' . request()->input('token'));
     }
 
     public function makeUp()
     {
+        if (!session('leave')) {
+            session_delete('leave');
+            return redirect('/absence/leave');
+        }
+        if (!request()->input('token')) {
+            session_delete('leave');
+            return redirect('/absence/leave');
+        }
+        if (session('leave') !== request()->input('token')) {
+            session_delete('leave');
+            return redirect('/absence/leave');
+        }
         $makeUpData = [
             [
                 'id' => 'IELTS 1',

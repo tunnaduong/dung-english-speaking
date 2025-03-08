@@ -21,7 +21,7 @@
             <div class="line-bottom"></div>
         </div>
         <form action="{{ route('absence/leave/store') }}" id="leaveForm" method="POST" class="m-0 mt-3">
-            @csrf
+            <input type="hidden" name="token" value="{{ bin2hex(random_bytes(16)) }}">
             <div class="row g-3 mb-3">
                 <div class="col-12 col-sm-6">
                     <div>

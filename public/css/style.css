@@ -446,3 +446,36 @@ select[multiple] {
   background-color: #2f80ed !important;
   color: white !important;
 }
+
+.pagination .active > a {
+  background-color: #3497f9 !important;
+  color: white;
+  border-color: #3497f9;
+  border-radius: 10px;
+  width: 40px;
+  text-align: center;
+}
+
+.page-item a {
+  border-radius: 10px;
+  text-align: center;
+  color: #3497f9;
+  border: 0;
+}
+
+.page-item .page-link {
+  border-radius: 10px !important; /* Adjust the value as needed */
+}
+
+.pagination {
+  gap: 12px;
+}
+
+.pagination .disabled > a {
+  background-color: transparent !important;
+  color: #c4c4c4;
+}
+
+.w-40 {
+  width: 40px;
+}
