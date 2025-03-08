@@ -149,6 +149,11 @@ main {
   .sidebar-title {
     display: none;
   }
+
+  .table-big td,
+  .table-big th {
+    padding: 7px !important;
+  }
 }
 
 @media (min-width: 991.98px) {
@@ -414,6 +419,11 @@ select[multiple] {
 .table-custom td:last-child,
 .table-custom th:last-child {
   border-radius: 0 10px 10px 0;
+}
+
+.table-big td,
+.table-big th {
+  padding: 15px;
 }
 
 .btn-send {

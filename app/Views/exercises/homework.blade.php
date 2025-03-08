@@ -20,7 +20,7 @@
             < Exercises</a>
                 <div class="btn-exercise mt-4">Homeworks</div>
                 <div class="table-responsive">
-                    <table class="table table-custom table-responsive">
+                    <table class="table table-custom">
                         <thead class="overflow-hidden">
                             <tr>
                                 <th>Name</th>

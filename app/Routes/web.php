@@ -17,6 +17,7 @@ $route->get('/exercises/tests', [HomeController::class, 'test']);
 $route->get('/absence', [HomeController::class, 'absence']);
 $route->get('/absence/leave', [AbsenceController::class, 'leave']);
 $route->post('/absence/leave/store', [AbsenceController::class, 'store']);
+$route->get('/absence/leave/make-up', [AbsenceController::class, 'makeUp']);
 $route->any('/login', [AuthController::class, 'login']);
 $route->any('/forgot-password', [AuthController::class, 'forgotPassword']);
 $route->any('/password/reset/{token}', [AuthController::class, 'resetPassword']);
