@@ -13,6 +13,7 @@ $route->get('/courses/{id}', [HomeController::class, 'courseDetail']);
 $route->get('/exercises', [HomeController::class, 'exercise']);
 $route->get('/exercises/homeworks', [HomeController::class, 'homework']);
 $route->get('/exercises/tests', [HomeController::class, 'test']);
+$route->get('/absence', [HomeController::class, 'absence']);
 $route->any('/login', [AuthController::class, 'login']);
 $route->any('/forgot-password', [AuthController::class, 'forgotPassword']);
 $route->any('/password/reset/{token}', [AuthController::class, 'resetPassword']);

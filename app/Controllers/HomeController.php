@@ -120,4 +120,9 @@ class HomeController extends Controller
   {
     return view('exercises.test');
   }
+
+  public function absence()
+  {
+    return view('home.absence');
+  }
 }
