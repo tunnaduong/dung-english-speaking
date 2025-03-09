@@ -29,10 +29,20 @@ class AuthController extends Controller
             if (empty($errors)) {
                 // Authenticate user
                 // ...
+                if ($_POST['email'] === 'tiendung@gmail.com') {
+                    session_set('user', [
+                        'id' => 2,
+                        'name' => 'Hoang Tien Dung',
+                        'email' => $_POST['email'],
+                        'role' => 'teacher',
+                    ]);
+                    return redirect('/');
+                }
                 session_set('user', [
                     'id' => 1,
                     'name' => 'Nguyen Thi Hai My',
                     'email' => $_POST['email'],
+                    'role' => 'student',
                 ]);
                 return redirect('/');
             }

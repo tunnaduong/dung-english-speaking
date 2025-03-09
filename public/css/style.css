@@ -497,3 +497,12 @@ select option:checked {
 .w-200 {
   width: 200px;
 }
+
+.back-link {
+  color: black;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: var(--primary-color);
+}

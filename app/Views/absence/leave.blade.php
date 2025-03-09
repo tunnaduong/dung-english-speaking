@@ -17,7 +17,9 @@
     </div>
     <div class="w-100 my-4 bg-white rounded-4 p-4 exercise-menu">
         <div>
-            <h4 class="fw-bold">Absence/Leave of absence</h4>
+            <h4 class="fw-bold"><a href="{{ route('absence') }}" class="back-link">Absence</a>/Leave of
+                absence
+            </h4>
             <div class="line-bottom"></div>
         </div>
         <form action="{{ route('absence/leave/store') }}" id="leaveForm" method="POST" class="m-0 mt-3">

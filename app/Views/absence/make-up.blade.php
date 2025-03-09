@@ -17,7 +17,8 @@
     </div>
     <div class="w-100 my-4 bg-white rounded-4 p-4 exercise-menu">
         <div>
-            <h4 class="fw-bold">Absence/Leave of absence/Make up</h4>
+            <h4 class="fw-bold"><a href="{{ route('absence') }}" class="back-link">Absence</a>/<a
+                    href="{{ route('absence/leave') }}" class="back-link">Leave of absence</a>/Make up</h4>
             <div class="line-bottom"></div>
         </div>
         <div class="table-responsive">
