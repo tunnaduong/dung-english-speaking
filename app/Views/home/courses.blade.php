@@ -23,7 +23,8 @@
             <div class="col-md-6 col-12">
                 <div class="rounded-4 border-line mt-3">
                     <div class="p-3 px-4">
-                        <div class="fw-bold fs-5">Pre IELTS - 27 lectures</div>
+                        <a href="{{ route('courses/pre-ielts') }}" class="fw-bold fs-5 text-decoration-none text-black">Pre
+                            IELTS - 27 lectures</a>
                         <div class="progress-text">25%</div>
                         <div class="progress">
                             <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25"
@@ -37,14 +38,15 @@
                             <div>Grammar lecture 7</div>
                             <span class="exercise-duration">Exercise | 25 mins</span>
                         </div>
-                        <a href="{{ route('courses/pre-ielts') }}" class="btn btn-start">Start</a>
+                        <a href="{{ route('courses/pre-ielts/start') }}" class="btn btn-start">Start</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 col-12">
                 <div class="rounded-4 border-line mt-3">
                     <div class="p-3 px-4">
-                        <div class="fw-bold fs-5">IELTS 4.0 - 27 lectures</div>
+                        <a href="{{ route('courses/ielts-4.0') }}"
+                            class="fw-bold fs-5 text-decoration-none text-black">IELTS 4.0 - 27 lectures</a>
                         <div class="progress-text">0%</div>
                         <div class="progress">
                             <div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="0"
@@ -58,7 +60,7 @@
                             <div>Reading 1</div>
                             <span class="exercise-duration">Exercise | 20 mins</span>
                         </div>
-                        <a href="{{ route('courses/ielts-4.0') }}" class="btn btn-start">Start</a>
+                        <a href="{{ route('courses/ielts-4.0/start') }}" class="btn btn-start">Start</a>
                     </div>
                 </div>
             </div>

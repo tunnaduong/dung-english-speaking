@@ -83,35 +83,35 @@
         <div class="row">
             <div class="col-12 col-sm-3 mt-3">
                 <div>Listening</div>
-                <select class="form-select rounded-35 custom-select" multiple>
-                    <option>Test 1:</option>
-                    <option>Test 2:</option>
-                    <option>Test 3:</option>
-                </select>
+                <div class="border-line rounded-35 p-2 px-3 d-flex flex-column gap-2">
+                    <div>Test 1:</div>
+                    <div>Test 2:</div>
+                    <div>Test 3:</div>
+                </div>
             </div>
             <div class="col-12 col-sm-3 mt-3">
                 <div>Speaking</div>
-                <select class="form-select rounded-35 custom-select" multiple>
-                    <option>Test 1:</option>
-                    <option>Test 2:</option>
-                    <option>Test 3:</option>
-                </select>
+                <div class="border-line rounded-35 p-2 px-3 d-flex flex-column gap-2">
+                    <div>Test 1:</div>
+                    <div>Test 2:</div>
+                    <div>Test 3:</div>
+                </div>
             </div>
             <div class="col-12 col-sm-3 mt-3">
                 <div>Reading</div>
-                <select class="form-select rounded-35 custom-select" multiple>
-                    <option>Test 1:</option>
-                    <option>Test 2:</option>
-                    <option>Test 3:</option>
-                </select>
+                <div class="border-line rounded-35 p-2 px-3 d-flex flex-column gap-2">
+                    <div>Test 1:</div>
+                    <div>Test 2:</div>
+                    <div>Test 3:</div>
+                </div>
             </div>
             <div class="col-12 col-sm-3 mt-3">
                 <div>Writing</div>
-                <select class="form-select rounded-35 custom-select" multiple>
-                    <option>Test 1:</option>
-                    <option>Test 2:</option>
-                    <option>Test 3:</option>
-                </select>
+                <div class="border-line rounded-35 p-2 px-3 d-flex flex-column gap-2">
+                    <div>Test 1:</div>
+                    <div>Test 2:</div>
+                    <div>Test 3:</div>
+                </div>
             </div>
         </div>
     </div>
