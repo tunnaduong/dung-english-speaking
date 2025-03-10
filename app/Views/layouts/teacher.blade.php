@@ -34,8 +34,10 @@
                     'links' => [
                         'My Profile' => ['/profile', 'face.svg'],
                         'Classrooms' => ['/classrooms', 'school.svg'],
+                        'Courses' => ['/courses', 'library_books.svg'],
                         'Students' => ['/students', 'person_outline.svg'],
                         'Exercises' => ['/exercises', 'menu_book.svg'],
+                        'Correction' => ['/correction', 'playlist_add_check.svg'],
                         'Log Out' => ['/logout', 'logout.svg'],
                     ],
                     'active' => $active ?? null,
