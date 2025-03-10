@@ -21,6 +21,9 @@ class HomeController extends Controller
 
   public function profile()
   {
+    if (session('user')['role'] === 'teacher') {
+      return view('teacher.profile');
+    }
     return view('home.profile');
   }
 
