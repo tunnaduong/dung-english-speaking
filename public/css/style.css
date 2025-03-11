@@ -506,3 +506,25 @@ select option:checked {
 .back-link:hover {
   color: var(--primary-color);
 }
+
+.max-w-200 {
+  max-width: 200px;
+}
+
+.search-icon {
+  position: absolute;
+  top: 12px;
+  left: 10px;
+  pointer-events: none;
+}
+
+.search-input {
+  border: 1px solid #bdbdbd;
+  border-radius: 15px;
+  background-color: white;
+  font-size: 16px;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  padding-left: 2.5rem;
+  padding-right: 1rem;
+}

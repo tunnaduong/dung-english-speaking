@@ -5,8 +5,10 @@
 use App\Controllers\AbsenceController;
 use App\Controllers\AuthController;
 use App\Controllers\HomeController;
+use App\Controllers\TeacherController;
 use App\Core\Asset\Asset;
 
+// Student
 $route->get('/', [HomeController::class, 'index']);
 $route->get('/profile', [HomeController::class, 'profile']);
 $route->get('/courses', [HomeController::class, 'courses']);
@@ -19,6 +21,9 @@ $route->get('/absence/leave', [AbsenceController::class, 'leave']);
 $route->get('/absence/history', [AbsenceController::class, 'history']);
 $route->post('/absence/leave/store', [AbsenceController::class, 'store']);
 $route->get('/absence/leave/make-up', [AbsenceController::class, 'makeUp']);
+// Teacher
+$route->get('/classrooms', [TeacherController::class, 'classroom']);
+// Auth
 $route->any('/login', [AuthController::class, 'login']);
 $route->any('/forgot-password', [AuthController::class, 'forgotPassword']);
 $route->any('/password/reset/{token}', [AuthController::class, 'resetPassword']);
