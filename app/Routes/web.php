@@ -23,6 +23,8 @@ $route->post('/absence/leave/store', [AbsenceController::class, 'store']);
 $route->get('/absence/leave/make-up', [AbsenceController::class, 'makeUp']);
 // Teacher
 $route->get('/classrooms', [TeacherController::class, 'classroom']);
+$route->get('/classrooms/{id}/list', [TeacherController::class, 'classroomList']);
+$route->get('/classrooms/{id}/curriculum', [TeacherController::class, 'classroomCurriculum']);
 // Auth
 $route->any('/login', [AuthController::class, 'login']);
 $route->any('/forgot-password', [AuthController::class, 'forgotPassword']);
