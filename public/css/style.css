@@ -528,3 +528,26 @@ select option:checked {
   padding-left: 2.5rem;
   padding-right: 1rem;
 }
+
+.btn-classroom {
+  background-color: #dae1ea;
+  color: #2e52b2;
+  border: 1px solid #2e52b2;
+  border-radius: 10px;
+  width: 110px;
+  text-decoration: none;
+  text-align: center;
+  padding: 7px 0;
+}
+
+.classroom {
+  width: 100%;
+  max-width: 350px;
+  background-color: #f1f1f1 !important;
+}
+
+.classroom-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  justify-items: center;
+}
