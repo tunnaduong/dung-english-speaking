@@ -570,3 +570,7 @@ select option:checked {
   width: 150px;
   padding: 7px 13px;
 }
+
+.min-w-0 {
+  min-width: 0;
+}

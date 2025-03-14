@@ -28,7 +28,7 @@
     <div class="bg-color">
         <div class="left-white"></div>
         <div class="container">
-            <div class="row">
+            <div class="row flex-nowrap">
                 @include('components.sidebar', [
                     'title' => 'Menu',
                     'links' => [
@@ -40,7 +40,7 @@
                     ],
                     'active' => $active ?? null,
                 ])
-                <main class="col px-md-4">
+                <main class="col px-md-4 min-w-0">
                     @yield('content')
                 </main>
             </div>

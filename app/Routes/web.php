@@ -25,6 +25,10 @@ $route->get('/absence/leave/make-up', [AbsenceController::class, 'makeUp']);
 $route->get('/classrooms', [TeacherController::class, 'classroom']);
 $route->get('/classrooms/{id}/list', [TeacherController::class, 'classroomList']);
 $route->get('/classrooms/{id}/curriculum', [TeacherController::class, 'classroomCurriculum']);
+$route->get('/classrooms/{id}/curriculum/add', [TeacherController::class, 'addCurriculum']);
+$route->get('/classrooms/{id}/curriculum/{curriculumId}/edit', [TeacherController::class, 'editCurriculum']);
+$route->post('/classrooms/{id}/curriculum/{curriculumId}/update', [TeacherController::class, 'updateCurriculum']);
+$route->get('/classrooms/{id}/curriculum/{curriculumId}/delete', [TeacherController::class, 'deleteCurriculum']);
 $route->get('/classrooms/{id}/attendance', [TeacherController::class, 'classroomAttendance']);
 // Auth
 $route->any('/login', [AuthController::class, 'login']);

@@ -63,7 +63,7 @@
                 </table>
             </div>
             <div class="d-flex justify-content-end">
-                <a href="{{ route('classrooms/pre01/attendance') }}" class="btn-classroom px-3 w-auto">Attendance</a>
+                <a href="{{ route('classrooms/pre01/attendance/submit') }}" class="btn-classroom px-3 w-auto">Submit</a>
             </div>
         </div>
     </div>
