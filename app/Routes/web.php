@@ -25,6 +25,7 @@ $route->get('/absence/leave/make-up', [AbsenceController::class, 'makeUp']);
 $route->get('/classrooms', [TeacherController::class, 'classroom']);
 $route->get('/classrooms/{id}/list', [TeacherController::class, 'classroomList']);
 $route->get('/classrooms/{id}/curriculum', [TeacherController::class, 'classroomCurriculum']);
+$route->get('/classrooms/{id}/attendance', [TeacherController::class, 'classroomAttendance']);
 // Auth
 $route->any('/login', [AuthController::class, 'login']);
 $route->any('/forgot-password', [AuthController::class, 'forgotPassword']);

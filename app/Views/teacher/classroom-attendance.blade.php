@@ -1,6 +1,6 @@
 @extends('layouts.teacher', ['active' => 1])
 
-@section('title', 'Classroom List | DungES')
+@section('title', 'Classroom Attendance | DungES')
 
 @section('content')
     <div class="w-100 my-4 bg-white rounded-4 p-4 border-line">
@@ -15,22 +15,30 @@
         <div>
             <div class="d-flex justify-content-between">
                 <div>
-                    <h4 class="fw-bold"><a href="{{ route('classrooms') }}" class="back-link">Classrooms</a>/List
+                    <h4 class="fw-bold"><a href="{{ route('classrooms') }}" class="back-link">Classrooms</a>/<a
+                            href="{{ route('classrooms/pre01/list') }}" class="back-link">List</a>/Attendance
                     </h4>
                     <div class="line-bottom"></div>
                 </div>
                 <div class="number-of">NoS: {{ count($students) }}</div>
             </div>
             <div class="table-responsive table-limit-height my-3">
-                <table class="table table-custom table-big table-sticky">
+                <table class="table table-custom table-big table-sticky table-horizontal" style="white-space: nowrap">
                     <thead class="overflow-hidden">
                         <tr>
                             <th>No.</th>
-                            <th>ID Student</th>
-                            <th>Full name</th>
-                            <th>Gender</th>
-                            <th>Birth Date</th>
-                            <th>Phone</th>
+                            <th style="width: 100px">ID Student</th>
+                            <th style="width: 200px">Full name</th>
+                            <th style="width: 100px">Day 1</th>
+                            <th style="width: 100px">Day 2</th>
+                            <th style="width: 100px">Day 3</th>
+                            <th>Day 4</th>
+                            <th>Day 5</th>
+                            <th>Day 6</th>
+                            <th>Day 7</th>
+                            <th>Day 8</th>
+                            <th>Day 9</th>
+                            <th>Day 10</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,9 +47,16 @@
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $student['id'] }}</td>
                                 <td>{{ $student['name'] }}</td>
-                                <td>{{ $student['gender'] }}</td>
-                                <td>{{ $student['birth_date'] }}</td>
-                                <td>{{ $student['phone'] }}</td>
+                                <td>{{ $student['day_1'] }}</td>
+                                <td>{{ $student['day_2'] }}</td>
+                                <td>{{ $student['day_3'] }}</td>
+                                <td>{{ $student['day_4'] }}</td>
+                                <td>{{ $student['day_5'] }}</td>
+                                <td>{{ $student['day_6'] }}</td>
+                                <td>{{ $student['day_7'] }}</td>
+                                <td>{{ $student['day_8'] }}</td>
+                                <td>{{ $student['day_9'] }}</td>
+                                <td>{{ $student['day_10'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>

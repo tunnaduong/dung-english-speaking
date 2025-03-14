@@ -551,3 +551,22 @@ select option:checked {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   justify-items: center;
 }
+
+.table-sticky thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #fff;
+}
+
+.table-limit-height {
+  max-height: 720px;
+}
+
+.number-of {
+  border: 1px solid #dae1ea;
+  border-radius: 10px;
+  background-color: #f5f7fb;
+  width: 150px;
+  padding: 7px 13px;
+}
