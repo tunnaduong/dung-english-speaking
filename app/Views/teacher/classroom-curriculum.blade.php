@@ -23,7 +23,7 @@
                         src="{{ asset('add.svg') }}" class="me-2" />Add new</a>
             </div>
             <div class="table-responsive my-3">
-                <table class="table table-custom table-big table-sticky table-horizontal">
+                <table class="table table-custom table-big table-sticky table-horizontal m-0">
                     <thead class="overflow-hidden">
                         <tr>
                             <th>No.</th>
@@ -42,12 +42,34 @@
                                 <td>{{ $curriculum['date'] }}</td>
                                 <td><a href="{{ route('classrooms/pre01/curriculum/' . $curriculum['session'] . '/edit') }}"
                                         class="me-2">
-                                        <img src="{{ asset('edit.svg') }}" /></a><a
-                                        href="{{ route('classrooms/pre01/curriculum/' . $curriculum['session'] . '/delete') }}"
-                                        onclick="return confirm('Are you sure you want to delete this curriculum?')"><img
-                                            src="{{ asset('delete.svg') }}" /></a>
+                                        <img src="{{ asset('edit.svg') }}" /></a><button class="btn-custom"
+                                        data-bs-toggle="modal" data-bs-target="#deleteModal{{ $loop->index }}"><img
+                                            src="{{ asset('delete.svg') }}" /></button>
                                 </td>
                             </tr>
+                            @push('scripts')
+                                <!-- Bootstrap 5 Modal -->
+                                <div class="modal fade" id="deleteModal{{ $loop->index }}" tabindex="-1"
+                                    aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header p-2">
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body text-center">
+                                                <h5 class="fw-semi mb-4">Do you want to delete this lecture?</h5>
+                                                <div class="d-flex justify-content-around">
+                                                    <a class="btn btn-confirm"
+                                                        href="{{ route('classrooms/pre01/curriculum/' . $curriculum['session'] . '/delete') }}">Yes</a>
+                                                    <button type="button" class="btn btn-confirm"
+                                                        data-bs-dismiss="modal">No</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endpush
                         @endforeach
                     </tbody>
                 </table>

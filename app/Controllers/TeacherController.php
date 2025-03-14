@@ -372,17 +372,10 @@ class TeacherController extends Controller
 
     public function editCurriculum($id, $curriculumId)
     {
-        $curriculum = [
-            'session' => 'BG01001',
-            'topic' => 'Reading 1: Thay đổi tư duy đọc tiếng Anh',
-            'date' => '2025-01-06',
-        ];
-        return view('teacher.edit-curriculum', compact('curriculum'));
-    }
-
-    public function updateCurriculum($id, $curriculumId)
-    {
-        return redirect("/classrooms/$id/curriculum");
+        if (request()->isMethod('post')) {
+            return redirect("/classrooms/$id/curriculum");
+        }
+        return view('teacher.edit-curriculum', compact('id', 'curriculumId'));
     }
 
     public function deleteCurriculum($id, $curriculumId)
@@ -392,6 +385,9 @@ class TeacherController extends Controller
 
     public function addCurriculum($id)
     {
+        if (request()->isMethod('post')) {
+            return redirect("/classrooms/$id/curriculum");
+        }
         return view('teacher.add-curriculum');
     }
 }
