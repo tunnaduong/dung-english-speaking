@@ -31,6 +31,8 @@ $route->get('/classrooms/{id}/curriculum/{curriculumId}/delete', [TeacherControl
 $route->get('/classrooms/{id}/attendance', [TeacherController::class, 'classroomAttendance']);
 $route->any('/courses/{id}/edit', [TeacherController::class, 'editCourse']);
 $route->get('/students', [TeacherController::class, 'students']);
+$route->get('/students/{id}/profile', [TeacherController::class, 'studentProfile']);
+$route->get('/students/{id}/class/{classId}', [TeacherController::class, 'studentProfileClassDetail']);
 // Auth
 $route->any('/login', [AuthController::class, 'login']);
 $route->any('/forgot-password', [AuthController::class, 'forgotPassword']);

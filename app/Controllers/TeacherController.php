@@ -403,4 +403,14 @@ class TeacherController extends Controller
     {
         return view('teacher.students');
     }
+
+    public function studentProfile($id)
+    {
+        return view('teacher.student-profile', compact('id'));
+    }
+
+    public function studentProfileClassDetail($id, $classId)
+    {
+        return view('teacher.student-profile-class-detail', compact('id'));
+    }
 }
