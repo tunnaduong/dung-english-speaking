@@ -588,3 +588,15 @@ select option:checked {
   box-shadow: none !important; /* Remove focus outline */
   outline: none !important; /* Remove additional focus styles */
 }
+
+.right-btn {
+  right: 0;
+  bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .right-btn {
+    position: initial !important;
+    margin-top: 20px;
+  }
+}

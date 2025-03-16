@@ -6,12 +6,18 @@ class AbsenceController extends Controller
 {
     public function leave()
     {
+        if (session('user')['role'] === 'teacher') {
+            return redirect('/');
+        }
         session_delete('leave');
         return view('absence.leave');
     }
 
     public function store()
     {
+        if (session('user')['role'] === 'teacher') {
+            return redirect('/');
+        }
         // Handle store absence request...
         session_set('leave', request()->input('token'));
         return redirect('/absence/leave/make-up?page=1&token=' . request()->input('token'));
@@ -19,6 +25,9 @@ class AbsenceController extends Controller
 
     public function makeUp()
     {
+        if (session('user')['role'] === 'teacher') {
+            return redirect('/');
+        }
         if (!session('leave')) {
             session_delete('leave');
             return redirect('/absence/leave');
@@ -68,6 +77,9 @@ class AbsenceController extends Controller
 
     public function history()
     {
+        if (session('user')['role'] === 'teacher') {
+            return redirect('/');
+        }
         $historyData = [
             [
                 'date' => '2025-01-01',

@@ -37,6 +37,9 @@ class HomeController extends Controller
 
   public function courseDetail($id)
   {
+    if (session('user')['role'] === 'teacher') {
+      return redirect('/');
+    }
     $courseContent = [
       'Buổi 1: Hiểu vể bản chất việc học tiếng Anh' => [
         'duration' => '90 mins',
@@ -114,21 +117,95 @@ class HomeController extends Controller
 
   public function exercise()
   {
+    if (session('user')['role'] === 'teacher') {
+      $exercises = [
+        [
+          'id' => 'E00001',
+          'name' => 'Listening 1',
+          'level' => '3.0',
+          'skill' => 'Listening',
+        ],
+        [
+          'id' => 'E00002',
+          'name' => 'Writing 1',
+          'level' => '3.5',
+          'skill' => 'Writing',
+        ],
+        [
+          'id' => 'E00003',
+          'name' => 'Reading 1',
+          'level' => '3.5',
+          'skill' => 'Reading',
+        ],
+        [
+          'id' => 'E00004',
+          'name' => 'Reading 1',
+          'level' => '4.0',
+          'skill' => 'Reading',
+        ],
+        [
+          'id' => 'E00005',
+          'name' => 'Reading 1',
+          'level' => '4.0',
+          'skill' => 'Reading',
+        ],
+        [
+          'id' => 'E00006',
+          'name' => 'Reading 1',
+          'level' => '4.5',
+          'skill' => 'Reading',
+        ],
+        [
+          'id' => 'E00007',
+          'name' => 'Reading 1',
+          'level' => '4.0',
+          'skill' => 'Reading',
+        ],
+        [
+          'id' => 'E00008',
+          'name' => 'Reading 1',
+          'level' => '4.0',
+          'skill' => 'Reading',
+        ],
+        [
+          'id' => 'E00009',
+          'name' => 'Reading 1',
+          'level' => '4.0',
+          'skill' => 'Reading',
+        ],
+        [
+          'id' => 'E00010',
+          'name' => 'Reading 1',
+          'level' => '4.0',
+          'skill' => 'Reading',
+        ],
+      ];
+      return view('teacher.exercises', compact('exercises'));
+    }
     return view('home.exercise');
   }
 
   public function homework()
   {
+    if (session('user')['role'] === 'teacher') {
+      return redirect('/');
+    }
     return view('exercises.homework');
   }
 
   public function test()
   {
+    if (session('user')['role'] === 'teacher') {
+      return redirect('/');
+    }
     return view('exercises.test');
   }
 
   public function absence()
   {
+    if (session('user')['role'] === 'teacher') {
+      return redirect('/');
+    }
     return view('home.absence');
   }
 }
