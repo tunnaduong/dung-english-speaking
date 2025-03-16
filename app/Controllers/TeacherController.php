@@ -398,4 +398,9 @@ class TeacherController extends Controller
         }
         return view('teacher.edit-course');
     }
+
+    public function students()
+    {
+        return view('teacher.students');
+    }
 }
