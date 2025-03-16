@@ -390,4 +390,12 @@ class TeacherController extends Controller
         }
         return view('teacher.add-curriculum');
     }
+
+    public function editCourse($id)
+    {
+        if (request()->isMethod('post')) {
+            return redirect("/courses");
+        }
+        return view('teacher.edit-course');
+    }
 }

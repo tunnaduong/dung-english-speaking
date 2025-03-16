@@ -29,6 +29,9 @@ class HomeController extends Controller
 
   public function courses()
   {
+    if (session('user')['role'] === 'teacher') {
+      return view('teacher.courses');
+    }
     return view('home.courses');
   }
 
