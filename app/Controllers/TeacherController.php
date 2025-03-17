@@ -413,4 +413,14 @@ class TeacherController extends Controller
     {
         return view('teacher.student-profile-class-detail', compact('id'));
     }
+
+    public function correction()
+    {
+        return view('teacher.correction');
+    }
+
+    public function createExercise()
+    {
+        return view('teacher.create-exercise');
+    }
 }

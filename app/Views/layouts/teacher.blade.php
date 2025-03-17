@@ -8,6 +8,7 @@
 
     @stack('meta')
     <link href="/css/bootstrap-5.3.3/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     <link href="/css/fonts.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
     @stack('styles')

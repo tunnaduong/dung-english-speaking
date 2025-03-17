@@ -33,6 +33,8 @@ $route->any('/courses/{id}/edit', [TeacherController::class, 'editCourse']);
 $route->get('/students', [TeacherController::class, 'students']);
 $route->get('/students/{id}/profile', [TeacherController::class, 'studentProfile']);
 $route->get('/students/{id}/class/{classId}', [TeacherController::class, 'studentProfileClassDetail']);
+$route->get('/correction', [TeacherController::class, 'correction']);
+$route->get('/exercises/create', [TeacherController::class, 'createExercise']);
 // Auth
 $route->any('/login', [AuthController::class, 'login']);
 $route->any('/forgot-password', [AuthController::class, 'forgotPassword']);
