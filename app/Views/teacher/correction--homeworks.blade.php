@@ -43,7 +43,7 @@
                                 <td>{{ $exercise['id'] }}</td>
                                 <td>{{ $exercise['name'] }}</td>
                                 <td>{{ $exercise['level'] }}</td>
-                                <td>{{ $exercise['date'] }}</td>
+                                <td>{{ date('d/m/Y', strtotime($exercise['date'])) }}</td>
                                 <td><a href="{{ route("correction/$id/homeworks/" . $exercise['id']) }}">View</a>
                                 </td>
                             </tr>

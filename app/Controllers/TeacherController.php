@@ -456,6 +456,57 @@ class TeacherController extends Controller
 
     public function correctionHomeworkView($id, $homeworkId)
     {
-        return view('teacher.correction--homeworks-view', compact('id', 'homeworkId'));
+        $students = [
+            [
+                'id' => 'S00236',
+                'name' => 'Nguyễn Tiến Dũng',
+                'gender' => 'Male',
+                'birth_date' => '2003-05-25',
+                'score' => '10.0',
+            ],
+            [
+                'id' => 'S00236',
+                'name' => 'Nguyễn Minh Đức',
+                'gender' => 'Male',
+                'birth_date' => '2002-02-02',
+                'score' => '9.0',
+            ],
+            [
+                'id' => 'S00236',
+                'name' => 'Trần Thu Hà',
+                'gender' => 'Female',
+                'birth_date' => '2006-12-15',
+                'score' => '8.0',
+            ],
+            [
+                'id' => 'S00236',
+                'name' => 'Trịnh Duy Hoàng',
+                'gender' => 'Male',
+                'birth_date' => '2004-09-28',
+                'score' => 'N/A',
+            ],
+            [
+                'id' => 'S00236',
+                'name' => 'Phạm Anh Kiên',
+                'gender' => 'Male',
+                'birth_date' => '2009-01-24',
+                'score' => 'N/A',
+            ],
+            [
+                'id' => 'S00236',
+                'name' => 'Nguyễn Tấn Lộc',
+                'gender' => 'Male',
+                'birth_date' => '2005-08-14',
+                'score' => 'N/A',
+            ],
+            [
+                'id' => 'S00236',
+                'name' => 'Nguyễn Nam Phong',
+                'gender' => 'Male',
+                'birth_date' => '2006-09-23',
+                'score' => 'N/A',
+            ],
+        ];
+        return view('teacher.correction--homeworks-view', compact('id', 'homeworkId', 'students'));
     }
 }
