@@ -600,3 +600,7 @@ select option:checked {
     margin-top: 20px;
   }
 }
+
+.text-gray {
+  color: #767373;
+}

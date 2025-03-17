@@ -423,4 +423,9 @@ class TeacherController extends Controller
     {
         return view('teacher.create-exercise');
     }
+
+    public function deleteExercise($id)
+    {
+        return redirect('/exercises');
+    }
 }
