@@ -428,4 +428,34 @@ class TeacherController extends Controller
     {
         return redirect('/exercises');
     }
+
+    public function correctionHomework($id)
+    {
+        $exercises = [
+            [
+                'id' => 'E00001',
+                'name' => 'Writing 1',
+                'level' => '3.5',
+                'date' => '2025-02-14',
+            ],
+            [
+                'id' => 'E00002',
+                'name' => 'Reading 1',
+                'level' => '3.5',
+                'date' => '2025-02-21',
+            ],
+            [
+                'id' => 'E00003',
+                'name' => 'Listening 1',
+                'level' => '4.0',
+                'date' => '2025-02-28',
+            ],
+        ];
+        return view('teacher.correction--homeworks', compact('id', 'exercises'));
+    }
+
+    public function correctionHomeworkView($id, $homeworkId)
+    {
+        return view('teacher.correction--homeworks-view', compact('id', 'homeworkId'));
+    }
 }
