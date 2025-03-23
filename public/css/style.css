@@ -622,3 +622,35 @@ select option:checked {
   right: 10px;
   pointer-events: none;
 }
+
+.btn-edit {
+  background-color: #d1f8e8 !important;
+  color: #2ec083 !important;
+  border: 1px solid #2ec083 !important;
+}
+
+.btn-delete {
+  background-color: #f7d3d4 !important;
+  color: #fc0005 !important;
+  border: 1px solid #fc0005 !important;
+}
+
+.btn-disabled {
+  background-color: #d8d6d6 !important;
+  color: #867f7f !important;
+  border: 1px solid #333333 !important;
+  pointer-events: none;
+}
+
+.btn-disabled > img {
+  filter: brightness(0) saturate(100%) invert(51%) sepia(3%) saturate(632%)
+    hue-rotate(317deg) brightness(99%) contrast(86%);
+}
+
+.table-custom tbody tr.selected {
+  background-color: #bed0f9;
+}
+
+#data-table tbody tr {
+  cursor: pointer;
+}

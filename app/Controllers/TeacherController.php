@@ -166,6 +166,9 @@ class TeacherController extends Controller
                 'phone' => '0394519379',
             ],
         ];
+        if (session('user')['role'] === 'admin') {
+            return view('admin.classrooms--list', compact('students'));
+        }
         return view('teacher.classroom-list', compact('students'));
     }
 

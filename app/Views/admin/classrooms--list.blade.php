@@ -1,4 +1,4 @@
-@extends('layouts.teacher', ['active' => 1])
+@extends('layouts.admin', ['active' => 0])
 
 @section('title', 'Classroom List | DungES')
 
@@ -22,7 +22,7 @@
                 <div class="number-of">NoS: {{ count($students) }}</div>
             </div>
             <div class="table-responsive table-limit-height my-3">
-                <table class="table table-custom table-big table-sticky">
+                <table id="data-table" class="table table-custom table-big table-sticky">
                     <thead class="overflow-hidden">
                         <tr>
                             <th>No.</th>
@@ -47,9 +47,81 @@
                     </tbody>
                 </table>
             </div>
-            <div class="d-flex justify-content-end">
-                <a href="{{ route('classrooms/pre01/attendance') }}" class="btn-classroom px-3 w-auto">Attendance</a>
+            <div class="d-flex justify-content-end gap-4">
+                <a href="#" class="btn-classroom btn-edit px-3 btn-disabled"><img src="{{ asset('edit.svg') }}"
+                        width="15" class="me-2" />Edit</a>
+                <button data-bs-toggle="modal" data-bs-target="#deleteModal"
+                    class="btn-classroom btn-delete px-3 btn-disabled"><img src="{{ asset('delete.svg') }}" width="15"
+                        class="me-2" />Delete</button>
             </div>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <!-- Bootstrap 5 Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header p-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h5 class="fw-semi mb-4">Do you want to delete?</h5>
+                    <div class="d-flex justify-content-around">
+                        <a class="btn btn-confirm" id="yes-btn" href="#">Yes</a>
+                        <button type="button" class="btn btn-confirm" data-bs-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const table = document.getElementById('data-table');
+            const rows = table.querySelectorAll('tbody tr');
+
+            rows.forEach(row => {
+                row.addEventListener('click', function() {
+                    // Check if the clicked row is already selected
+                    const isSelected = this.classList.contains('selected');
+
+                    // Remove the selected class from all rows
+                    rows.forEach(r => {
+                        r.classList.remove('selected');
+                    });
+
+                    // If the clicked row wasn't already selected, select it
+                    // If it was already selected, it remains deselected
+                    if (!isSelected) {
+                        this.classList.add('selected');
+                    }
+
+                    // Enable or disable the edit and delete buttons
+                    const editButton = document.querySelector('.btn-edit');
+                    const deleteButton = document.querySelector('.btn-delete');
+
+                    // Change the href of the edit and delete buttons
+                    const selectedRow = document.querySelector('.selected');
+                    if (selectedRow) {
+                        const id = selectedRow.querySelector('td:nth-child(2)').textContent;
+                        editButton.href = `{{ route('students') }}/${id}/edit`;
+                        document.querySelector('#yes-btn').href =
+                            `{{ route('students') }}/${id}/delete`;
+                    } else {
+                        editButton.href = '#';
+                        deleteButton.href = '#';
+                    }
+
+                    if (selectedRow) {
+                        editButton.classList.remove('btn-disabled');
+                        deleteButton.classList.remove('btn-disabled');
+                    } else {
+                        editButton.classList.add('btn-disabled');
+                        deleteButton.classList.add('btn-disabled');
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
