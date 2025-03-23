@@ -604,3 +604,15 @@ select option:checked {
 .text-gray {
   color: #767373;
 }
+
+.score {
+  background-color: #f5f7fb;
+  border: 1px solid #dae1ea;
+  border-radius: 10px;
+  padding-left: 70px;
+}
+
+.score-text {
+  top: 7px;
+  left: 10px;
+}

@@ -509,4 +509,12 @@ class TeacherController extends Controller
         ];
         return view('teacher.correction--homeworks-view', compact('id', 'homeworkId', 'students'));
     }
+
+    public function correctionHomeworkScoring($id, $homeworkId, $studentId)
+    {
+        if (request()->isMethod('post')) {
+            return redirect("/correction/$id/homeworks/$homeworkId");
+        }
+        return view('teacher.correction--homeworks-scoring', compact('id', 'homeworkId', 'studentId'));
+    }
 }

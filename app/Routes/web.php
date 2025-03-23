@@ -36,6 +36,7 @@ $route->get('/students/{id}/class/{classId}', [TeacherController::class, 'studen
 $route->get('/correction', [TeacherController::class, 'correction']);
 $route->get('/correction/{id}/homeworks', [TeacherController::class, 'correctionHomework']);
 $route->get('/correction/{id}/homeworks/{homeworkId}', [TeacherController::class, 'correctionHomeworkView']);
+$route->any('/correction/{id}/homeworks/{homeworkId}/{studentId}', [TeacherController::class, 'correctionHomeworkScoring']);
 $route->get('/exercises/create', [TeacherController::class, 'createExercise']);
 $route->get('/exercises/{id}/delete', [TeacherController::class, 'deleteExercise']);
 // Auth
