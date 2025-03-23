@@ -37,7 +37,7 @@
                                 <td>{{ $exercise['level'] }}</td>
                                 <td>{{ $exercise['skill'] }}</td>
                                 <td><a href="{{ route('exercises/' . $exercise['id'] . '/edit') }}" class="me-2">
-                                        <img src="{{ asset('assignment.svg') }}" /></a><button class="btn-custom"
+                                        <img src="{{ asset('edit3.svg') }}" /></a><button class="btn-custom"
                                         data-bs-toggle="modal" data-bs-target="#deleteModal{{ $loop->index }}"><img
                                             src="{{ asset('delete2.svg') }}" /></button>
                                 </td>

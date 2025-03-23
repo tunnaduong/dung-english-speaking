@@ -9,13 +9,16 @@ class TeacherController extends Controller
         if (!session('user')) {
             redirect('/login');
         }
-        if (session('user')['role'] !== "teacher") {
+        if (session('user')['role'] !== "teacher" && session('user')['role'] !== "admin") {
             redirect('/');
         }
     }
 
     public function classroom()
     {
+        if (session('user')['role'] === 'admin') {
+            return view('admin.classrooms');
+        }
         return view('teacher.classrooms');
     }
 
@@ -421,6 +424,9 @@ class TeacherController extends Controller
 
     public function createExercise()
     {
+        if (request()->isMethod('post')) {
+            return redirect('/exercises');
+        }
         return view('teacher.create-exercise');
     }
 

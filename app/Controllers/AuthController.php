@@ -38,6 +38,15 @@ class AuthController extends Controller
                     ]);
                     return redirect('/');
                 }
+                if ($_POST['email'] === 'admin@gmail.com') {
+                    session_set('user', [
+                        'id' => 3,
+                        'name' => 'Admin',
+                        'email' => $_POST['email'],
+                        'role' => 'admin',
+                    ]);
+                    return redirect('/');
+                }
                 session_set('user', [
                     'id' => 1,
                     'name' => 'Nguyen Thi Hai My',

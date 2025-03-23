@@ -16,6 +16,9 @@ class HomeController extends Controller
     if (!session('user')) {
       return redirect('/login');
     }
+    if (session('user')['role'] === 'admin') {
+      return redirect('/classrooms');
+    }
     return redirect('/profile');
   }
 

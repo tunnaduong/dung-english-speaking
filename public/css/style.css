@@ -616,3 +616,9 @@ select option:checked {
   top: 7px;
   left: 10px;
 }
+
+.edit-icon {
+  top: 8px;
+  right: 10px;
+  pointer-events: none;
+}
