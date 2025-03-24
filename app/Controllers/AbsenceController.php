@@ -6,7 +6,7 @@ class AbsenceController extends Controller
 {
     public function leave()
     {
-        if (session('user')['role'] === 'teacher') {
+        if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
             return redirect('/');
         }
         session_delete('leave');
@@ -15,7 +15,7 @@ class AbsenceController extends Controller
 
     public function store()
     {
-        if (session('user')['role'] === 'teacher') {
+        if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
             return redirect('/');
         }
         // Handle store absence request...
@@ -25,7 +25,7 @@ class AbsenceController extends Controller
 
     public function makeUp()
     {
-        if (session('user')['role'] === 'teacher') {
+        if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
             return redirect('/');
         }
         if (!session('leave')) {
@@ -77,7 +77,7 @@ class AbsenceController extends Controller
 
     public function history()
     {
-        if (session('user')['role'] === 'teacher') {
+        if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
             return redirect('/');
         }
         $historyData = [

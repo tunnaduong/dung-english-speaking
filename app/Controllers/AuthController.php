@@ -2,6 +2,9 @@
 
 namespace App\Controllers;
 
+use App\Models\Student;
+use App\Models\Employee;
+
 class AuthController extends Controller
 {
     public function login()
@@ -28,32 +31,23 @@ class AuthController extends Controller
 
             if (empty($errors)) {
                 // Authenticate user
-                // ...
-                if ($_POST['email'] === 'tiendung@gmail.com') {
+                $employee = Employee::findByEmail($_POST['email']);
+                $student = Student::findByEmail($_POST['email']);
+                if (!$employee && !$student) {
+                    flashError(['email' => 'Email not found']);
+                } elseif ($employee && $_POST['password'] != $employee['password']) {
+                    flashError(['password' => 'Password is incorrect']);
+                } elseif ($student && $_POST['password'] != $student['password']) {
+                    flashError(['password' => 'Password is incorrect']);
+                } else {
                     session_set('user', [
-                        'id' => 2,
-                        'name' => 'Hoang Tien Dung',
+                        'id' => $employee ? $employee['id'] : $student['id'],
+                        'name' => $employee ? $employee['name'] : $student['name'],
                         'email' => $_POST['email'],
-                        'role' => 'teacher',
+                        'role' => $employee ? $employee['role'] : 'Student',
                     ]);
                     return redirect('/');
                 }
-                if ($_POST['email'] === 'admin@gmail.com') {
-                    session_set('user', [
-                        'id' => 3,
-                        'name' => 'Admin',
-                        'email' => $_POST['email'],
-                        'role' => 'admin',
-                    ]);
-                    return redirect('/');
-                }
-                session_set('user', [
-                    'id' => 1,
-                    'name' => 'Nguyen Thi Hai My',
-                    'email' => $_POST['email'],
-                    'role' => 'student',
-                ]);
-                return redirect('/');
             }
 
             $errors = getFlash('error');

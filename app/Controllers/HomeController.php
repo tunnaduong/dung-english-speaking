@@ -16,7 +16,7 @@ class HomeController extends Controller
     if (!session('user')) {
       return redirect('/login');
     }
-    if (session('user')['role'] === 'admin') {
+    if (session('user')['role'] === 'Academic Affair') {
       return redirect('/classrooms');
     }
     return redirect('/profile');
@@ -24,7 +24,7 @@ class HomeController extends Controller
 
   public function profile()
   {
-    if (session('user')['role'] === 'teacher') {
+    if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
       return view('teacher.profile');
     }
     return view('home.profile');
@@ -32,7 +32,7 @@ class HomeController extends Controller
 
   public function courses()
   {
-    if (session('user')['role'] === 'teacher') {
+    if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
       return view('teacher.courses');
     }
     return view('home.courses');
@@ -40,7 +40,7 @@ class HomeController extends Controller
 
   public function courseDetail($id)
   {
-    if (session('user')['role'] === 'teacher') {
+    if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
       return redirect('/');
     }
     $courseContent = [
@@ -120,7 +120,7 @@ class HomeController extends Controller
 
   public function exercise()
   {
-    if (session('user')['role'] === 'teacher') {
+    if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
       $exercises = [
         [
           'id' => 'E00001',
@@ -190,7 +190,7 @@ class HomeController extends Controller
 
   public function homework()
   {
-    if (session('user')['role'] === 'teacher') {
+    if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
       return redirect('/');
     }
     return view('exercises.homework');
@@ -198,7 +198,7 @@ class HomeController extends Controller
 
   public function test()
   {
-    if (session('user')['role'] === 'teacher') {
+    if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
       return redirect('/');
     }
     return view('exercises.test');
@@ -206,7 +206,7 @@ class HomeController extends Controller
 
   public function absence()
   {
-    if (session('user')['role'] === 'teacher') {
+    if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
       return redirect('/');
     }
     return view('home.absence');

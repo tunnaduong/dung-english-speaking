@@ -9,14 +9,14 @@ class TeacherController extends Controller
         if (!session('user')) {
             redirect('/login');
         }
-        if (session('user')['role'] !== "teacher" && session('user')['role'] !== "admin") {
+        if (session('user')['role'] !== "Teacher" && session('user')['role'] !== 'Teaching Assistant' && session('user')['role'] !== "Academic Affair") {
             redirect('/');
         }
     }
 
     public function classroom()
     {
-        if (session('user')['role'] === 'admin') {
+        if (session('user')['role'] === 'Academic Affair') {
             return view('admin.classrooms');
         }
         return view('teacher.classrooms');
@@ -166,7 +166,7 @@ class TeacherController extends Controller
                 'phone' => '0394519379',
             ],
         ];
-        if (session('user')['role'] === 'admin') {
+        if (session('user')['role'] === 'Academic Affair') {
             return view('admin.classrooms--list', compact('students'));
         }
         return view('teacher.classroom-list', compact('students'));
