@@ -2,15 +2,21 @@
 
 namespace App\Controllers;
 
+use App\Models\Course;
 use App\Models\Student;
+use App\Models\Employee;
 
 class HomeController extends Controller
 {
   public $student;
+  public $employee;
+  public $course;
 
   public function __construct()
   {
     $this->student = new Student();
+    $this->employee = new Employee();
+    $this->course = new Course();
     if (!session('user')) {
       redirect('/login');
     }
@@ -30,7 +36,8 @@ class HomeController extends Controller
   public function profile()
   {
     if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
-      return view('teacher.profile');
+      $profile = $this->employee->findByEmail(session('user')['email']);
+      return view('teacher.profile', compact('profile'));
     }
     $profile = $this->student->findByEmail(session('user')['email']);
     return view('home.profile', compact('profile'));
@@ -38,10 +45,11 @@ class HomeController extends Controller
 
   public function courses()
   {
+    $courses = $this->course::all();
     if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
-      return view('teacher.courses');
+      return view('teacher.courses', compact('courses'));
     }
-    return view('home.courses');
+    return view('home.courses', compact('courses'));
   }
 
   public function courseDetail($id)
@@ -121,6 +129,7 @@ class HomeController extends Controller
         ],
       ],
     ];
+    $courseContent = $this->course->getCourseContent($id);
     return view('courses.detail', compact('courseContent'));
   }
 

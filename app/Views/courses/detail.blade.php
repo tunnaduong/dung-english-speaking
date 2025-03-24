@@ -5,7 +5,7 @@
 @section('content')
     <div class="w-100 my-4 bg-white rounded-4 overflow-hidden">
         <div class="bg-gray p-4">
-            <h4 class="fw-bold text-uppercase">Pre IELTS</h4>
+            <h4 class="fw-bold text-uppercase">{{ $courseContent[0]['course_name'] }}</h4>
             <div class="line-bottom"></div>
             <div class="mt-2 fs-14">Giáo viên: Tiến Dũng</div>
         </div>
@@ -24,8 +24,6 @@
                             <img src="{{ asset('check 1.svg') }}" class="me-2 align-self-start">
                             <div class="fs-14">Hiểu được cách học từ vựng/ ngữ pháp hiệu quả.</div>
                         </div>
-                    </div>
-                    <div class="row mb-3 g-3">
                         <div class="col-12 col-md-6 d-flex">
                             <img src="{{ asset('check 1.svg') }}" class="me-2 align-self-start">
                             <div class="fs-14">Có khả năng nối từ để viết thành câu hoàn chỉnh</div>
@@ -35,8 +33,6 @@
                             <div class="fs-14">Hiểu được bản chất của tiếng Anh và sự khác biệt giữa tiếng Anh và tiếng
                                 Việt.</div>
                         </div>
-                    </div>
-                    <div class="row mb-3 g-3">
                         <div class="col-12 col-md-6 d-flex">
                             <img src="{{ asset('check 1.svg') }}" class="me-2 align-self-start">
                             <div class="fs-14">Tích luỹ những từ vựng cơ bản nhất cho từng chủ đề áp dụng được cho kỹ năng
@@ -47,22 +43,31 @@
                 </div>
             </div>
             <h5 class="fw-bold mt-5">Nội dung chương trình học 9 tuần</h5>
-            <div class="fs-14 mb-3">27 Buổi</div>
+            <div class="fs-14 mb-3">{{ count($courseContent) }} Buổi</div>
             <div class="accordion accordion-flush" id="accordionFlushExample">
-                @foreach ($courseContent as $sessionTitle => $session)
+                @foreach ($courseContent as $session)
                     <div class="accordion-item rounded-3 mb-2 border-line overflow-hidden">
                         <h2 class="accordion-header">
                             <button class="accordion-button border-bottom collapsed fw-semi fs-14" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ $loop->index }}"
                                 aria-expanded="false" aria-controls="flush-collapse{{ $loop->index }}">
-                                {{ $sessionTitle }}
-                                <span class="ms-auto fw-normal flex-shrink-0">{{ $session['duration'] }}</span>
+                                {{ $session['topic'] }}
+                                <span class="ms-auto fw-normal flex-shrink-0">90 mins</span>
                             </button>
                         </h2>
                         <div id="flush-collapse{{ $loop->index }}" class="accordion-collapse collapse"
                             data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body fs-14">
                                 <ul class="m-0">
+                                    @php
+                                        $session['details'] = [
+                                            'Ôn tập nội dung bài cũ + Sửa Homework',
+                                            'Nghe bài nghe thuộc chủ đề Education, cho học viên ôn lại vocab đã học',
+                                            'Ôn tập lại kiến thức về Noun đã học (loại từ, vị trí từ,...)',
+                                            'Tổng kết nội dung bài học + giao Homework',
+                                            'Tổng hợp vocabs đã học trong topic Education theo mental models giáo viên gợi ý',
+                                        ];
+                                    @endphp
                                     @foreach ($session['details'] as $detail)
                                         <li>{{ $detail }}</li>
                                     @endforeach

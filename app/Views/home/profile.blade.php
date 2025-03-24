@@ -67,7 +67,7 @@
                                 style="width: 20px; height: 20px;">
                             Phone number</label>
                         <input disabled type="text" id="phone" name="phone" class="form-control"
-                            value="{{ $profile['phone'] }}">
+                            value="0{{ $profile['phone'] }}">
                     </div>
                 </div>
             </div>

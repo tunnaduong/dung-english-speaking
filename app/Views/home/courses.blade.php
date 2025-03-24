@@ -20,50 +20,32 @@
             <div class="line-bottom"></div>
         </div>
         <div class="row">
-            <div class="col-md-6 col-12">
-                <div class="rounded-4 border-line mt-3">
-                    <div class="p-3 px-4">
-                        <a href="{{ route('courses/pre-ielts') }}" class="fw-bold fs-5 text-decoration-none text-black">Pre
-                            IELTS - 27 lectures</a>
-                        <div class="progress-text">25%</div>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25"
-                                aria-valuemin="0" aria-valuemax="100"></div>
+            @foreach ($courses as $course)
+                <div class="col-md-6 col-12">
+                    <div class="rounded-4 border-line mt-3">
+                        <div class="p-3 px-4">
+                            <a href="{{ route('courses/' . $course['id']) }}"
+                                class="fw-bold fs-5 text-decoration-none text-black">{{ $course['course_name'] }} -
+                                {{ $course['NoL'] }}
+                                lectures</a>
+                            <div class="progress-text">0%</div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="0"
+                                    aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
                         </div>
-                    </div>
-                    <hr class="mt-1 mb-0">
-                    <div class="p-3 px-4 d-flex align-items-center">
-                        <img src="{{ asset('work_outline.svg') }}" class="me-3">
-                        <div class="flex-fill">
-                            <div>Grammar lecture 7</div>
-                            <span class="exercise-duration">Exercise | 25 mins</span>
+                        <hr class="mt-1 mb-0">
+                        <div class="p-3 px-4 d-flex align-items-center">
+                            <img src="{{ asset('work_outline.svg') }}" class="me-3">
+                            <div class="flex-fill">
+                                <div>Grammar lecture 7</div>
+                                <span class="exercise-duration">Exercise | 25 mins</span>
+                            </div>
+                            <a href="{{ route("courses/{$course['id']}/start") }}" class="btn btn-start">Start</a>
                         </div>
-                        <a href="{{ route('courses/pre-ielts/start') }}" class="btn btn-start">Start</a>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6 col-12">
-                <div class="rounded-4 border-line mt-3">
-                    <div class="p-3 px-4">
-                        <a href="{{ route('courses/ielts-4.0') }}"
-                            class="fw-bold fs-5 text-decoration-none text-black">IELTS 4.0 - 27 lectures</a>
-                        <div class="progress-text">0%</div>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="0"
-                                aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                    </div>
-                    <hr class="mt-1 mb-0">
-                    <div class="p-3 px-4 d-flex align-items-center">
-                        <img src="{{ asset('work_outline.svg') }}" class="me-3">
-                        <div class="flex-fill">
-                            <div>Reading 1</div>
-                            <span class="exercise-duration">Exercise | 20 mins</span>
-                        </div>
-                        <a href="{{ route('courses/ielts-4.0/start') }}" class="btn btn-start">Start</a>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
     <div class="container px-0 my-4">
