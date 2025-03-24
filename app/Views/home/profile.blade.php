@@ -24,8 +24,8 @@
             <div class="flex-fill overflow-hidden">
                 <h5 class="fw-bold">{{ getLastTwoWords(session('user')['name']) }}</h5>
                 <div class="fs-09 mb-2 text-truncate">
-                    myhainguyen02@gmail.com</div>
-                <div class="fs-09 text-truncate">0392323232</div>
+                    {{ $profile['email'] }}</div>
+                <div class="fs-09 text-truncate">0{{ $profile['phone'] }}</div>
             </div>
         </div>
         <form action="{{ route('profile/update') }}" method="POST" class="m-0 mt-3">
@@ -37,7 +37,7 @@
                             Full
                             Name</label>
                         <input type="text" name="full_name" id="full_name" class="form-control"
-                            value="Nguyen Thi Hai My">
+                            value="{{ $profile['name'] }}">
                     </div>
                 </div>
                 <div class="col-12 col-sm-6">
@@ -45,7 +45,8 @@
                         <label for="dob" class="form-label fs-09"><img src="{{ asset('calendar_month.svg') }}">
                             Date of
                             birth</label>
-                        <input type="date" id="dob" name="dob" class="form-control" value="2003-03-02">
+                        <input type="date" id="dob" name="dob" class="form-control"
+                            value="{{ $profile['DoB'] }}">
                     </div>
                 </div>
             </div>
@@ -53,10 +54,11 @@
             <div class="row g-3 mb-3">
                 <div class="col-12 col-sm-6">
                     <div>
-                        <label for="email" class="form-label fs-09"><img src="{{ asset('mail.svg') }}" class="ms-1 me-1">
+                        <label for="email" class="form-label fs-09"><img src="{{ asset('mail.svg') }}"
+                                class="ms-1 me-1">
                             Email</label>
                         <input disabled type="text" name="email" id="email" class="form-control"
-                            value="myhainguyen02@gmail.com">
+                            value="{{ $profile['email'] }}">
                     </div>
                 </div>
                 <div class="col-12 col-sm-6">
@@ -65,7 +67,7 @@
                                 style="width: 20px; height: 20px;">
                             Phone number</label>
                         <input disabled type="text" id="phone" name="phone" class="form-control"
-                            value="0392323232">
+                            value="{{ $profile['phone'] }}">
                     </div>
                 </div>
             </div>

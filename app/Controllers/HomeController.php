@@ -2,12 +2,17 @@
 
 namespace App\Controllers;
 
+use App\Models\Student;
+
 class HomeController extends Controller
 {
+  public $student;
+
   public function __construct()
   {
+    $this->student = new Student();
     if (!session('user')) {
-      return redirect('/login');
+      redirect('/login');
     }
   }
 
@@ -27,7 +32,8 @@ class HomeController extends Controller
     if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
       return view('teacher.profile');
     }
-    return view('home.profile');
+    $profile = $this->student->findByEmail(session('user')['email']);
+    return view('home.profile', compact('profile'));
   }
 
   public function courses()
