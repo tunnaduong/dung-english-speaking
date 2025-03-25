@@ -23,7 +23,7 @@
             <form action="" class="position-relative m-0">
                 <img src="{{ asset('search.svg') }}" class="search-icon">
                 <input type="text" placeholder="Searching" class="search-input form-control form-control-lg"
-                    id="search" name="search" value="{{ $_GET['search'] ?? 'Hai My' }}">
+                    id="search" name="search" value="{{ $_GET['search'] }}">
             </form>
         </div>
         <div class="table-responsive my-3">
@@ -37,12 +37,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><a href="{{ route('students/1/profile') }}" class="text-black">Nguyen Thi Hai My</a></td>
-                        <td>0987654321</td>
-                        <td>myhainguyen02@gmail.com</td>
-                        <td>Pre IELTS 01</td>
-                    </tr>
+                    @foreach ($students as $student)
+                        <tr>
+                            <td><a href="{{ route('students/' . $student['s_id'] . '/profile') }}"
+                                    class="text-black">{{ $student['name'] }}</a></td>
+                            <td>0{{ $student['phone'] }}</td>
+                            <td>{{ $student['email'] }}</td>
+                            <td>{{ $student['class_name'] }}</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

@@ -228,12 +228,18 @@ class TeacherController extends Controller
 
     public function students()
     {
-        return view('teacher.students');
+        $students = $this->studentInfo::getAllStudents();
+        // if has search query
+        if (request()->get('search')) {
+            $students = $this->studentInfo::searchStudentsByName(request()->get('search'));
+        }
+        return view('teacher.students', compact('students'));
     }
 
     public function studentProfile($id)
     {
-        return view('teacher.student-profile', compact('id'));
+        $student = $this->studentInfo::getStudentById($id);
+        return view('teacher.student-profile', compact('id', 'student'));
     }
 
     public function studentProfileClassDetail($id, $classId)
