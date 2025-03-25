@@ -35,7 +35,7 @@
                                 <td>{{ $exercise['id'] }}</td>
                                 <td>{{ $exercise['name'] }}</td>
                                 <td>{{ $exercise['level'] }}</td>
-                                <td>{{ $exercise['skill'] }}</td>
+                                <td>{{ $exercise['skill_type'] }}</td>
                                 <td><a href="{{ route('exercises/' . $exercise['id'] . '/edit') }}" class="me-2">
                                         <img src="{{ asset('edit3.svg') }}" /></a><button class="btn-custom"
                                         data-bs-toggle="modal" data-bs-target="#deleteModal{{ $loop->index }}"><img

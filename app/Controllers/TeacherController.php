@@ -249,7 +249,8 @@ class TeacherController extends Controller
 
     public function correction()
     {
-        return view('teacher.correction');
+        $classrooms = $this->classroom->getClasses(session('user')['user_id']);
+        return view('teacher.correction', compact('classrooms'));
     }
 
     public function createExercise()
@@ -258,6 +259,14 @@ class TeacherController extends Controller
             return redirect('/exercises');
         }
         return view('teacher.create-exercise');
+    }
+
+    public function editExercise($id)
+    {
+        if (request()->isMethod('post')) {
+            return redirect('/exercises');
+        }
+        return view('teacher.edit-exercise', compact('id'));
     }
 
     public function deleteExercise($id)
@@ -288,6 +297,31 @@ class TeacherController extends Controller
             ],
         ];
         return view('teacher.correction--homeworks', compact('id', 'exercises'));
+    }
+
+    public function correctionTest($id)
+    {
+        $exercises = [
+            [
+                'id' => 'E00001',
+                'name' => 'Writing 1',
+                'level' => '3.5',
+                'date' => '2025-02-14',
+            ],
+            [
+                'id' => 'E00002',
+                'name' => 'Reading 1',
+                'level' => '3.5',
+                'date' => '2025-02-21',
+            ],
+            [
+                'id' => 'E00003',
+                'name' => 'Listening 1',
+                'level' => '4.0',
+                'date' => '2025-02-28',
+            ],
+        ];
+        return view('teacher.correction--tests', compact('id', 'exercises'));
     }
 
     public function correctionHomeworkView($id, $homeworkId)
@@ -346,11 +380,75 @@ class TeacherController extends Controller
         return view('teacher.correction--homeworks-view', compact('id', 'homeworkId', 'students'));
     }
 
+    public function correctionTestView($id, $homeworkId)
+    {
+        $students = [
+            [
+                'id' => 'S00236',
+                'name' => 'Nguyễn Tiến Dũng',
+                'gender' => 'Male',
+                'birth_date' => '2003-05-25',
+                'score' => '10.0',
+            ],
+            [
+                'id' => 'S00236',
+                'name' => 'Nguyễn Minh Đức',
+                'gender' => 'Male',
+                'birth_date' => '2002-02-02',
+                'score' => '9.0',
+            ],
+            [
+                'id' => 'S00236',
+                'name' => 'Trần Thu Hà',
+                'gender' => 'Female',
+                'birth_date' => '2006-12-15',
+                'score' => '8.0',
+            ],
+            [
+                'id' => 'S00236',
+                'name' => 'Trịnh Duy Hoàng',
+                'gender' => 'Male',
+                'birth_date' => '2004-09-28',
+                'score' => 'N/A',
+            ],
+            [
+                'id' => 'S00236',
+                'name' => 'Phạm Anh Kiên',
+                'gender' => 'Male',
+                'birth_date' => '2009-01-24',
+                'score' => 'N/A',
+            ],
+            [
+                'id' => 'S00236',
+                'name' => 'Nguyễn Tấn Lộc',
+                'gender' => 'Male',
+                'birth_date' => '2005-08-14',
+                'score' => 'N/A',
+            ],
+            [
+                'id' => 'S00236',
+                'name' => 'Nguyễn Nam Phong',
+                'gender' => 'Male',
+                'birth_date' => '2006-09-23',
+                'score' => 'N/A',
+            ],
+        ];
+        return view('teacher.correction--tests-view', compact('id', 'homeworkId', 'students'));
+    }
+
     public function correctionHomeworkScoring($id, $homeworkId, $studentId)
     {
         if (request()->isMethod('post')) {
             return redirect("/correction/$id/homeworks/$homeworkId");
         }
         return view('teacher.correction--homeworks-scoring', compact('id', 'homeworkId', 'studentId'));
+    }
+
+    public function correctionTestScoring($id, $homeworkId, $studentId)
+    {
+        if (request()->isMethod('post')) {
+            return redirect("/correction/$id/tests/$homeworkId");
+        }
+        return view('teacher.correction--tests-scoring', compact('id', 'homeworkId', 'studentId'));
     }
 }
