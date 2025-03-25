@@ -13,33 +13,18 @@
             </form>
         </div>
         <div class="classroom-container gap-4 mt-4">
-            <div class="border-line p-4 rounded-4 m-2 classroom">
-                <h5 class="fw-bold">PRE01</h5>
-                <div class="fw-semi">Pre IELTS 01 - 27 lectures</div>
-                <div>Teacher: Hoàng Tiến Dũng</div>
-                <div class="d-flex gap-2 justify-content-between mt-3">
-                    <a href="{{ route('classrooms/pre01/list') }}" class="btn-classroom">List</a>
-                    <a href="{{ route('classrooms/pre01/curriculum') }}" class="btn-classroom">Curriculum</a>
+            @foreach ($classrooms as $classroom)
+                <div class="border-line p-4 rounded-4 m-2 classroom">
+                    <h5 class="fw-bold">{{ $classroom['class_name'] }}</h5>
+                    <div class="fw-semi">{{ $classroom['NoL'] }} lectures</div>
+                    <div>Teacher: {{ $classroom['name'] }}</div>
+                    <div class="d-flex gap-2 justify-content-between mt-3">
+                        <a href="{{ route("classrooms/{$classroom['class_id']}/list") }}" class="btn-classroom">List</a>
+                        <a href="{{ route("classrooms/{$classroom['class_id']}/curriculum") }}"
+                            class="btn-classroom">Curriculum</a>
+                    </div>
                 </div>
-            </div>
-            <div class="border-line p-4 rounded-4 m-2 classroom">
-                <h5 class="fw-bold">BEGINNER01</h5>
-                <div class="fw-semi">Beginner 4.0 - 27 lectures</div>
-                <div>Teacher: Hoàng Tiến Dũng</div>
-                <div class="d-flex gap-2 justify-content-between mt-3">
-                    <a href="{{ route('classrooms/beginner01/list') }}" class="btn-classroom">List</a>
-                    <a href="{{ route('classrooms/beginner01/curriculum') }}" class="btn-classroom">Curriculum</a>
-                </div>
-            </div>
-            <div class="border-line p-4 rounded-4 m-2 classroom">
-                <h5 class="fw-bold">UPPER03</h5>
-                <div class="fw-semi">Upper 5.0 - 27 lectures</div>
-                <div>Teacher: Hoàng Tiến Dũng</div>
-                <div class="d-flex gap-2 justify-content-between mt-3">
-                    <a href="{{ route('classrooms/upper03/list') }}" class="btn-classroom">List</a>
-                    <a href="{{ route('classrooms/upper03/curriculum') }}" class="btn-classroom">Curriculum</a>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 @endsection

@@ -72,7 +72,7 @@
                 <div class="modal-body text-center">
                     <h5 class="fw-semi mb-4">Do you want to cancel?</h5>
                     <div class="d-flex justify-content-around">
-                        <a class="btn btn-confirm" href="{{ route('classrooms/pre01/curriculum') }}">Yes</a>
+                        <a class="btn btn-confirm" href="{{ route('classrooms/' . $id . '/curriculum') }}">Yes</a>
                         <button type="button" class="btn btn-confirm" data-bs-dismiss="modal">No</button>
                     </div>
                 </div>

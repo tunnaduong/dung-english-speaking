@@ -13,66 +13,21 @@
             </form>
         </div>
         <div class="classroom-container gap-4 mt-4">
-            <div class="border-line p-4 rounded-4 m-2 classroom">
-                <div class="d-flex justify-content-between">
-                    <h5 class="fw-bold">Pre IELTS - 27 lectures</h5>
-                    <a href="{{ route('courses/pre01/edit') }}">
-                        <img src="{{ asset('edit.svg') }}">
-                    </a>
+            @foreach ($courses as $course)
+                <div class="border-line p-4 rounded-4 m-2 classroom">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="fw-bold">{{ $course['course_name'] }} - {{ $course['NoL'] }} lectures</h5>
+                        <a href="{{ route('courses/' . $course['id'] . '/edit') }}">
+                            <img src="{{ asset('edit.svg') }}">
+                        </a>
+                    </div>
+                    <div>Classes: 1</div>
+                    <div class="d-flex gap-2 justify-content-center mt-3">
+                        <a href="{{ route('classrooms/' . $course['id'] . '/curriculum') }}"
+                            class="btn-classroom">Curriculum</a>
+                    </div>
                 </div>
-                <div>Classes: 2</div>
-                <div class="d-flex gap-2 justify-content-center mt-3">
-                    <a href="{{ route('classrooms/pre01/curriculum') }}" class="btn-classroom">Curriculum</a>
-                </div>
-            </div>
-            <div class="border-line p-4 rounded-4 m-2 classroom">
-                <div class="d-flex justify-content-between">
-                    <h5 class="fw-bold">Beginner 4.0 - 27 lectures</h5>
-                    <a href="{{ route('courses/pre01/edit') }}">
-                        <img src="{{ asset('edit.svg') }}">
-                    </a>
-                </div>
-                <div>Classes: 3</div>
-                <div class="d-flex gap-2 justify-content-center mt-3">
-                    <a href="{{ route('classrooms/pre01/curriculum') }}" class="btn-classroom">Curriculum</a>
-                </div>
-            </div>
-            <div class="border-line p-4 rounded-4 m-2 classroom">
-                <div class="d-flex justify-content-between">
-                    <h5 class="fw-bold">Upper 5.0 - 27 lectures</h5>
-                    <a href="{{ route('courses/pre01/edit') }}">
-                        <img src="{{ asset('edit.svg') }}">
-                    </a>
-                </div>
-                <div>Classes: 3</div>
-                <div class="d-flex gap-2 justify-content-center mt-3">
-                    <a href="{{ route('classrooms/pre01/curriculum') }}" class="btn-classroom">Curriculum</a>
-                </div>
-            </div>
-            <div class="border-line p-4 rounded-4 m-2 classroom">
-                <div class="d-flex justify-content-between">
-                    <h5 class="fw-bold">Super 6.0 - 27 lectures</h5>
-                    <a href="{{ route('courses/pre01/edit') }}">
-                        <img src="{{ asset('edit.svg') }}">
-                    </a>
-                </div>
-                <div>Classes: 2</div>
-                <div class="d-flex gap-2 justify-content-center mt-3">
-                    <a href="{{ route('classrooms/pre01/curriculum') }}" class="btn-classroom">Curriculum</a>
-                </div>
-            </div>
-            <div class="border-line p-4 rounded-4 m-2 classroom">
-                <div class="d-flex justify-content-between">
-                    <h5 class="fw-bold">Hero 7.5 - 27 lectures</h5>
-                    <a href="{{ route('courses/pre01/edit') }}">
-                        <img src="{{ asset('edit.svg') }}">
-                    </a>
-                </div>
-                <div>Classes: 1</div>
-                <div class="d-flex gap-2 justify-content-center mt-3">
-                    <a href="{{ route('classrooms/pre01/curriculum') }}" class="btn-classroom">Curriculum</a>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 @endsection

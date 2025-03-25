@@ -11,7 +11,17 @@ class Course extends Model
 
     public static function getCourseContent($id)
     {
-        $sql = "SELECT * FROM curriculum INNER JOIN course ON course.id = curriculum.course_id WHERE course_id = ?";
+        $sql = "SELECT curriculum.*, curriculum.id AS c_id FROM curriculum INNER JOIN course ON course.id = curriculum.course_id WHERE course_id = ?";
         return DB::query($sql, [$id])->fetchAll();
+    }
+
+    public static function getCourseByClassId($classId)
+    {
+        return (new self())->where('id', '=', $classId)->first();
+    }
+
+    public static function getAllCourses()
+    {
+        return (new self())->get();
     }
 }

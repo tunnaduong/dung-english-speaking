@@ -40,8 +40,8 @@
                                 <td>{{ $student['id'] }}</td>
                                 <td>{{ $student['name'] }}</td>
                                 <td>{{ $student['gender'] }}</td>
-                                <td>{{ date('d/m/Y', strtotime($student['birth_date'])) }}</td>
-                                <td>{{ $student['phone'] }}</td>
+                                <td>{{ date('d/m/Y', strtotime($student['DoB'])) }}</td>
+                                <td>0{{ $student['phone'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>

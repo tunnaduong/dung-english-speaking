@@ -45,6 +45,7 @@ class AuthController extends Controller
                         'name' => $employee ? $employee['name'] : $student['name'],
                         'email' => $_POST['email'],
                         'role' => $employee ? $employee['role'] : 'Student',
+                        'user_id' => $employee ? $employee['user_id'] : $student['student_id']
                     ]);
                     return redirect('/');
                 }
