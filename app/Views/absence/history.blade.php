@@ -32,8 +32,8 @@
                 <tbody>
                     @foreach ($historyData as $history)
                         <tr>
-                            <td>{{ $history['date'] }}</td>
-                            <td>{{ $history['shift'] }}</td>
+                            <td>{{ date('d/m/Y', strtotime($history['date'])) }}</td>
+                            <td>Ca 1</td>
                             <td>{{ $history['reason'] }}</td>
                         </tr>
                     @endforeach

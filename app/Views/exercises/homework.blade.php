@@ -30,24 +30,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Homework 1</td>
-                                <td>14/02/2025</td>
-                                <td>Done</td>
-                                <td>90/100</td>
-                            </tr>
-                            <tr>
-                                <td>Homework 2</td>
-                                <td>21/02/2025</td>
-                                <td>Done</td>
-                                <td>80/100</td>
-                            </tr>
-                            <tr>
-                                <td>Homework 3</td>
-                                <td>28/02/2025</td>
-                                <td>Not done</td>
-                                <td>-/-</td>
-                            </tr>
+                            @foreach ($homeworks as $homework)
+                                <tr>
+                                    <td>{{ $homework['name'] }}</td>
+                                    <td>{{ date('d/m/Y', strtotime($homework['deadline'])) }}</td>
+                                    <td>Done</td>
+                                    <td>90/100</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

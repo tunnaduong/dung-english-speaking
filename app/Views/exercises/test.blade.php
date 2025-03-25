@@ -30,18 +30,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Test 1</td>
-                                <td>03/03/2025</td>
-                                <td>Not done</td>
-                                <td>-/-</td>
-                            </tr>
-                            <tr>
-                                <td>Test 2</td>
-                                <td>10/03/2025</td>
-                                <td>Not done</td>
-                                <td>-/-</td>
-                            </tr>
+                            @foreach ($tests as $test)
+                                <tr>
+                                    <td>{{ $test['name'] }}</td>
+                                    <td>{{ $test['deadline'] }}</td>
+                                    <td>Not done</td>
+                                    <td>-/-</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

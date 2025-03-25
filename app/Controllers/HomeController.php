@@ -5,18 +5,21 @@ namespace App\Controllers;
 use App\Models\Course;
 use App\Models\Student;
 use App\Models\Employee;
+use App\Models\Homework;
 
 class HomeController extends Controller
 {
   public $student;
   public $employee;
   public $course;
+  public $homework;
 
   public function __construct()
   {
     $this->student = new Student();
     $this->employee = new Employee();
     $this->course = new Course();
+    $this->homework = new Homework();
     if (!session('user')) {
       redirect('/login');
     }
@@ -208,7 +211,8 @@ class HomeController extends Controller
     if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
       return redirect('/');
     }
-    return view('exercises.homework');
+    $homeworks = $this->homework->getHomeworks();
+    return view('exercises.homework', compact('homeworks'));
   }
 
   public function test()
@@ -216,7 +220,8 @@ class HomeController extends Controller
     if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
       return redirect('/');
     }
-    return view('exercises.test');
+    $tests = $this->homework->getTests();
+    return view('exercises.test', compact('tests'));
   }
 
   public function absence()

@@ -2,8 +2,17 @@
 
 namespace App\Controllers;
 
+use App\Models\Absence;
+
 class AbsenceController extends Controller
 {
+    public $absence;
+
+    public function __construct()
+    {
+        $this->absence = new Absence();
+    }
+
     public function leave()
     {
         if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
@@ -107,6 +116,7 @@ class AbsenceController extends Controller
                 'reason' => 'Bị ốm',
             ]
         ];
+        $historyData = $this->absence->getAbsenceHistory(session('user')['id']);
         return view('absence.history', compact('historyData'));
     }
 }
