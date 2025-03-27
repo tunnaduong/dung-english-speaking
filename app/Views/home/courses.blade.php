@@ -24,8 +24,8 @@
                 <div class="col-md-6 col-12">
                     <div class="rounded-4 border-line mt-3">
                         <div class="p-3 px-4">
-                            <a href="{{ route('courses/' . $course['id']) }}"
-                                class="fw-bold fs-5 text-decoration-none text-black">{{ $course['course_name'] }} -
+                            <a href="{{ route('courses/' . $course['c_id']) }}"
+                                class="fw-bold fs-5 text-decoration-none text-black">{{ $course['class_name'] }} -
                                 {{ $course['NoL'] }}
                                 lectures</a>
                             <div class="progress-text">0%</div>
@@ -41,7 +41,7 @@
                                 <div>Grammar lecture 7</div>
                                 <span class="exercise-duration">Exercise | 25 mins</span>
                             </div>
-                            <a href="{{ route("courses/{$course['id']}/start") }}" class="btn btn-start">Start</a>
+                            <a href="{{ route("courses/{$course['c_id']}/start") }}" class="btn btn-start">Start</a>
                         </div>
                     </div>
                 </div>

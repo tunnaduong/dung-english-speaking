@@ -51,7 +51,7 @@ class HomeController extends Controller
 
   public function courses()
   {
-    $courses = $this->course::all();
+    $courses = $this->course::getCoursesByStudentId(session('user')['user_id']);
     if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
       return view('teacher.courses', compact('courses'));
     }

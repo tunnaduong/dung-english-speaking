@@ -24,4 +24,10 @@ class Course extends Model
     {
         return (new self())->get();
     }
+
+    public static function getCoursesByStudentId($studentId)
+    {
+        $sql = "SELECT class.*, info_student.*, course.*, class.id AS c_id FROM info_student INNER JOIN class ON class.id = info_student.class_id INNER JOIN course ON class.id_course = course.id WHERE info_student.id = ?";
+        return DB::query($sql, [$studentId])->fetchAll();
+    }
 }
