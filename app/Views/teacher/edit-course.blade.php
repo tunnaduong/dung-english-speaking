@@ -5,7 +5,7 @@
 @section('content')
     <div class="w-100 my-4 bg-white rounded-4 p-4 border-line">
         <div class="d-flex justify-content-center mb-3">
-            <h4 class="fw-bold m-0 flex-shrink-0">Beginner 4.0 - 27 lectures</h4>
+            <h4 class="fw-bold m-0 flex-shrink-0">{{ $course['course_name'] }} - {{ $course['NoL'] }} lectures</h4>
         </div>
         <div>
             <h4 class="fw-bold"><a href="{{ route('courses') }}" class="back-link">Courses</a>/Edit
@@ -19,8 +19,7 @@
                         <div class="mb-3">Course ID</d>
                     </td>
                     <td>
-                        <div class="session-id mb-3">C001</div>
-                        <input type="hidden" name="session_id" value="C001">
+                        <div class="session-id mb-3">{{ $id }}</div>
                     </td>
                 </tr>
                 <tr>
@@ -28,7 +27,7 @@
                         <div class="mb-3 mt-2">Course Name</div>
                     </td>
                     <td>
-                        <textarea name="topic" class="form-control rounded-35 mb-3 bg-light" rows="2">Beginner 4.0 - 27 lectures</textarea>
+                        <textarea name="name" class="form-control rounded-35 mb-3 bg-light" rows="2">{{ $course['course_name'] }} - {{ $course['NoL'] }} lectures</textarea>
                     </td>
                 </tr>
             </table>

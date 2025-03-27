@@ -11,6 +11,7 @@ use App\Core\Asset\Asset;
 // Student
 $route->get('/', [HomeController::class, 'index']);
 $route->get('/profile', [HomeController::class, 'profile']);
+$route->post('/profile/update', [HomeController::class, 'updateProfile']);
 $route->get('/courses', [HomeController::class, 'courses']);
 $route->get('/courses/{id}', [HomeController::class, 'courseDetail']);
 $route->get('/exercises', [HomeController::class, 'exercise']);

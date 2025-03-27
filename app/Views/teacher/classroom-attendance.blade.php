@@ -16,7 +16,7 @@
             <div class="d-flex justify-content-between">
                 <div>
                     <h4 class="fw-bold"><a href="{{ route('classrooms') }}" class="back-link">Classrooms</a>/<a
-                            href="{{ route('classrooms/pre01/list') }}" class="back-link">List</a>/Attendance
+                            href="{{ route('classrooms/' . $id . '/list') }}" class="back-link">List</a>/Attendance
                     </h4>
                     <div class="line-bottom"></div>
                 </div>
@@ -63,7 +63,7 @@
                 </table>
             </div>
             <div class="d-flex justify-content-end">
-                <a href="{{ route('classrooms/pre01/attendance/submit') }}" class="btn-classroom px-3 w-auto">Submit</a>
+                <a href="{{ route('classrooms/' . $id . '/attendance/submit') }}" class="btn-classroom px-3 w-auto">Submit</a>
             </div>
         </div>
     </div>

@@ -88,9 +88,9 @@
             </div>
         </div>
     </div>
+@endsection
 
-
-
+@push('scripts')
     <script>
         let currentDate = new Date();
         let highlightedDays = {
@@ -110,6 +110,21 @@
                 22: "#2f80ed",
                 25: "#2f80ed",
                 27: "#00966d",
+            },
+            "2025-4": {
+                3: "#00966d",
+                10: "#00966d",
+                17: "#00966d",
+                24: "#00966d",
+                1: "#2f80ed",
+                8: "#2f80ed",
+                15: "#2f80ed",
+                22: "#2f80ed",
+                29: "#2f80ed",
+                5: "#2f80ed",
+                12: "#2f80ed",
+                19: "#2f80ed",
+                26: "#2f80ed",
             }
         };
 
@@ -166,10 +181,15 @@
                             dayStyle = `background-color: ${daysToHighlight[dayCounter]}; color: white;`;
                         }
 
+                        if (daysToHighlight[dayCounter] && (dayCounter === today.getDate() && month === today.getMonth() &&
+                                year === today.getFullYear())) {
+                            dayStyle += `border: 4px solid #ff3b30;`;
+                        }
+
                         calendarHTML +=
                             `<div class="col d-flex justify-content-center">
-                        <div class="calendar-day" style="${dayStyle}">${dayCounter}</div>
-                    </div>`;
+                    <div class="calendar-day" style="${dayStyle}">${dayCounter}</div>
+                </div>`;
                         dayCounter++;
                     }
                 }
@@ -192,5 +212,4 @@
 
         generateCalendar();
     </script>
-
-@endsection
+@endpush

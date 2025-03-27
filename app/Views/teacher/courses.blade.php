@@ -17,13 +17,13 @@
                 <div class="border-line p-4 rounded-4 m-2 classroom">
                     <div class="d-flex justify-content-between">
                         <h5 class="fw-bold">{{ $course['course_name'] }} - {{ $course['NoL'] }} lectures</h5>
-                        <a href="{{ route('courses/' . $course['id'] . '/edit') }}">
+                        <a href="{{ route('courses/' . $course['co_id'] . '/edit') }}">
                             <img src="{{ asset('edit.svg') }}">
                         </a>
                     </div>
                     <div>Classes: 1</div>
                     <div class="d-flex gap-2 justify-content-center mt-3">
-                        <a href="{{ route('classrooms/' . $course['id'] . '/curriculum') }}"
+                        <a href="{{ route('classrooms/' . $course['co_id'] . '/curriculum') }}"
                             class="btn-classroom">Curriculum</a>
                     </div>
                 </div>

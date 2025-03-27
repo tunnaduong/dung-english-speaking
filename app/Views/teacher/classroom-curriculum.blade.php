@@ -39,7 +39,7 @@
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $curriculum['c_id'] }}</td>
                                 <td>{{ $curriculum['topic'] }}</td>
-                                <td>{{ date('d/m/Y', strtotime($curriculum['created_at'])) }}</td>
+                                <td>{{ date('d/m/Y', strtotime($curriculum['c_created_at'])) }}</td>
                                 <td><a href="{{ route('classrooms/' . $id . '/curriculum/' . $curriculum['c_id'] . '/edit') }}"
                                         class="me-2">
                                         <img src="{{ asset('edit.svg') }}" /></a><button class="btn-custom"

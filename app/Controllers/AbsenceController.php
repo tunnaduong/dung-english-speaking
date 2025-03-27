@@ -28,6 +28,13 @@ class AbsenceController extends Controller
             return redirect('/');
         }
         // Handle store absence request...
+        $this->absence::create([
+            'student_id' => session('user')['user_id'],
+            'date' => request()->input('day_off'),
+            'reason' => request()->input('reason'),
+            'date_sent' => date('Y-m-d H:i:s'),
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
         session_set('leave', request()->input('token'));
         return redirect('/absence/leave/make-up?page=1&token=' . request()->input('token'));
     }

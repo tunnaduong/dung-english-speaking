@@ -5,11 +5,11 @@
 @section('content')
     <div class="w-100 my-4 bg-white rounded-4 p-4 border-line">
         <div class="d-flex justify-content-center mb-3">
-            <h4 class="fw-bold m-0 flex-shrink-0">Beginner 4.0 - 27 lectures</h4>
+            <h4 class="fw-bold m-0 flex-shrink-0">{{ $course2['course_name'] }} - {{ $course2['NoL'] }} lectures</h4>
         </div>
         <div>
             <h4 class="fw-bold"><a href="{{ route('classrooms') }}" class="back-link">Classrooms</a>/<a
-                    href="{{ route('classrooms/pre01/curriculum') }}" class="back-link">Curriculum</a>/Edit
+                    href="{{ route('classrooms/' . $id . '/curriculum') }}" class="back-link">Curriculum</a>/Edit
             </h4>
             <div class="line-bottom"></div>
         </div>
@@ -29,7 +29,7 @@
                         <div class="mb-3 mt-2">Topic</div>
                     </td>
                     <td>
-                        <textarea name="topic" placeholder="Add topic..." class="form-control rounded-35 mb-3 bg-light" rows="3">Testing: Final test</textarea>
+                        <textarea name="topic" placeholder="Add topic..." class="form-control rounded-35 mb-3 bg-light" rows="3">{{ $course['topic'] }}</textarea>
                     </td>
                 </tr>
                 <tr>
@@ -38,16 +38,21 @@
                     </td>
                     <td>
                         <input type="date" name="date" class="form-control w-200 mb-3 rounded-35 bg-light"
-                            value="2025-03-02">
+                            value="{{ $course['date'] }}">
                     </td>
                 </tr>
                 <tr>
                     <td>Exercise</td>
                     <td>
                         <select name="exercise" class="form-select w-200 rounded-35 bg-light">
-                            <option value="listen1">Listening 1</option>
-                            <option value="listen2">Listening 2</option>
-                            <option value="listen3">Listening 3</option>
+                            <option disabled {{ $course['exercise_id'] == null ? 'selected' : '' }}>Choose one
+                            </option>
+                            @foreach ($exercises as $exercise)
+                                <option value="{{ $exercise['id'] }}"
+                                    {{ $course['exercise_id'] == $exercise['id'] ? 'selected' : '' }}>
+                                    {{ $exercise['name'] }}
+                                </option>
+                            @endforeach
                         </select>
                     </td>
                 </tr>

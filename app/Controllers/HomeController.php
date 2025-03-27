@@ -7,6 +7,9 @@ use App\Models\Student;
 use App\Models\Employee;
 use App\Models\Exercise;
 use App\Models\Homework;
+use App\Models\InfoStudent;
+use App\Models\InfoEmployee;
+use App\Controllers\Controller;
 
 class HomeController extends Controller
 {
@@ -15,6 +18,8 @@ class HomeController extends Controller
   public $course;
   public $homework;
   public $exercise;
+  public $infoStudent;
+  public $infoEmployee;
 
   public function __construct()
   {
@@ -23,6 +28,8 @@ class HomeController extends Controller
     $this->course = new Course();
     $this->homework = new Homework();
     $this->exercise = new Exercise();
+    $this->infoStudent = new InfoStudent();
+    $this->infoEmployee = new InfoEmployee();
     if (!session('user')) {
       redirect('/login');
     }
@@ -49,12 +56,39 @@ class HomeController extends Controller
     return view('home.profile', compact('profile'));
   }
 
+  public function updateProfile()
+  {
+    if (session('user')['role'] === 'Student') {
+      $this->infoStudent::update([
+        'name' => request()->input('full_name'),
+        'DoB' => request()->input('dob'),
+      ], [
+        'id' => session('user')['user_id']
+      ]);
+    } else {
+      $this->infoEmployee::update([
+        'name' => request()->input('full_name'),
+        'DoB' => request()->input('dob'),
+      ], [
+        'id' => session('user')['user_id']
+      ]);
+    }
+    // Retrieve the current session data
+    $currentUser = session('user');
+    // Update only the 'name' field
+    $currentUser['name'] = request()->input('full_name');
+    // Save the updated session data back
+    session_set('user', $currentUser);
+    return redirect('/profile');
+  }
+
   public function courses()
   {
-    $courses = $this->course::getCoursesByStudentId(session('user')['user_id']);
     if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
+      $courses = $this->course::getCoursesByTeacherId(session('user')['user_id']);
       return view('teacher.courses', compact('courses'));
     }
+    $courses = $this->course::getCoursesByStudentId(session('user')['user_id']);
     return view('home.courses', compact('courses'));
   }
 

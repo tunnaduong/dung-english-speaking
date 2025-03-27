@@ -3,7 +3,9 @@
 namespace App\Controllers;
 
 use App\Models\Course;
+use App\Models\Exercise;
 use App\Models\Classroom;
+use App\Models\Curriculum;
 use App\Models\InfoStudent;
 
 class TeacherController extends Controller
@@ -11,12 +13,16 @@ class TeacherController extends Controller
     public $classroom;
     public $studentInfo;
     public $course;
+    public $curriculum;
+    public $exercise;
 
     public function __construct()
     {
         $this->studentInfo = new InfoStudent();
         $this->classroom = new Classroom();
         $this->course = new Course();
+        $this->curriculum = new Curriculum();
+        $this->exercise = new Exercise();
         if (!session('user')) {
             redirect('/login');
         }
@@ -38,9 +44,10 @@ class TeacherController extends Controller
     {
         $students = $this->studentInfo->getStudents($id);
         if (session('user')['role'] === 'Academic Affair') {
-            return view('admin.classrooms--list', compact('students'));
+            return view('admin.classrooms--list', compact('students', 'id'));
         }
-        return view('teacher.classroom-list', compact('students'));
+        $course = $this->course->getCourseByClassId($id);
+        return view('teacher.classroom-list', compact('students', 'id', 'course'));
     }
 
     public function classroomCurriculum($id)
@@ -194,36 +201,69 @@ class TeacherController extends Controller
                 'day_10' => 'Có',
             ],
         ];
-        return view('teacher.classroom-attendance', compact('students'));
+        return view('teacher.classroom-attendance', compact('students', 'id'));
     }
 
     public function editCurriculum($id, $curriculumId)
     {
         if (request()->isMethod('post')) {
+            // Handle edit curriculum
+            $this->curriculum::update([
+                'topic' => request()->input('topic'),
+                'exercise_id' => request()->input('exercise') ?? null,
+                'date' => !empty(request()->input('date')) ? request()->input('date') : null,
+                'course_id' => $id,
+                'created_by' => session('user')['user_id'],
+            ], ['id' => $id]);
             return redirect("/classrooms/$id/curriculum");
         }
-        return view('teacher.edit-curriculum', compact('id', 'curriculumId'));
+        $course2 = $this->course->getCourseByClassId($id);
+        $exercises = $this->exercise::all();
+        $course = $this->curriculum::find(['id' => $curriculumId]);
+        return view('teacher.edit-curriculum', compact('id', 'curriculumId', 'course', 'course2', 'exercises'));
     }
 
     public function deleteCurriculum($id, $curriculumId)
     {
+        $this->curriculum::delete(['id' => $curriculumId]);
         return redirect("/classrooms/$id/curriculum");
     }
 
     public function addCurriculum($id)
     {
         if (request()->isMethod('post')) {
+            // Handle add curriculum
+            $this->curriculum::create([
+                'topic' => request()->input('topic'),
+                'date' => request()->input('date'),
+                'exercise_id' => request()->input('exercise') ?? null,
+                'course_id' => $id,
+                'created_by' => session('user')['user_id'],
+            ]);
             return redirect("/classrooms/$id/curriculum");
         }
-        return view('teacher.add-curriculum', compact('id'));
+        $course = $this->course->getCourseByClassId($id);
+        $exercises = $this->exercise::all();
+        return view('teacher.add-curriculum', compact('id', 'exercises', 'course'));
     }
 
     public function editCourse($id)
     {
         if (request()->isMethod('post')) {
+            // Handle edit course
+            preg_match('/\b(\d+)\s+lectures\b/', request()->input('name'), $matches);
+            preg_match('/^(.*?)\s*-\s*\d+\s+lectures$/', request()->input('name'), $matches2);
+            !empty($matches[1]) ? $nol = $matches[1] : $nol = 0;
+            !empty($matches2[1]) ? $name = $matches2[1] : $name = '';
+            $this->course::update([
+                'course_name' => $name,
+                'NoL' => $nol,
+                'updated_by' => session('user')['user_id'],
+            ], ['id' => $id]);
             return redirect("/courses");
         }
-        return view('teacher.edit-course');
+        $course = $this->course::find(['id' => $id]);
+        return view('teacher.edit-course', compact('id', 'course'));
     }
 
     public function students()

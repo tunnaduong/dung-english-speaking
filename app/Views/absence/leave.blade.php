@@ -27,9 +27,9 @@
             <div class="row g-3 mb-3">
                 <div class="col-12 col-sm-6">
                     <div>
-                        <label for="dob" class="form-label fs-09 fw-bold"><img src="{{ asset('calendar_month.svg') }}">
+                        <label for="day_off" class="form-label fs-09 fw-bold"><img src="{{ asset('calendar_month.svg') }}">
                             Day off</label>
-                        <input type="date" id="dob" name="dob" class="form-control"
+                        <input type="date" id="day_off" name="day_off" class="form-control"
                             value="{{ date('Y-m-d') }}">
                     </div>
                 </div>
