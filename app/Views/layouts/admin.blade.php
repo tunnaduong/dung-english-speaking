@@ -34,7 +34,7 @@
                     'title' => 'Menu',
                     'links' => [
                         'Classrooms' => ['/classrooms', 'school.svg'],
-                        'Personnel' => ['/personnel', 'person_pin.svg'],
+                        'Employees' => ['/employees', 'person_pin.svg'],
                         'Students' => ['/students', 'person_outline.svg'],
                         'Courses' => ['/courses', 'library_books.svg'],
                         'School Shift' => ['/school-shift', 'calendar_month.svg'],

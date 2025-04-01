@@ -2,11 +2,12 @@
 
 /** @var Phroute\Phroute\RouteCollector $route */
 
-use App\Controllers\AbsenceController;
+use App\Core\Asset\Asset;
 use App\Controllers\AuthController;
 use App\Controllers\HomeController;
+use App\Controllers\AdminController;
+use App\Controllers\AbsenceController;
 use App\Controllers\TeacherController;
-use App\Core\Asset\Asset;
 
 // Student
 $route->get('/', [HomeController::class, 'index']);
@@ -44,6 +45,11 @@ $route->any('/correction/{id}/tests/{homeworkId}/{studentId}', [TeacherControlle
 $route->any('/exercises/create', [TeacherController::class, 'createExercise']);
 $route->get('/exercises/{id}/delete', [TeacherController::class, 'deleteExercise']);
 $route->any('/exercises/{id}/edit', [TeacherController::class, 'editExercise']);
+// Admin
+$route->get('/employees', [AdminController::class, 'employees']);
+$route->any('/employees/add', [AdminController::class, 'addEmployee']);
+$route->any('/employees/{id}/edit', [AdminController::class, 'editEmployee']);
+$route->get('/employees/{id}/delete', [AdminController::class, 'deleteEmployee']);
 // Auth
 $route->any('/login', [AuthController::class, 'login']);
 $route->any('/forgot-password', [AuthController::class, 'forgotPassword']);
