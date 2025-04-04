@@ -228,6 +228,7 @@ class Request
       return false;
     }
 
+    $this->clearOldInput(); // Xóa dữ liệu cũ nếu không có lỗi
     return true;
   }
 
@@ -242,6 +243,13 @@ class Request
     $defaultData = array_merge($this->get(), $this->post());
     if ($data !== null || ! empty($defaultData)) {
       $_SESSION['old'] = $data ?? $defaultData;
+    }
+  }
+
+  public function clearOldInput()
+  {
+    if (isset($_SESSION['old'])) {
+      unset($_SESSION['old']);
     }
   }
 

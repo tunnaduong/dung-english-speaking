@@ -13,112 +13,36 @@
             </form>
         </div>
         <div class="d-flex justify-content-end mt-3">
-            <a href="{{ route('classrooms/pre01/curriculum/add') }}" class="btn-classroom px-3 w-auto"><img
+            <a href="{{ route('classrooms/pre01/add') }}" class="btn-classroom px-3 w-auto"><img
                     src="{{ asset('add.svg') }}" class="me-2" />Add new</a>
         </div>
-        <div class="classroom-container gap-4 mt-4">
-            <div class="border-line p-4 rounded-4 m-2 classroom">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h5 class="fw-bold">PRE01</h5>
-                        <div class="fw-semi">Pre IELTS 01 - 27 lectures</div>
-                        <div>Teacher: Hoàng Tiến Dũng</div>
+        <div class="row justify-content-center gap-4 mt-4">
+            @foreach ($classrooms as $classroom)
+                <div class="col-md-6 border-line p-4 rounded-4 m-2 classroom">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5 class="fw-bold">{{ $classroom['class_name'] }}</h5>
+                            <div class="fw-semi">{{ $classroom['course_name'] }} - {{ $classroom['NoL'] }} lectures
+                            </div>
+                            <div>Teacher: {{ $classroom['name'] }}</div>
+                        </div>
+                        <div class="d-flex flex-column gap-3">
+                            <a href="{{ route('classrooms/' . $classroom['class_id'] . '/edit') }}"><img
+                                    src="{{ asset('edit.svg') }}"></a>
+                            <a href="{{ route('classrooms/' . $classroom['class_id'] . '/delete') }}"><img
+                                    src="{{ asset('delete.svg') }}"></a>
+                        </div>
                     </div>
-                    <div class="d-flex flex-column gap-3">
-                        <a href="{{ route('classrooms/pre01/list') }}"><img src="{{ asset('edit.svg') }}"></a>
-                        <a href="{{ route('classrooms/pre01/curriculum') }}"><img src="{{ asset('delete.svg') }}"></a>
-                    </div>
-                </div>
-                <div class="d-flex gap-2 justify-content-between mt-3">
-                    <a href="{{ route('classrooms/pre01/list') }}" class="btn-classroom">List</a>
-                    <a href="{{ route('classrooms/pre01/curriculum') }}" class="btn-classroom">Curriculum</a>
-                </div>
-            </div>
-            <div class="border-line p-4 rounded-4 m-2 classroom">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h5 class="fw-bold">PRE02</h5>
-                        <div class="fw-semi">Pre IELTS 02 - 27 lectures</div>
-                        <div>Teacher: Hoàng Tiến Dũng</div>
-                    </div>
-                    <div class="d-flex flex-column gap-3">
-                        <a href="{{ route('classrooms/pre01/list') }}"><img src="{{ asset('edit.svg') }}"></a>
-                        <a href="{{ route('classrooms/pre01/curriculum') }}"><img src="{{ asset('delete.svg') }}"></a>
+                    <div class="d-flex gap-2 justify-content-between mt-3">
+                        <a href="{{ route('classrooms/' . $classroom['class_id'] . '/list') }}"
+                            class="btn-classroom">List</a>
+                        <a href="{{ route('classrooms/' . $classroom['class_id'] . '/curriculum') }}"
+                            class="btn-classroom">Curriculum</a>
+                        <a href="{{ route('classrooms/' . $classroom['class_id'] . '/assign') }}"
+                            class="btn-classroom">Assign</a>
                     </div>
                 </div>
-                <div class="d-flex gap-2 justify-content-between mt-3">
-                    <a href="{{ route('classrooms/pre01/list') }}" class="btn-classroom">List</a>
-                    <a href="{{ route('classrooms/pre01/curriculum') }}" class="btn-classroom">Curriculum</a>
-                </div>
-            </div>
-            <div class="border-line p-4 rounded-4 m-2 classroom">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h5 class="fw-bold">BEGINNER01</h5>
-                        <div class="fw-semi">Beginner 4.0 01 - 27 lectures</div>
-                        <div>Teacher: Hoàng Tiến Dũng</div>
-                    </div>
-                    <div class="d-flex flex-column gap-3">
-                        <a href="{{ route('classrooms/pre01/list') }}"><img src="{{ asset('edit.svg') }}"></a>
-                        <a href="{{ route('classrooms/pre01/curriculum') }}"><img src="{{ asset('delete.svg') }}"></a>
-                    </div>
-                </div>
-                <div class="d-flex gap-2 justify-content-between mt-3">
-                    <a href="{{ route('classrooms/pre01/list') }}" class="btn-classroom">List</a>
-                    <a href="{{ route('classrooms/pre01/curriculum') }}" class="btn-classroom">Curriculum</a>
-                </div>
-            </div>
-            <div class="border-line p-4 rounded-4 m-2 classroom">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h5 class="fw-bold">BEGINNER02</h5>
-                        <div class="fw-semi">Beginner 4.0 02 - 27 lectures</div>
-                        <div>Teacher: Hoàng Tiến Dũng</div>
-                    </div>
-                    <div class="d-flex flex-column gap-3">
-                        <a href="{{ route('classrooms/pre01/list') }}"><img src="{{ asset('edit.svg') }}"></a>
-                        <a href="{{ route('classrooms/pre01/curriculum') }}"><img src="{{ asset('delete.svg') }}"></a>
-                    </div>
-                </div>
-                <div class="d-flex gap-2 justify-content-between mt-3">
-                    <a href="{{ route('classrooms/pre01/list') }}" class="btn-classroom">List</a>
-                    <a href="{{ route('classrooms/pre01/curriculum') }}" class="btn-classroom">Curriculum</a>
-                </div>
-            </div>
-            <div class="border-line p-4 rounded-4 m-2 classroom">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h5 class="fw-bold">BEGINNER03</h5>
-                        <div class="fw-semi">Beginner 4.0 03 - 27 lectures</div>
-                        <div>Teacher: Hoàng Tiến Dũng</div>
-                    </div>
-                    <div class="d-flex flex-column gap-3">
-                        <a href="{{ route('classrooms/pre01/list') }}"><img src="{{ asset('edit.svg') }}"></a>
-                        <a href="{{ route('classrooms/pre01/curriculum') }}"><img src="{{ asset('delete.svg') }}"></a>
-                    </div>
-                </div>
-                <div class="d-flex gap-2 justify-content-between mt-3">
-                    <a href="{{ route('classrooms/pre01/list') }}" class="btn-classroom">List</a>
-                    <a href="{{ route('classrooms/pre01/curriculum') }}" class="btn-classroom">Curriculum</a>
-                </div>
-            </div>
-            <div class="border-line p-4 rounded-4 m-2 classroom">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h5 class="fw-bold">UPPER01</h5>
-                        <div class="fw-semi">Upper 5.0 01 - 27 lectures</div>
-                        <div>Teacher: Hoàng Tiến Dũng</div>
-                    </div>
-                    <div class="d-flex flex-column gap-3">
-                        <a href="{{ route('classrooms/pre01/list') }}"><img src="{{ asset('edit.svg') }}"></a>
-                        <a href="{{ route('classrooms/pre01/curriculum') }}"><img src="{{ asset('delete.svg') }}"></a>
-                    </div>
-                </div>
-                <div class="d-flex gap-2 justify-content-between mt-3">
-                    <a href="{{ route('classrooms/pre01/list') }}" class="btn-classroom">List</a>
-                    <a href="{{ route('classrooms/pre01/curriculum') }}" class="btn-classroom">Curriculum</a>
-                </div>
-            </div>
+            @endforeach
         </div>
         <nav class="d-flex justify-content-center mt-3">
             <ul class="pagination">

@@ -34,7 +34,11 @@ class TeacherController extends Controller
     public function classroom()
     {
         if (session('user')['role'] === 'Academic Affair') {
-            return view('admin.classrooms');
+            $classrooms = $this->classroom->select(['class.id AS class_id', 'class.*', 'info_employee.*', 'course.*'])
+                ->join('info_employee', 'class.teacher_id = info_employee.id', 'INNER')
+                ->join('course', 'class.id_course = course.id', 'INNER')
+                ->get();
+            return view('admin.classrooms', compact('classrooms'));
         }
         $classrooms = $this->classroom->getClasses(session('user')['user_id']);
         return view('teacher.classrooms', compact('classrooms'));
