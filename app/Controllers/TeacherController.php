@@ -56,6 +56,11 @@ class TeacherController extends Controller
 
     public function classroomCurriculum($id)
     {
+        if (session('user')['role'] === 'Academic Affair') {
+            $course = $this->course->getCourseByClassId($id);
+            $curriculums = $this->course->getCourseContent($id);
+            return view('admin.classrooms--curriculum', compact('curriculums', 'id', 'course'));
+        }
         $course = $this->course->getCourseByClassId($id);
         $curriculums = $this->course->getCourseContent($id);
         return view('teacher.classroom-curriculum', compact('curriculums', 'id', 'course'));
