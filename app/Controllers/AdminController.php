@@ -2,21 +2,24 @@
 
 namespace App\Controllers;
 
-use App\Models\Employee;
-use App\Models\InfoEmployee;
 use App\Models\Roles;
+use App\Models\Employee;
+use App\Models\Schedule;
+use App\Models\InfoEmployee;
 
 class AdminController extends Controller
 {
     public $infoEmployee;
     public $roles;
     public $employee;
+    public $schedule;
 
     public function __construct()
     {
         $this->infoEmployee = new InfoEmployee();
         $this->roles = new Roles();
         $this->employee = new Employee();
+        $this->schedule = new Schedule();
     }
 
     public function employees()
@@ -87,5 +90,53 @@ class AdminController extends Controller
     {
         $this->infoEmployee->delete(['id' => $id]);
         return redirect('/employees');
+    }
+
+    public function schoolShift()
+    {
+        $shifts = $this->schedule->all();
+        return view('admin.school-shift', compact('shifts'));
+    }
+
+    public function addSchoolShift()
+    {
+        if (request()->isMethod('post')) {
+            $data = request()->post();
+            $rules = [
+                'start_time' => 'required',
+                'end_time' => 'required',
+            ];
+            if (!request()->validate($rules, $data)) {
+                return back();
+            }
+            $data['day_of_week'] = "";
+            $this->schedule->create($data);
+            return redirect('/school-shift');
+        }
+        return view('admin.school-shift--add');
+    }
+
+    public function editSchoolShift($id)
+    {
+        if (request()->isMethod('post')) {
+            $data = request()->post();
+            $rules = [
+                'start_time' => 'required',
+                'end_time' => 'required',
+            ];
+            if (!request()->validate($rules, $data)) {
+                return back();
+            }
+            $this->schedule->update($data, ['id' => $id]);
+            return redirect('/school-shift');
+        }
+        $shift = $this->schedule->find(['id' => $id]);
+        return view('admin.school-shift--edit', compact('shift'));
+    }
+
+    public function deleteSchoolShift($id)
+    {
+        $this->schedule->delete(['id' => $id]);
+        return redirect('/school-shift');
     }
 }

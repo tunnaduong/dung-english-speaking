@@ -50,6 +50,10 @@ $route->get('/employees', [AdminController::class, 'employees']);
 $route->any('/employees/add', [AdminController::class, 'addEmployee']);
 $route->any('/employees/{id}/edit', [AdminController::class, 'editEmployee']);
 $route->get('/employees/{id}/delete', [AdminController::class, 'deleteEmployee']);
+$route->get('/school-shift', [AdminController::class, 'schoolShift']);
+$route->any('/school-shift/add', [AdminController::class, 'addSchoolShift']);
+$route->any('/school-shift/{id}/edit', [AdminController::class, 'editSchoolShift']);
+$route->get('/school-shift/{id}/delete', [AdminController::class, 'deleteSchoolShift']);
 // Auth
 $route->any('/login', [AuthController::class, 'login']);
 $route->any('/forgot-password', [AuthController::class, 'forgotPassword']);

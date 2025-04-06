@@ -22,7 +22,8 @@
                 <div class="number-of">NoS: {{ count($students) }}</div>
             </div>
             <div class="table-responsive table-limit-height my-3">
-                <table id="data-table" class="table table-custom table-big table-sticky">
+                <table id="data-table" class="table table-custom table-big table-sticky table-horizontal"
+                    style="white-space: nowrap">
                     <thead class="overflow-hidden">
                         <tr>
                             <th>No.</th>
@@ -41,13 +42,15 @@
                                 <td>{{ $student['name'] }}</td>
                                 <td>{{ $student['gender'] }}</td>
                                 <td>{{ date('d/m/Y', strtotime($student['DoB'])) }}</td>
-                                <td>{{ $student['phone'] }}</td>
+                                <td>0{{ $student['phone'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
             <div class="d-flex justify-content-end gap-4">
+                <a href="{{ route('classrooms/add') }}" class="btn-classroom px-3 w-auto"><img
+                        src="{{ asset('add.svg') }}" class="me-2" />Add new</a>
                 <a href="#" class="btn-classroom btn-edit px-3 btn-disabled"><img src="{{ asset('edit.svg') }}"
                         width="15" class="me-2" />Edit</a>
                 <button data-bs-toggle="modal" data-bs-target="#deleteModal"

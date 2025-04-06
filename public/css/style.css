@@ -354,7 +354,7 @@ select[multiple] {
 }
 
 .exercise-menu {
-  min-height: calc(100vh - 103px - 160px - (1.5rem * 3));
+  min-height: calc(100vh - 103px - 160px - (1.5rem * -4));
 }
 
 .btn-exercise {
