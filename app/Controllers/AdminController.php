@@ -370,4 +370,75 @@ class AdminController extends Controller
         $this->curriculum->delete(['id' => $curriculumId]);
         return redirect('/courses/' . $id . '/curriculum');
     }
+
+    public function account()
+    {
+        $accounts_employee = $this->infoEmployee->join('roles', 'info_employee.role_id = roles.role_id', 'INNER')
+            ->get();
+        $accounts_student = $this->infoStudent->all();
+        foreach ($accounts_employee as $key => $value) {
+            $employee = $this->employee->find(['user_id' => $value['id']]);
+            $accounts_employee[$key]['email'] = $employee ? $employee['email'] : null; // Safely handle null
+        }
+        foreach ($accounts_student as $key => $value) {
+            $student = $this->student->find(['student_id' => $value['id']]);
+            $accounts_student[$key]['role'] = 'Student';
+            $accounts_student[$key]['email'] = $student ? $student['email'] : null; // Safely handle null
+        }
+        $accounts = array_merge($accounts_employee, $accounts_student);
+        return view('admin.account', compact('accounts'));
+    }
+
+    public function editEmployeeAccount($id)
+    {
+        if (request()->isMethod('post')) {
+            $data = request()->post();
+            $rules = [
+                'email' => 'required|email',
+                'password' => 'required',
+                'role_id' => 'required',
+            ];
+            if (!request()->validate($rules, $data)) {
+                return back();
+            }
+            $this->infoEmployee->update(['role_id' => $data['role_id']], ['id' => $id]);
+            $this->employee->update(['email' => $data['email'], 'password' => $data['password']], ['user_id' => $id]);
+            return redirect('/account');
+        }
+        $employee = $this->employee->find(['user_id' => $id]);
+        $employee2 = $this->infoEmployee->find(['id' => $id]);
+        $roles = $this->roles->all();
+        return view('admin.account--edit-employee', compact('employee', 'employee2', 'id', 'roles'));
+    }
+
+    public function editStudentAccount($id)
+    {
+        if (request()->isMethod('post')) {
+            $data = request()->post();
+            $rules = [
+                'email' => 'required|email',
+                'password' => 'required',
+            ];
+            if (!request()->validate($rules, $data)) {
+                return back();
+            }
+            $this->student->update(['email' => $data['email'], 'password' => $data['password']], ['student_id' => $id]);
+            return redirect('/account');
+        }
+        $student = $this->student->find(['student_id' => $id]);
+        $student2 = $this->infoStudent->find(['id' => $id]);
+        return view('admin.account--edit-student', compact('student', 'id', 'student2'));
+    }
+
+    public function deleteStudentAccount($id)
+    {
+        $this->infoStudent->delete(['id' => $id]);
+        return redirect('/account');
+    }
+
+    public function deleteEmployeeAccount($id)
+    {
+        $this->infoEmployee->delete(['id' => $id]);
+        return redirect('/account');
+    }
 }

@@ -65,6 +65,11 @@ $route->get('/courses/{id}/curriculum', [AdminController::class, 'courseCurricul
 $route->any('/courses/{id}/curriculum/add', [AdminController::class, 'addCurriculum']);
 $route->any('/courses/{id}/curriculum/{curriculumId}/edit', [AdminController::class, 'editCurriculum']);
 $route->get('/courses/{id}/curriculum/{curriculumId}/delete', [AdminController::class, 'deleteCurriculum']);
+$route->get('/account', [AdminController::class, 'account']);
+$route->any('/account/{id}/edit-employee', [AdminController::class, 'editEmployeeAccount']);
+$route->any('/account/{id}/edit-student', [AdminController::class, 'editStudentAccount']);
+$route->get('/account/{id}/delete-student', [AdminController::class, 'deleteStudentAccount']);
+$route->get('/account/{id}/delete-employee', [AdminController::class, 'deleteEmployeeAccount']);
 // Auth
 $route->any('/login', [AuthController::class, 'login']);
 $route->any('/forgot-password', [AuthController::class, 'forgotPassword']);
