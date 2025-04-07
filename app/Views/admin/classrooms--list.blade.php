@@ -5,7 +5,7 @@
 @section('content')
     <div class="w-100 my-4 bg-white rounded-4 p-4 border-line">
         <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
-            <h4 class="fw-bold m-0 flex-shrink-0">Pre IELTS 01 - 27 lectures</h4>
+            <h4 class="fw-bold m-0 flex-shrink-0">{{ $course['course_name'] }} - {{ $course['NoL'] }} lectures</h4>
             <form action="" class="position-relative m-0">
                 <img src="{{ asset('search.svg') }}" class="search-icon">
                 <input type="text" placeholder="Searching" class="search-input form-control form-control-lg" id="search"
@@ -49,7 +49,7 @@
                 </table>
             </div>
             <div class="d-flex justify-content-end gap-4">
-                <a href="{{ route('classrooms/add') }}" class="btn-classroom px-3 w-auto"><img
+                <a href="{{ route('classrooms/' . $id . '/add-student') }}" class="btn-classroom px-3 w-auto"><img
                         src="{{ asset('add.svg') }}" class="me-2" />Add new</a>
                 <a href="#" class="btn-classroom btn-edit px-3 btn-disabled"><img src="{{ asset('edit.svg') }}"
                         width="15" class="me-2" />Edit</a>

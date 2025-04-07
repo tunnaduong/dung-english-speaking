@@ -1,18 +1,18 @@
-@extends('layouts.admin', ['active' => 1])
+@extends('layouts.admin', ['active' => 0])
 
-@section('title', 'Edit Employee | DungES')
+@section('title', 'Add Student | DungES')
 
 @section('content')
     <div class="w-100 my-4 bg-white rounded-4 p-4 border-line exercise-menu">
         <div class="d-flex justify-content-center mb-3">
-            <h4 class="fw-bold m-0 flex-shrink-0">Employees</h4>
+            <h4 class="fw-bold m-0 flex-shrink-0">Students</h4>
         </div>
         <div>
             <div class="d-flex align-items-center gap-2 mb-3">
                 <div>
                     <h4 class="fw-bold">
-                        <a href="{{ route('employees') }}" class="back-link">
-                            < Employees</a>/{{ $employee['name'] }}/Edit
+                        <a href="{{ route('classrooms/' . $id . '/list') }}" class="back-link">
+                            < Students List</a>/Add
                     </h4>
                     <div class="line-bottom"></div>
                 </div>
@@ -26,7 +26,7 @@
                                 Full
                                 Name</label>
                             <input type="text" name="name" id="full_name" class="form-control"
-                                value="{{ $employee['name'] }}">
+                                value="{{ old('name') }}">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -34,7 +34,7 @@
                             <label for="dob" class="form-label fs-09"><img src="{{ asset('calendar_month.svg') }}">
                                 Date of Birth</label>
                             <input type="date" name="DoB" id="dob" class="form-control"
-                                value="{{ $employee['DoB'] }}">
+                                value="{{ old('DoB') }}">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -42,7 +42,7 @@
                             <label for="email" class="form-label fs-09"><img src="{{ asset('mail.svg') }}">
                                 Email</label>
                             <input type="email" name="email" id="email" class="form-control"
-                                value="{{ $emp['email'] }}">
+                                value="{{ old('email') }}">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -50,35 +50,15 @@
                             <label for="phone" class="form-label fs-09"><img src="{{ asset('phone.svg') }}">
                                 Phone</label>
                             <input type="text" name="phone" id="phone" class="form-control"
-                                value="0{{ $employee['phone'] }}">
+                                value="{{ old('phone') }}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div>
-                            <label for="address" class="form-label fs-09"><img src="{{ asset('location_on.svg') }}">
-                                Address</label>
-                            <input type="text" name="address" id="address" class="form-control"
-                                value="{{ $employee['address'] }}">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div>
-                            <label for="role" class="form-label fs-09"><img src="{{ asset('info.svg') }}">
-                                Role</label>
-                            <select name="role_id" id="role" class="form-select">
-                                @foreach ($roles as $role)
-                                    <option {{ $employee['role_id'] == $role['role_id'] ? 'selected' : '' }}
-                                        value="{{ $role['role_id'] }}">{{ $role['role'] }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div>
-                            <label for="id" class="form-label fs-09"><img src="{{ asset('person_pin.svg') }}">
-                                ID Number</label>
-                            <input type="text" name="personal_id" id="id" class="form-control"
-                                value="{{ $employee['personal_id'] }}">
+                            <label for="password" class="form-label fs-09">
+                                Password</label>
+                            <input type="password" name="password" id="password" class="form-control"
+                                value="{{ old('password') }}">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -88,14 +68,14 @@
                             <div class="d-flex gap-4">
                                 <div>
                                     <input class="form-check-input" type="radio" name="gender" value="Male"
-                                        id="genderMale" {{ $employee['gender'] == 'Male' ? 'checked' : '' }}>
+                                        id="genderMale">
                                     <label class="form-check-label" for="genderMale">
                                         Male
                                     </label>
                                 </div>
                                 <div>
                                     <input class="form-check-input" type="radio" name="gender" value="Female"
-                                        id="genderFemale" {{ $employee['gender'] == 'Female' ? 'checked' : '' }}>
+                                        id="genderFemale">
                                     <label class="form-check-label" for="genderFemale">
                                         Female
                                     </label>

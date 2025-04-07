@@ -47,10 +47,10 @@ class TeacherController extends Controller
     public function classroomList($id)
     {
         $students = $this->studentInfo->getStudents($id);
-        if (session('user')['role'] === 'Academic Affair') {
-            return view('admin.classrooms--list', compact('students', 'id'));
-        }
         $course = $this->course->getCourseByClassId($id);
+        if (session('user')['role'] === 'Academic Affair') {
+            return view('admin.classrooms--list', compact('students', 'course', 'id'));
+        }
         return view('teacher.classroom-list', compact('students', 'id', 'course'));
     }
 
@@ -223,12 +223,15 @@ class TeacherController extends Controller
                 'date' => !empty(request()->input('date')) ? request()->input('date') : null,
                 'course_id' => $id,
                 'created_by' => session('user')['user_id'],
-            ], ['id' => $id]);
+            ], ['id' => $curriculumId]);
             return redirect("/classrooms/$id/curriculum");
         }
         $course2 = $this->course->getCourseByClassId($id);
         $exercises = $this->exercise::all();
         $course = $this->curriculum::find(['id' => $curriculumId]);
+        if (session('user')['role'] === 'Academic Affair') {
+            return view('admin.classrooms--curriculum-edit', compact('id', 'curriculumId', 'course', 'course2', 'exercises'));
+        }
         return view('teacher.edit-curriculum', compact('id', 'curriculumId', 'course', 'course2', 'exercises'));
     }
 

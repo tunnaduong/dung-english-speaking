@@ -3,8 +3,12 @@
 namespace App\Controllers;
 
 use App\Models\Roles;
+use App\Models\Course;
+use App\Models\Student;
 use App\Models\Employee;
 use App\Models\Schedule;
+use App\Models\Classroom;
+use App\Models\InfoStudent;
 use App\Models\InfoEmployee;
 
 class AdminController extends Controller
@@ -13,6 +17,10 @@ class AdminController extends Controller
     public $roles;
     public $employee;
     public $schedule;
+    public $student;
+    public $infoStudent;
+    public $course;
+    public $classroom;
 
     public function __construct()
     {
@@ -20,6 +28,10 @@ class AdminController extends Controller
         $this->roles = new Roles();
         $this->employee = new Employee();
         $this->schedule = new Schedule();
+        $this->student = new Student();
+        $this->infoStudent = new InfoStudent();
+        $this->course = new Course();
+        $this->classroom = new Classroom();
     }
 
     public function employees()
@@ -138,5 +150,71 @@ class AdminController extends Controller
     {
         $this->schedule->delete(['id' => $id]);
         return redirect('/school-shift');
+    }
+
+    public function addStudent($id)
+    {
+        if (request()->isMethod('post')) {
+            $data = request()->post();
+            $rules = [
+                'name' => 'required',
+                'email' => 'required|email',
+                'gender' => 'required',
+                'DoB' => 'required',
+                'phone' => 'required|min:10|max:11',
+                'password' => 'required',
+            ];
+            if (!request()->validate($rules, $data)) {
+                return back();
+            }
+            $data['class_id'] = $id;
+            $email = $data['email'];
+            $password = $data['password'];
+            unset($data['email']);
+            unset($data['password']);
+            $uid = $this->infoStudent->create($data);
+            $this->student->create([
+                'student_id' => $uid,
+                'email' => $email,
+                'password' => $password,
+            ]);
+            return redirect('/classrooms/' . $id . '/list');
+        }
+        return view('admin.classrooms--list--add-student', compact('id'));
+    }
+
+    public function editStudent()
+    {
+        return view('admin.classrooms--list--edit-student');
+    }
+
+    public function deleteStudent($id)
+    {
+        $this->infoStudent->delete(['id' => $id]);
+        return back();
+    }
+
+    public function assignClassroom($id)
+    {
+        $class = $this->classroom->find(['id' => $id]);
+        if (request()->isMethod('post')) {
+            $data = request()->post();
+            $rules = [
+                'teacher_id' => 'required',
+                'assistant_id' => 'required',
+            ];
+            if (!request()->validate($rules, $data)) {
+                return back();
+            }
+            $class['teacher_id'] = $data['teacher_id'];
+            $class['assistant_id'] = $data['assistant_id'];
+            $this->classroom->update($class, ['id' => $id]);
+            return redirect('/classrooms');
+        }
+        $course = $this->course->getCourseByClassId($id);
+        $class = $this->classroom->find(['id' => $id]);
+        $teachers = $this->infoEmployee->all(['role_id' => 1]);
+        $tas = $this->infoEmployee->all(['role_id' => 2]);
+        return view('admin.classrooms--assign', compact('id', 'course', 'teachers', 'tas', 'class'));
     }
 }
