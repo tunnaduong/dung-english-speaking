@@ -16,9 +16,9 @@
             <a href="{{ route('classrooms/add') }}" class="btn-classroom px-3 w-auto"><img src="{{ asset('add.svg') }}"
                     class="me-2" />Add new</a>
         </div>
-        <div class="row justify-content-center gap-4 mt-4">
+        <div class="classroom-container gap-4 mt-4">
             @foreach ($classrooms as $classroom)
-                <div class="col-md-6 border-line p-4 rounded-4 m-2 classroom">
+                <div class="border-line p-4 rounded-4 m-2 classroom">
                     <div class="d-flex justify-content-between">
                         <div>
                             <h5 class="fw-bold">{{ $classroom['class_name'] }}</h5>

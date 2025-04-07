@@ -261,6 +261,23 @@ class TeacherController extends Controller
 
     public function editCourse($id)
     {
+        if (session('user')['role'] === 'Academic Affair') {
+            $course = $this->course::find(['id' => $id]);
+            if (request()->isMethod('post')) {
+                // Handle edit course
+                preg_match('/\b(\d+)\s+lectures\b/', request()->input('name'), $matches);
+                preg_match('/^(.*?)\s*-\s*\d+\s+lectures$/', request()->input('name'), $matches2);
+                !empty($matches[1]) ? $nol = $matches[1] : $nol = 0;
+                !empty($matches2[1]) ? $name = $matches2[1] : $name = '';
+                $this->course::update([
+                    'course_name' => $name,
+                    'NoL' => $nol,
+                    'updated_by' => session('user')['user_id'],
+                ], ['id' => $id]);
+                return redirect("/courses");
+            }
+            return view('admin.courses--edit', compact('id', 'course'));
+        }
         if (request()->isMethod('post')) {
             // Handle edit course
             preg_match('/\b(\d+)\s+lectures\b/', request()->input('name'), $matches);

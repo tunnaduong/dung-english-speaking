@@ -21,7 +21,7 @@
                             <img src="{{ asset('edit.svg') }}">
                         </a>
                     </div>
-                    <div>Classes: 1</div>
+                    <div>Classes: {{ $course['total_classes'] }}</div>
                     <div class="d-flex gap-2 justify-content-center mt-3">
                         <a href="{{ route('classrooms/' . $course['co_id'] . '/curriculum') }}"
                             class="btn-classroom">Curriculum</a>

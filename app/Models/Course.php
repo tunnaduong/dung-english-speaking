@@ -33,7 +33,13 @@ class Course extends Model
 
     public static function getCoursesByTeacherId($teacherId)
     {
-        $sql = "SELECT class.*, info_employee.*, course.*, course.id AS co_id, class.id AS c_id FROM info_employee LEFT JOIN class ON class.teacher_id = info_employee.id LEFT JOIN course ON class.id_course = course.id WHERE info_employee.id = ?";
+        $sql = "SELECT class.*, info_employee.*, course.*, COUNT(class.id) AS total_classes, course.id AS co_id, class.id AS c_id FROM info_employee INNER JOIN class ON class.teacher_id = info_employee.id INNER JOIN course ON class.id_course = course.id WHERE info_employee.id = ? GROUP BY course.id, course.course_name";
         return DB::query($sql, [$teacherId])->fetchAll();
+    }
+
+    public static function getAllCoursesInAdmin()
+    {
+        $sql = "SELECT course.*, COUNT(class.id) AS total_classes FROM course LEFT JOIN class ON course.id = class.id_course GROUP BY course.id, course.course_name";
+        return DB::query($sql)->fetchAll();
     }
 }

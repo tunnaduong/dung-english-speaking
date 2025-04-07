@@ -9,6 +9,10 @@ class AuthController extends Controller
 {
     public function login()
     {
+        // Check if user is already logged in
+        if (session('user')) {
+            return redirect('/');
+        }
         // If POST request
         $errors = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

@@ -59,6 +59,12 @@ $route->any('/classrooms/{id}/assign', [AdminController::class, 'assignClassroom
 $route->get('/students/{id}/delete', [AdminController::class, 'deleteStudent']);
 $route->any('/students/{id}/edit', [AdminController::class, 'editStudents']);
 $route->any('/students/add', [AdminController::class, 'addStudents']);
+$route->get('/courses/{id}/delete', [AdminController::class, 'deleteCourse']);
+$route->any('/courses/add', [AdminController::class, 'addCourse']);
+$route->get('/courses/{id}/curriculum', [AdminController::class, 'courseCurriculum']);
+$route->any('/courses/{id}/curriculum/add', [AdminController::class, 'addCurriculum']);
+$route->any('/courses/{id}/curriculum/{curriculumId}/edit', [AdminController::class, 'editCurriculum']);
+$route->get('/courses/{id}/curriculum/{curriculumId}/delete', [AdminController::class, 'deleteCurriculum']);
 // Auth
 $route->any('/login', [AuthController::class, 'login']);
 $route->any('/forgot-password', [AuthController::class, 'forgotPassword']);

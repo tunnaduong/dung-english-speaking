@@ -6,8 +6,10 @@ use App\Models\Roles;
 use App\Models\Course;
 use App\Models\Student;
 use App\Models\Employee;
+use App\Models\Exercise;
 use App\Models\Schedule;
 use App\Models\Classroom;
+use App\Models\Curriculum;
 use App\Models\InfoStudent;
 use App\Models\InfoEmployee;
 
@@ -21,6 +23,8 @@ class AdminController extends Controller
     public $infoStudent;
     public $course;
     public $classroom;
+    public $exercise;
+    public $curriculum;
 
     public function __construct()
     {
@@ -32,6 +36,8 @@ class AdminController extends Controller
         $this->infoStudent = new InfoStudent();
         $this->course = new Course();
         $this->classroom = new Classroom();
+        $this->exercise = new Exercise();
+        $this->curriculum = new Curriculum();
     }
 
     public function employees()
@@ -280,5 +286,88 @@ class AdminController extends Controller
         }
         $classes = $this->classroom->all();
         return view('admin.students--add', compact('classes'));
+    }
+
+    public function deleteCourse($id)
+    {
+        $this->course->delete(['id' => $id]);
+        return redirect('/courses');
+    }
+
+    public function addCourse()
+    {
+        if (request()->isMethod('post')) {
+            $data = request()->post();
+            $rules = [
+                'course_name' => 'required',
+                'NoL' => 'required',
+            ];
+            if (!request()->validate($rules, $data)) {
+                return back();
+            }
+            $data['created_by'] = session('user')['user_id'];
+            $this->course->create($data);
+            return redirect('/courses');
+        }
+        return view('admin.courses--add');
+    }
+
+    public function courseCurriculum($id)
+    {
+        $course = $this->course->getCourseByClassId($id);
+        $curriculums = $this->course->getCourseContent($id);
+        return view('admin.courses--curriculum', compact('curriculums', 'course', 'id'));
+    }
+
+    public function addCurriculum($id)
+    {
+        if (request()->isMethod('post')) {
+            $data = request()->post();
+            $rules = [
+                'topic' => 'required',
+            ];
+            if (!request()->validate($rules, $data)) {
+                return back();
+            }
+            $data['course_id'] = $id;
+            $this->curriculum->create($data);
+            return redirect('/courses/' . $id . '/curriculum');
+        }
+        $course = $this->course->getCourseByClassId($id);
+        $exercises = $this->exercise::all();
+        return view('admin.courses--curriculum-add', compact('id', 'course', 'exercises'));
+    }
+
+    public function editCurriculum($id, $curriculumId)
+    {
+        if (request()->isMethod('post')) {
+            $data = request()->post();
+            $rules = [
+                'topic' => 'required',
+            ];
+            if (!request()->validate($rules, $data)) {
+                return back();
+            }
+            // Convert date "" thành NULL trước khi lưu
+            if ($data['date'] == "") {
+                $data['date'] = null;
+            }
+            if ($data['exercise_id'] == "") {
+                $data['exercise_id'] = null;
+            }
+            $this->curriculum->update($data, ['id' => $curriculumId]);
+            return redirect('/courses/' . $id . '/curriculum');
+        }
+        $curriculum = $this->course->find(['id' => $curriculumId]);
+        $course2 = $this->course->getCourseByClassId($id);
+        $exercises = $this->exercise::all();
+        $course = $this->curriculum::find(['id' => $curriculumId]);
+        return view('admin.courses--curriculum-edit', compact('id', 'curriculum', 'curriculumId', 'course2', 'exercises', 'course'));
+    }
+
+    public function deleteCurriculum($id, $curriculumId)
+    {
+        $this->curriculum->delete(['id' => $curriculumId]);
+        return redirect('/courses/' . $id . '/curriculum');
     }
 }
