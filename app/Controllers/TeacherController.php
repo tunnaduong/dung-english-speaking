@@ -285,6 +285,9 @@ class TeacherController extends Controller
         if (request()->get('search')) {
             $students = $this->studentInfo::searchStudentsByName(request()->get('search'));
         }
+        if (session('user')['role'] === 'Academic Affair') {
+            return view('admin.students', compact('students'));
+        }
         return view('teacher.students', compact('students'));
     }
 

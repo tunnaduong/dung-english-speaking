@@ -183,9 +183,9 @@ class AdminController extends Controller
         return view('admin.classrooms--list--add-student', compact('id'));
     }
 
-    public function editStudent()
+    public function editStudent($id)
     {
-        return view('admin.classrooms--list--edit-student');
+        return view('admin.classrooms--list--edit-student', compact('id'));
     }
 
     public function deleteStudent($id)
@@ -216,5 +216,69 @@ class AdminController extends Controller
         $teachers = $this->infoEmployee->all(['role_id' => 1]);
         $tas = $this->infoEmployee->all(['role_id' => 2]);
         return view('admin.classrooms--assign', compact('id', 'course', 'teachers', 'tas', 'class'));
+    }
+
+    public function editStudents($id)
+    {
+        $student = $this->infoStudent->getStudentById($id);
+        $classes = $this->classroom->all();
+        if (request()->isMethod('post')) {
+            $data = request()->post();
+            $rules = [
+                'name' => 'required',
+                'email' => 'required|email',
+                'gender' => 'required',
+                'DoB' => 'required',
+                'phone' => 'required|min:10|max:11',
+                'password' => 'required',
+                'class_id' => 'required',
+            ];
+            if (!request()->validate($rules, $data)) {
+                return back();
+            }
+            $email = $data['email'];
+            $password = $data['password'];
+            unset($data['email']);
+            unset($data['password']);
+            $this->infoStudent->update($data, ['id' => $id]);
+            $this->student->update([
+                'email' => $email,
+                'password' => $password,
+            ], ['student_id' => $id]);
+            return redirect('/students');
+        }
+        return view('admin.students--edit', compact('id', 'student', 'classes'));
+    }
+
+    public function addStudents()
+    {
+        if (request()->isMethod('post')) {
+            $data = request()->post();
+            $rules = [
+                'name' => 'required',
+                'email' => 'required|email',
+                'gender' => 'required',
+                'DoB' => 'required',
+                'phone' => 'required|min:10|max:11',
+                'password' => 'required',
+                'class_id' => 'required',
+            ];
+            if (!request()->validate($rules, $data)) {
+                return back();
+            }
+            $email = $data['email'];
+            $password = $data['password'];
+            unset($data['email']);
+            unset($data['password']);
+            $uid = $this->infoStudent->create($data);
+            $this->student->create([
+                'student_id' => $uid,
+                'email' => $email,
+                'password' => $password,
+            ]);
+            return redirect('/students');
+        }
+        $classes = $this->classroom->all();
+        return view('admin.students--add', compact('classes'));
     }
 }
