@@ -53,7 +53,7 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body text-center">
-                                        <h5 class="fw-semi mb-4">Do you want to delete this classroom?</h5>
+                                        <h5 class="fw-semi mb-4">Do you want to delete this course?</h5>
                                         <div class="d-flex justify-content-around">
                                             <a class="btn btn-confirm"
                                                 href="{{ route('courses/' . $course['id'] . '/delete') }}">Yes</a>

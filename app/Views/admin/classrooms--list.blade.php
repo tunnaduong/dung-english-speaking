@@ -19,7 +19,7 @@
                     </h4>
                     <div class="line-bottom"></div>
                 </div>
-                <div class="number-of">NoS: {{ count($students) }}</div>
+                <div class="number-of">NoS: {{ count($students['data']) }}</div>
             </div>
             <div class="table-responsive table-limit-height my-3">
                 <table id="data-table" class="table table-custom table-big table-sticky table-horizontal"
@@ -35,7 +35,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($students as $student)
+                        @foreach ($students['data'] as $student)
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $student['id'] }}</td>
@@ -48,6 +48,10 @@
                     </tbody>
                 </table>
             </div>
+            @include('components.pagination', [
+                'current_page' => $students['current_page'],
+                'last_page' => $students['last_page'],
+            ])
             <div class="d-flex justify-content-end gap-4">
                 <a href="{{ route('classrooms/' . $id . '/add-student') }}" class="btn-classroom px-3 w-auto"><img
                         src="{{ asset('add.svg') }}" class="me-2" />Add new</a>

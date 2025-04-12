@@ -42,4 +42,9 @@ class Course extends Model
         $sql = "SELECT course.*, COUNT(class.id) AS total_classes FROM course LEFT JOIN class ON course.id = class.id_course GROUP BY course.id, course.course_name";
         return DB::query($sql)->fetchAll();
     }
+
+    public static function searchCoursesByName(string $name)
+    {
+        return (new self())->where('course_name', 'LIKE', "%$name%")->get();
+    }
 }

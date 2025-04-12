@@ -26,6 +26,7 @@
                         <tr>
                             <th>No.</th>
                             <th>ID School Shift</th>
+                            <th>Day of Week</th>
                             <th>Start Time</th>
                             <th>End Time</th>
                             <th>Action</th>
@@ -36,6 +37,7 @@
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $shift['id'] }}</td>
+                                <td>{{ $shift['day_of_week'] }}</td>
                                 <td>{{ $shift['start_time'] }}</td>
                                 <td>{{ $shift['end_time'] }}</td>
                                 <td><a href="{{ route('school-shift/' . $shift['id'] . '/edit') }}" class="me-2">

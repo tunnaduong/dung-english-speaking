@@ -33,7 +33,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($employees as $employee)
+                        @foreach ($employees['data'] as $employee)
                             <tr>
                                 <td>{{ $employee['id'] }}</td>
                                 <td>{{ $employee['name'] }}</td>
@@ -73,6 +73,10 @@
                     </tbody>
                 </table>
             </div>
+            @include('components.pagination', [
+                'current_page' => $employees['current_page'],
+                'last_page' => $employees['last_page'],
+            ])
             <div class="d-flex justify-content-end">
                 <a href="{{ route('employees/add') }}" class="btn-classroom px-4">Add</a>
             </div>

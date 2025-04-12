@@ -38,6 +38,9 @@ class TeacherController extends Controller
                 ->join('info_employee', 'class.teacher_id = info_employee.id', 'INNER')
                 ->join('course', 'class.id_course = course.id', 'INNER')
                 ->get();
+            if (request()->get('search')) {
+                $classrooms = $this->classroom->where('class_name', 'LIKE', "%" . request()->get('search') . "%")->get();
+            }
             return view('admin.classrooms', compact('classrooms'));
         }
         $classrooms = $this->classroom->getClasses(session('user')['user_id']);
@@ -46,7 +49,10 @@ class TeacherController extends Controller
 
     public function classroomList($id)
     {
-        $students = $this->studentInfo->getStudents($id);
+        $students = $this->studentInfo->where('class_id', '=', $id)->paginate();
+        if (request()->get('search')) {
+            $students = $this->studentInfo->where('class_id', '=', $id)->where('name', 'LIKE', "%" . request()->get('search') . "%")->paginate();
+        }
         $course = $this->course->getCourseByClassId($id);
         if (session('user')['role'] === 'Academic Affair') {
             return view('admin.classrooms--list', compact('students', 'course', 'id'));
@@ -63,6 +69,11 @@ class TeacherController extends Controller
                 ->join('curriculum', 'curriculum.course_id = course.id', 'INNER')
                 ->where('course_id', '=', $id)
                 ->paginate();
+            if (request()->get('search')) {
+                $curriculums = $this->course
+                    ->where('topic', 'LIKE', "%" . request()->get('search') . "%")
+                    ->paginate();
+            }
             return view('admin.classrooms--curriculum', compact('curriculums', 'id', 'course'));
         }
         $course = $this->course->getCourseByClassId($id);
@@ -301,10 +312,13 @@ class TeacherController extends Controller
 
     public function students()
     {
-        $students = $this->studentInfo::getAllStudents();
+        $students = $this->studentInfo->select(['info_student.id AS s_id', 'students.*', 'info_student.*', 'class.*'])
+            ->join('class', 'info_student.class_id = class.id', 'INNER')
+            ->join('students', 'info_student.id = students.student_id', 'LEFT')
+            ->paginate();
         // if has search query
         if (request()->get('search')) {
-            $students = $this->studentInfo::searchStudentsByName(request()->get('search'));
+            $students = $this->studentInfo->where('name', 'LIKE', "%" . request()->get('search') . "%")->paginate();
         }
         if (session('user')['role'] === 'Academic Affair') {
             return view('admin.students', compact('students'));

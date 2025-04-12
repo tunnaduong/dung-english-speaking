@@ -43,7 +43,12 @@ class AdminController extends Controller
     public function employees()
     {
         $employees = $this->infoEmployee->join('roles', 'info_employee.role_id = roles.role_id', 'INNER')
-            ->get();
+            ->paginate();
+        if (request()->get('search')) {
+            $employees = $this->infoEmployee
+                ->where('name', 'LIKE', '%' . request()->get('search') . '%')
+                ->paginate();
+        }
         return view('admin.employees', compact('employees'));
     }
 
@@ -113,6 +118,10 @@ class AdminController extends Controller
     public function schoolShift()
     {
         $shifts = $this->schedule->all();
+        if (request()->get('search')) {
+            $shifts = $this->schedule->where('day_of_week', 'LIKE', '%' . request()->get('search') . '%')
+                ->get();
+        }
         return view('admin.school-shift', compact('shifts'));
     }
 
@@ -123,11 +132,11 @@ class AdminController extends Controller
             $rules = [
                 'start_time' => 'required',
                 'end_time' => 'required',
+                'day_of_week' => 'required',
             ];
             if (!request()->validate($rules, $data)) {
                 return back();
             }
-            $data['day_of_week'] = "";
             $this->schedule->create($data);
             return redirect('/school-shift');
         }
@@ -141,6 +150,7 @@ class AdminController extends Controller
             $rules = [
                 'start_time' => 'required',
                 'end_time' => 'required',
+                'day_of_week' => 'required',
             ];
             if (!request()->validate($rules, $data)) {
                 return back();
@@ -315,7 +325,30 @@ class AdminController extends Controller
     public function courseCurriculum($id)
     {
         $course = $this->course->getCourseByClassId($id);
-        $curriculums = $this->course->getCourseContent($id);
+        $curriculums = $this->curriculum::query()
+            ->select([
+                'curriculum.*',
+                'curriculum.id AS c_id',
+                'curriculum.created_at AS c_created_at',
+                'c.*'
+            ])
+            ->join('course', 'c.id = curriculum.course_id', 'INNER', 'c')
+            ->where('c.id', '=', $id)
+            ->paginate();
+        if (request()->get('search')) {
+            $curriculums = $this->curriculum::query()
+                ->select([
+                    'curriculum.*',
+                    'curriculum.id AS c_id',
+                    'curriculum.created_at AS c_created_at',
+                    'c.*'
+                ])
+                ->join('course', 'c.id = curriculum.course_id', 'INNER', 'c')
+                ->where('c.id', '=', $id)
+                ->where('topic', 'LIKE', '%' . request()->get('search') . '%')
+                ->paginate();
+        }
+
         return view('admin.courses--curriculum', compact('curriculums', 'course', 'id'));
     }
 
@@ -376,6 +409,15 @@ class AdminController extends Controller
         $accounts_employee = $this->infoEmployee->join('roles', 'info_employee.role_id = roles.role_id', 'INNER')
             ->get();
         $accounts_student = $this->infoStudent->all();
+        if (request()->get('search')) {
+            $accounts_employee = $this->infoEmployee
+                ->where('name', 'LIKE', '%' . request()->get('search') . '%')
+                ->join('roles', 'info_employee.role_id = r.role_id', 'INNER', 'r')
+                ->get();
+            $accounts_student = $this->infoStudent
+                ->where('name', 'LIKE', '%' . request()->get('search') . '%')
+                ->get();
+        }
         foreach ($accounts_employee as $key => $value) {
             $employee = $this->employee->find(['user_id' => $value['id']]);
             $accounts_employee[$key]['email'] = $employee ? $employee['email'] : null; // Safely handle null

@@ -86,6 +86,9 @@ class HomeController extends Controller
   {
     if (session('user')['role'] === 'Academic Affair') {
       $courses = $this->course->getAllCoursesInAdmin();
+      if (request()->input('search')) {
+        $courses = $this->course::searchCoursesByName(request()->input('search'));
+      }
       return view('admin.courses', compact('courses'));
     }
     if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {

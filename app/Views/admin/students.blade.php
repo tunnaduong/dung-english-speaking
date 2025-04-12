@@ -32,7 +32,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($students as $employee)
+                        @foreach ($students['data'] as $employee)
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $employee['s_id'] }}</td>
@@ -46,6 +46,10 @@
                     </tbody>
                 </table>
             </div>
+            @include('components.pagination', [
+                'current_page' => $students['current_page'],
+                'last_page' => $students['last_page'],
+            ])
             <div class="d-flex justify-content-end gap-4">
                 <a href="{{ route('students/add') }}" class="btn-classroom px-3 w-auto"><img src="{{ asset('add.svg') }}"
                         class="me-2" />Add new</a>

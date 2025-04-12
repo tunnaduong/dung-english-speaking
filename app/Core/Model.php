@@ -15,6 +15,9 @@ class Model
   /** @var array Điều kiện WHERE */
   protected array $whereConditions = [];
 
+  /** @var array Điều kiện OR WHERE */
+  protected array $orWhereConditions = [];
+
   /** @var array Các cột cần chọn */
   protected array $selectColumns = ['*'];
 
@@ -59,6 +62,24 @@ class Model
   }
 
   /**
+   * Thêm điều kiện OR WHERE vào truy vấn
+   *
+   * @param string $column Tên cột
+   * @param string $operator Toán tử so sánh
+   * @param mixed $value Giá trị so sánh
+   * @return $this
+   */
+  public function orWhere(string $column, string $operator, $value): self
+  {
+    $this->orWhereConditions[] = [
+      'column' => $column,
+      'operator' => $operator,
+      'value' => $value
+    ];
+    return $this;
+  }
+
+  /**
    * Thêm bảng JOIN vào truy vấn
    *
    * @param string $table Tên bảng cần join
@@ -66,15 +87,17 @@ class Model
    * @param string $type Loại join (INNER, LEFT, RIGHT, mặc định: INNER)
    * @return $this Trả về instance hiện tại để chain
    */
-  public function join(string $table, string $condition, string $type = 'INNER'): self
+  public function join(string $table, string $condition, string $type = 'INNER', ?string $alias = null): self
   {
     $this->joins[] = [
       'table' => $table,
+      'alias' => $alias,
       'condition' => $condition,
       'type' => strtoupper($type)
     ];
     return $this;
   }
+
 
   /**
    * Chọn các cột cần lấy
@@ -151,19 +174,43 @@ class Model
         if (!in_array($joinType, ['INNER', 'LEFT', 'RIGHT'])) {
           throw new RuntimeException("Loại join không hợp lệ: $joinType");
         }
-        $sql .= " $joinType JOIN `{$join['table']}` ON {$join['condition']}";
+        $joinTable = $join['alias'] ? "`{$join['table']}` AS `{$join['alias']}`" : "`{$join['table']}`";
+        $sql .= " {$joinType} JOIN {$joinTable} ON {$join['condition']}";
       }
     }
 
     // Điều kiện WHERE
+    $whereParts = [];
+    $params = [];
+
     if (!empty($this->whereConditions)) {
-      $whereParts = [];
       foreach ($this->whereConditions as $condition) {
-        $whereParts[] = "`{$condition['column']}` {$condition['operator']} ?";
+        $col = $condition['column'];
+        $whereParts[] = str_contains($col, '.') ? "{$col} {$condition['operator']} ?" : "`{$col}` {$condition['operator']} ?";
         $params[] = $condition['value'];
       }
+    }
+
+    if (!empty($this->orWhereConditions)) {
+      $orParts = [];
+      foreach ($this->orWhereConditions as $condition) {
+        $col = $condition['column'];
+        $orParts[] = str_contains($col, '.') ? "{$col} {$condition['operator']} ?" : "`{$col}` {$condition['operator']} ?";
+        $params[] = $condition['value'];
+      }
+
+      // Nếu có where trước đó thì nối bằng AND, ngược lại thì là WHERE
+      if (!empty($whereParts)) {
+        $whereParts[] = '(' . implode(' OR ', $orParts) . ')';
+      } else {
+        $whereParts[] = implode(' OR ', $orParts);
+      }
+    }
+
+    if (!empty($whereParts)) {
       $sql .= " WHERE " . implode(' AND ', $whereParts);
     }
+
 
     // Sắp xếp ORDER BY
     if ($this->orderBy !== null) {
@@ -504,19 +551,43 @@ class Model
     if (!empty($this->joins)) {
       foreach ($this->joins as $join) {
         $joinType = $join['type'];
-        $sql .= " $joinType JOIN `{$join['table']}` ON {$join['condition']}";
+        $joinTable = $join['alias'] ? "`{$join['table']}` AS `{$join['alias']}`" : "`{$join['table']}`";
+        $sql .= " {$joinType} JOIN {$joinTable} ON {$join['condition']}";
       }
     }
 
     // Preserve WHERE
+    $whereParts = [];
+    $params = [];
+
     if (!empty($this->whereConditions)) {
-      $whereParts = [];
       foreach ($this->whereConditions as $condition) {
-        $whereParts[] = "`{$condition['column']}` {$condition['operator']} ?";
+        $col = $condition['column'];
+        $whereParts[] = str_contains($col, '.') ? "{$col} {$condition['operator']} ?" : "`{$col}` {$condition['operator']} ?";
         $params[] = $condition['value'];
       }
+    }
+
+    if (!empty($this->orWhereConditions)) {
+      $orParts = [];
+      foreach ($this->orWhereConditions as $condition) {
+        $col = $condition['column'];
+        $orParts[] = str_contains($col, '.') ? "{$col} {$condition['operator']} ?" : "`{$col}` {$condition['operator']} ?";
+        $params[] = $condition['value'];
+      }
+
+      // Nếu có where trước đó thì nối bằng AND, ngược lại thì là WHERE
+      if (!empty($whereParts)) {
+        $whereParts[] = '(' . implode(' OR ', $orParts) . ')';
+      } else {
+        $whereParts[] = implode(' OR ', $orParts);
+      }
+    }
+
+    if (!empty($whereParts)) {
       $sql .= " WHERE " . implode(' AND ', $whereParts);
     }
+
 
     $total = DB::query($sql, $params)->fetchColumn();
     $lastPage = (int)ceil($total / $perPage);
