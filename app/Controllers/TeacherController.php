@@ -58,7 +58,11 @@ class TeacherController extends Controller
     {
         if (session('user')['role'] === 'Academic Affair') {
             $course = $this->course->getCourseByClassId($id);
-            $curriculums = $this->course->getCourseContent($id);
+            $curriculums = $this->course
+                ->select(['course.*', 'curriculum.*', 'curriculum.id AS c_id', 'curriculum.created_at AS c_created_at'])
+                ->join('curriculum', 'curriculum.course_id = course.id', 'INNER')
+                ->where('course_id', '=', $id)
+                ->paginate();
             return view('admin.classrooms--curriculum', compact('curriculums', 'id', 'course'));
         }
         $course = $this->course->getCourseByClassId($id);

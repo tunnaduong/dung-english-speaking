@@ -441,4 +441,62 @@ class AdminController extends Controller
         $this->infoEmployee->delete(['id' => $id]);
         return redirect('/account');
     }
+
+    public function editClassroom($id)
+    {
+        if (request()->isMethod('post')) {
+            $data = request()->post();
+            $rules = [
+                'class_name' => 'required',
+                'id_course' => 'required',
+                'NoS' => 'required',
+                'start_date' => 'required',
+                'end_date' => 'required',
+                'teacher_id' => 'required',
+                'assistant_id' => 'required',
+            ];
+            if (!request()->validate($rules, $data)) {
+                return back();
+            }
+            $this->classroom->update($data, ['id' => $id]);
+            return redirect('/classrooms');
+        }
+        $classroom = $this->classroom->find(['id' => $id]);
+        $courses = $this->course->all();
+        $course = $this->course->getCourseByClassId($id);
+        $teachers = $this->infoEmployee->all(['role_id' => 1]);
+        $tas = $this->infoEmployee->all(['role_id' => 2]);
+        return view('admin.classrooms--edit', compact('classroom', 'course', 'courses', 'id', 'teachers', 'tas'));
+    }
+
+    public function addClassroom()
+    {
+        if (request()->isMethod('post')) {
+            $data = request()->post();
+            $rules = [
+                'class_name' => 'required',
+                'id_course' => 'required',
+                'NoS' => 'required',
+                'start_date' => 'required',
+                'end_date' => 'required',
+                'teacher_id' => 'required',
+                'assistant_id' => 'required',
+            ];
+            if (!request()->validate($rules, $data)) {
+                return back();
+            }
+            $this->classroom->create($data);
+            return redirect('/classrooms');
+        }
+        $courses = $this->course->all();
+        $teachers = $this->infoEmployee->all(['role_id' => 1]);
+        $tas = $this->infoEmployee->all(['role_id' => 2]);
+        return view('admin.classrooms--add', compact('courses', 'teachers', 'tas'));
+    }
+
+    public function deleteClassroom($id)
+    {
+        $this->classroom->delete(['id' => $id]);
+        return redirect('/classrooms');
+    }
 }

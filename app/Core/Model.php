@@ -469,4 +469,64 @@ class Model
 
     return DB::exec($sql, [$id]);
   }
+
+  /**
+   * Phân trang kết quả truy vấn
+   *
+   * @param int $perPage Số bản ghi mỗi trang
+   * @return array [
+   *   'data' => array,        // Dữ liệu bản ghi
+   *   'current_page' => int,  // Trang hiện tại
+   *   'per_page' => int,      // Số bản ghi mỗi trang
+   *   'total' => int,         // Tổng số bản ghi
+   *   'last_page' => int      // Trang cuối cùng
+   * ]
+   */
+  public function paginate(int $perPage = 10): array
+  {
+    if (empty(static::$table)) {
+      throw new RuntimeException('Tên bảng phải được định nghĩa trong lớp con');
+    }
+
+    $page = isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 0 ? (int)$_GET['page'] : 1;
+    $this->limit($perPage)->offset(($page - 1) * $perPage);
+
+    // 1. Lấy dữ liệu trang hiện tại
+    $data = $this->get();
+
+    // 2. Tính tổng số bản ghi (không cần SELECT tùy chỉnh, chỉ đếm)
+    $table = static::$table;
+    $sql = "SELECT COUNT(*) as count FROM `$table`";
+
+    $params = [];
+
+    // Preserve joins
+    if (!empty($this->joins)) {
+      foreach ($this->joins as $join) {
+        $joinType = $join['type'];
+        $sql .= " $joinType JOIN `{$join['table']}` ON {$join['condition']}";
+      }
+    }
+
+    // Preserve WHERE
+    if (!empty($this->whereConditions)) {
+      $whereParts = [];
+      foreach ($this->whereConditions as $condition) {
+        $whereParts[] = "`{$condition['column']}` {$condition['operator']} ?";
+        $params[] = $condition['value'];
+      }
+      $sql .= " WHERE " . implode(' AND ', $whereParts);
+    }
+
+    $total = DB::query($sql, $params)->fetchColumn();
+    $lastPage = (int)ceil($total / $perPage);
+
+    return [
+      'data' => $data,
+      'current_page' => $page,
+      'per_page' => $perPage,
+      'total' => (int)$total,
+      'last_page' => $lastPage,
+    ];
+  }
 }
