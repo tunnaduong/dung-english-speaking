@@ -20,9 +20,3 @@ function getLastTwoWords($name)
   }
   return $name; // Return full name if it has less than 2 words
 }
-
-function getLastWord($name)
-{
-  $parts = explode(' ', trim($name)); // Split name into words
-  return end($parts); // Get the last element
-}

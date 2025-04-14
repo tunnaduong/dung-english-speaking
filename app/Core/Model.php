@@ -231,6 +231,8 @@ class Model
       $params[] = $this->offset;
     }
 
+    // echo $sql . '<br>';
+
     return DB::query($sql, $params)->fetchAll();
   }
 

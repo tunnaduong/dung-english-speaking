@@ -179,13 +179,13 @@ main {
 }
 
 .home-hero {
-  max-height: 200px;
+  min-height: 200px;
   padding: 20px;
 }
 
 .hero-img {
-  width: auto;
-  height: calc(100% - 20px);
+  width: 270px;
+  height: auto;
   object-fit: contain;
 }
 

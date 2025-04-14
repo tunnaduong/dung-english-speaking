@@ -3,14 +3,17 @@
 namespace App\Controllers;
 
 use App\Models\Absence;
+use App\Models\Classroom;
 
 class AbsenceController extends Controller
 {
     public $absence;
+    public $classroom;
 
     public function __construct()
     {
         $this->absence = new Absence();
+        $this->classroom = new Classroom();
     }
 
     public function leave()
@@ -32,11 +35,9 @@ class AbsenceController extends Controller
             'student_id' => session('user')['user_id'],
             'date' => request()->input('day_off'),
             'reason' => request()->input('reason'),
-            'date_sent' => date('Y-m-d H:i:s'),
-            'created_at' => date('Y-m-d H:i:s'),
         ]);
         session_set('leave', request()->input('token'));
-        return redirect('/absence/leave/make-up?page=1&token=' . request()->input('token'));
+        return redirect('/absence/leave/make-up?token=' . request()->input('token'));
     }
 
     public function makeUp()
@@ -88,6 +89,7 @@ class AbsenceController extends Controller
                 'shift' => 'Ca 1'
             ]
         ];
+        $makeUpData = $this->classroom->getMakeupClasses();
         return view('absence.make-up', compact('makeUpData'));
     }
 

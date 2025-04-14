@@ -6,11 +6,11 @@
     <div class="w-100 mt-4 bg-primary home-hero rounded-4 d-flex align-items-center justify-content-center px-3">
         <div class="hero-content d-flex align-items-center justify-content-between">
             <div class="flex-fill text-white">
-                <h2 class="fw-bold zoom">Hi {{ getLastWord(session('user')['name']) }}, Good Afternoon!</h2>
+                <h2 class="fw-bold zoom">Dũng English Speaking</h2>
                 <p class="m-0 zoom">You've learned 70% of your goal this week!<br>
                     Keep it up and improve your progress.</p>
             </div>
-            <div class="w-200">
+            <div>
                 <img src="{{ asset('hero.png') }}" class="hero-img img-fluid">
             </div>
         </div>
@@ -40,27 +40,5 @@
                 </tbody>
             </table>
         </div>
-        <nav class="d-flex justify-content-center">
-            <ul class="pagination">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#">Previous</a>
-                </li>
-                <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link w-40" href="#">2</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link w-40" href="#">3</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link w-40" href="#">4</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            </ul>
-        </nav>
     </div>
 @endsection

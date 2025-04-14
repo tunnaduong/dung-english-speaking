@@ -2,10 +2,18 @@
 
 namespace App\Models;
 
+use App\Core\DB;
+
 class Classroom extends Model
 {
     protected static string $table = 'class';
     protected static string $primaryKey = 'id';
+
+    public static function getMakeupClasses()
+    {
+        $sql = "SELECT c.id AS class_id, c.class_name, cu.date, s.day_of_week, CONCAT('Ca ', sc.id) AS shift FROM class c JOIN course co ON co.id = c.id_course JOIN curriculum cu ON cu.course_id = co.id JOIN schedules sc ON sc.id = cu.exercise_id LEFT JOIN schedules s ON s.id = sc.id WHERE cu.date IS NOT NULL";
+        return DB::query($sql)->fetchAll();
+    }
 
     public static function getClasses($teacherId)
     {

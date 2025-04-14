@@ -6,10 +6,10 @@
     <div class="w-100 mt-4 bg-primary home-hero rounded-4 d-flex align-items-center justify-content-center px-3">
         <div class="hero-content d-flex align-items-center justify-content-between">
             <div class="flex-fill text-white">
-                <h2 class="fw-bold zoom">Hi {{ getLastWord(session('user')['name']) }}, Good Afternoon!</h2>
+                <h2 class="fw-bold zoom">Dũng English Speaking</h2>
                 <p class="m-0 zoom">&nbsp;</p>
             </div>
-            <div class="w-200">
+            <div>
                 <img src="{{ asset('hero.png') }}" class="hero-img img-fluid">
             </div>
         </div>
