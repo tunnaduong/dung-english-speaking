@@ -14,7 +14,7 @@
             </div>
         </div>
     </div>
-    <div class="w-100 mt-4 bg-white rounded-4 p-4">
+    <div class="w-100 my-4 bg-white rounded-4 p-4">
         <div>
             <h4 class="fw-bold">My Profile</h4>
             <div class="line-bottom"></div>
