@@ -4,16 +4,19 @@ namespace App\Controllers;
 
 use App\Models\Absence;
 use App\Models\Classroom;
+use App\Models\MakeUpClass;
 
 class AbsenceController extends Controller
 {
     public $absence;
     public $classroom;
+    public $makeUpClass;
 
     public function __construct()
     {
         $this->absence = new Absence();
         $this->classroom = new Classroom();
+        $this->makeUpClass = new MakeUpClass();
     }
 
     public function leave()
@@ -31,13 +34,13 @@ class AbsenceController extends Controller
             return redirect('/');
         }
         // Handle store absence request...
-        $this->absence::create([
+        $absence_id = $this->absence::create([
             'student_id' => session('user')['user_id'],
             'date' => request()->input('day_off'),
             'reason' => request()->input('reason'),
         ]);
         session_set('leave', request()->input('token'));
-        return redirect('/absence/leave/make-up?token=' . request()->input('token'));
+        return redirect('/absence/leave/make-up?token=' . request()->input('token') . '&id=' . $absence_id);
     }
 
     public function makeUp()
@@ -57,38 +60,6 @@ class AbsenceController extends Controller
             session_delete('leave');
             return redirect('/absence/leave');
         }
-        $makeUpData = [
-            [
-                'id' => 'IELTS 1',
-                'class_name' => '3.0-5.0',
-                'date' => '2025-01-01',
-                'shift' => 'Ca 1'
-            ],
-            [
-                'id' => 'IELTS 2',
-                'class_name' => '3.0-5.5',
-                'date' => '2025-01-01',
-                'shift' => 'Ca 2'
-            ],
-            [
-                'id' => 'IELTS 2',
-                'class_name' => '3.0-6.0',
-                'date' => '2025-01-01',
-                'shift' => 'Ca 3'
-            ],
-            [
-                'id' => 'IELTS 4',
-                'class_name' => '3.0-5.0',
-                'date' => '2025-01-01',
-                'shift' => 'Ca 4'
-            ],
-            [
-                'id' => 'IELTS 5',
-                'class_name' => '4.0-5.0',
-                'date' => '2025-01-02',
-                'shift' => 'Ca 1'
-            ]
-        ];
         $makeUpData = $this->classroom->getMakeupClasses();
         return view('absence.make-up', compact('makeUpData'));
     }
@@ -98,34 +69,28 @@ class AbsenceController extends Controller
         if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
             return redirect('/');
         }
-        $historyData = [
-            [
-                'date' => '2025-01-01',
-                'shift' => 'Ca 1',
-                'reason' => 'Bị ốm',
-            ],
-            [
-                'date' => '2025-01-01',
-                'shift' => 'Ca 2',
-                'reason' => 'Bị lười',
-            ],
-            [
-                'date' => '2025-01-01',
-                'shift' => 'Ca 3',
-                'reason' => 'Bị ốm',
-            ],
-            [
-                'date' => '2025-01-01',
-                'shift' => 'Ca 4',
-                'reason' => 'Bị ốm',
-            ],
-            [
-                'date' => '2025-01-02',
-                'shift' => 'Ca 1',
-                'reason' => 'Bị ốm',
-            ]
-        ];
         $historyData = $this->absence->getAbsenceHistory(session('user')['id']);
         return view('absence.history', compact('historyData'));
+    }
+
+    public function makeUpClass($id)
+    {
+        if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
+            return redirect('/');
+        }
+
+        $makeupId = $this->makeUpClass::create([
+            'student_id' => session('user')['user_id'],
+            'absence_id' => request()->input('id'),
+            'class_id' => $id,
+            'date' => date('Y-m-d'),
+            'shift_id' => 1,
+        ]);
+
+        $this->absence::update([
+            'makeup_class_id' => $makeupId,
+        ], ['absence_id' => request()->input('id')]);
+
+        return redirect('/absence/history');
     }
 }

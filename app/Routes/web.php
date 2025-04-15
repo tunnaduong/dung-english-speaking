@@ -23,6 +23,7 @@ $route->get('/absence/leave', [AbsenceController::class, 'leave']);
 $route->get('/absence/history', [AbsenceController::class, 'history']);
 $route->post('/absence/leave/store', [AbsenceController::class, 'store']);
 $route->get('/absence/leave/make-up', [AbsenceController::class, 'makeUp']);
+$route->get('/absence/leave/make-up/{id}', [AbsenceController::class, 'makeUpClass']);
 // Teacher
 $route->get('/classrooms', [TeacherController::class, 'classroom']);
 $route->get('/classrooms/{id}/list', [TeacherController::class, 'classroomList']);

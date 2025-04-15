@@ -39,8 +39,32 @@
                             <td>{{ $class['class_name'] }}</td>
                             <td>{{ date('d/m/Y', strtotime($class['date'])) }}</td>
                             <td>{{ $class['shift'] }}</td>
-                            <td><a href="#" class="text-decoration-none">Enroll</a></td>
+                            <td><a href="#" class="text-decoration-none" data-bs-toggle="modal"
+                                    data-bs-target="#enrollModal{{ $class['class_id'] }}">Enroll</a></td>
                         </tr>
+                        @push('scripts')
+                            <!-- Bootstrap 5 Modal -->
+                            <div class="modal fade" id="enrollModal{{ $class['class_id'] }}" tabindex="-1"
+                                aria-labelledby="enrollModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header p-2">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            <h5 class="fw-semi mb-4">Choose this class?</h5>
+                                            <div class="d-flex justify-content-around">
+                                                <a href="{{ route('absence/leave/make-up/' . $class['class_id'] . '?id=' . request()->input('id')) }}"
+                                                    class="btn btn-confirm">Yes</a>
+                                                <button type="button" class="btn btn-confirm"
+                                                    data-bs-dismiss="modal">No</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endpush
                     @endforeach
                 </tbody>
             </table>

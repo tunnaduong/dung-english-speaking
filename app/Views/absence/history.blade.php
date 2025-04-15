@@ -27,6 +27,7 @@
                         <th>Date</th>
                         <th>Shift</th>
                         <th>Reason of absence</th>
+                        <th>Registered make-up class</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,6 +36,7 @@
                             <td>{{ date('d/m/Y', strtotime($history['date'])) }}</td>
                             <td>Ca 1</td>
                             <td>{{ $history['reason'] }}</td>
+                            <td>{{ $history['class_name'] }}</td>
                         </tr>
                     @endforeach
                 </tbody>
