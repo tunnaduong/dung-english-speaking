@@ -24,24 +24,17 @@
                 <div class="col-md-6 col-12">
                     <div class="rounded-4 border-line mt-3">
                         <div class="p-3 px-4">
-                            <a href="{{ route('courses/' . $course['c_id']) }}"
-                                class="fw-bold fs-5 text-decoration-none text-black">{{ $course['class_name'] }} -
+                            <div class="fw-bold fs-5 text-decoration-none text-black">{{ $course['class_name'] }} -
                                 {{ $course['NoL'] }}
-                                lectures</a>
-                            <div class="progress-text">0%</div>
+                                lectures</div>
+                            <div class="progress-text">25%</div>
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="0"
+                                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25"
                                     aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
-                        <hr class="mt-1 mb-0">
-                        <div class="p-3 px-4 d-flex align-items-center">
-                            <img src="{{ asset('work_outline.svg') }}" class="me-3">
-                            <div class="flex-fill">
-                                <div>Grammar lecture 7</div>
-                                <span class="exercise-duration">Exercise | 25 mins</span>
-                            </div>
-                            <a href="{{ route("courses/{$course['c_id']}/start") }}" class="btn btn-start">Start</a>
+                        <div class="p-3 px-4 d-flex justify-content-center align-items-center">
+                            <a href="{{ route('courses/' . $course['c_id']) }}" class="btn-classroom">Curriculum</a>
                         </div>
                     </div>
                 </div>

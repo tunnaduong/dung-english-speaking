@@ -77,44 +77,4 @@
             </div>
         </form>
     </div>
-    <div class="w-100 my-4 bg-white rounded-4 p-4">
-        <div>
-            <h4 class="fw-bold">Teaching Schedule</h4>
-            <div class="line-bottom"></div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-sm-3 mt-3">
-                <div>Listening</div>
-                <div class="border-line rounded-35 p-2 px-3 d-flex flex-column gap-2">
-                    <div>Test 1:</div>
-                    <div>Test 2:</div>
-                    <div>Test 3:</div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-3 mt-3">
-                <div>Speaking</div>
-                <div class="border-line rounded-35 p-2 px-3 d-flex flex-column gap-2">
-                    <div>Test 1:</div>
-                    <div>Test 2:</div>
-                    <div>Test 3:</div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-3 mt-3">
-                <div>Reading</div>
-                <div class="border-line rounded-35 p-2 px-3 d-flex flex-column gap-2">
-                    <div>Test 1:</div>
-                    <div>Test 2:</div>
-                    <div>Test 3:</div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-3 mt-3">
-                <div>Writing</div>
-                <div class="border-line rounded-35 p-2 px-3 d-flex flex-column gap-2">
-                    <div>Test 1:</div>
-                    <div>Test 2:</div>
-                    <div>Test 3:</div>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
