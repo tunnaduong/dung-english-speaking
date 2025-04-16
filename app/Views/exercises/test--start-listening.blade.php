@@ -14,7 +14,8 @@
                 Your browser does not support the audio element.
             </audio>
         </div>
-        <form action="{{ route('exercises/tests/' . $id . '/submit-listening') }}" method="POST" class="m-0">
+        <form action="{{ route('exercises/tests/' . $id . '/submit-listening') }}" method="POST" class="m-0"
+            id="listeningForm">
             <div class="border-line p-2 rounded-4 mt-3 limit-height">
                 <div class="fw-bold">{!! nl2br($test['question']) !!}</div>
             </div>
@@ -29,16 +30,52 @@
                 @endforeach
             </div>
             <input type="hidden" name="time_spent" id="timeSpent" value="00:00:00">
-            <div class="d-flex justify-content-end mt-3 gap-4">
-                <a href="{{ previous('exercises/tests') }}" class="btn-classroom">Cancel</a>
-                <button class="btn-classroom" type="submit">Submit</button>
-            </div>
         </form>
+        <div class="d-flex justify-content-end mt-3 gap-4">
+            <button class="btn-classroom" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel</button>
+            <button class="btn-classroom" data-bs-toggle="modal" data-bs-target="#saveConfirmModal">Submit</button>
+        </div>
     </div>
 @endsection
 
 @push('scripts')
+    <!-- Bootstrap 5 Modal -->
+    <div class="modal fade" id="cancelModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header p-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h5 class="fw-semi mb-4">Do you want to cancel?</h5>
+                    <div class="d-flex justify-content-around">
+                        <a class="btn btn-confirm" href="{{ previous('exercises/homeworks') }}">Yes</a>
+                        <button type="button" class="btn btn-confirm" data-bs-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="saveConfirmModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header p-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h5 class="fw-semi mb-4">Do you want to submit?</h5>
+                    <div class="d-flex justify-content-around">
+                        <button class="btn btn-confirm" onclick="submitForm()">Yes</button>
+                        <button type="button" class="btn btn-confirm" data-bs-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
+        function submitForm() {
+            document.getElementById("listeningForm").submit();
+        }
         // count up timer, change the hidden input value every second
         let timeSpent = 0; // seconds
         const timeSpentInput = document.getElementById('timeSpent');

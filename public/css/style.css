@@ -638,7 +638,7 @@ select option:checked {
 .btn-disabled {
   background-color: #d8d6d6 !important;
   color: #867f7f !important;
-  border: 1px solid #333333 !important;
+  border: 1px solid #c4c4c4 !important;
   pointer-events: none;
 }
 
@@ -672,4 +672,10 @@ select option:checked {
 .limit-height {
   max-height: 300px;
   overflow-y: auto;
+}
+
+.no-border-input {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }

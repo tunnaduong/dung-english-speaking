@@ -50,7 +50,7 @@
                 'current_page' => $students['current_page'],
                 'last_page' => $students['last_page'],
             ])
-            <div class="d-flex justify-content-end gap-4">
+            <div class="d-flex justify-content-end gap-4 mt-4">
                 <a href="{{ route('students/add') }}" class="btn-classroom px-3 w-auto"><img src="{{ asset('add.svg') }}"
                         class="me-2" />Add new</a>
                 <a href="#" class="btn-classroom btn-edit px-3 btn-disabled"><img src="{{ asset('edit.svg') }}"

@@ -153,6 +153,12 @@ class HomeController extends Controller
   {
     if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
       $exercises = $this->exercise::all();
+      if (request()->input('search')) {
+        $exercises = $this->exercise->orWhere('name', 'LIKE', "%" . request()->input('search') . "%")
+          ->orWhere('skill_type', 'LIKE', "%" . request()->input('search') . "%")
+          ->orWhere('type', 'LIKE', "%" . request()->input('search') . "%")
+          ->get();
+      }
       return view('teacher.exercises', compact('exercises'));
     }
     return view('home.exercise');

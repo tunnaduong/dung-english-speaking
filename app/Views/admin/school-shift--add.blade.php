@@ -18,7 +18,7 @@
                 </div>
             </div>
             @include('_flash')
-            <form action="" method="POST">
+            <form action="" method="POST" id="addSchoolShiftForm">
                 <div class="row gy-3">
                     <div class="col-md-6">
                         <div>
@@ -60,11 +60,52 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center mt-5 gap-4">
-                    <a href="{{ route('school-shift') }}" class="btn-classroom px-4">Cancel</a>
-                    <button type="submit" class="btn-classroom px-4">Save</button>
-                </div>
             </form>
+            <div class="d-flex justify-content-center mt-5 gap-4">
+                <button class="btn-classroom px-4" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel</button>
+                <button class="btn-classroom px-4" data-bs-toggle="modal" data-bs-target="#saveConfirmModal">Save</button>
+            </div>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <!-- Bootstrap 5 Modal -->
+    <div class="modal fade" id="cancelModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header p-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h5 class="fw-semi mb-4">Do you want to cancel?</h5>
+                    <div class="d-flex justify-content-around">
+                        <a class="btn btn-confirm" href="{{ route('school-shift') }}">Yes</a>
+                        <button type="button" class="btn btn-confirm" data-bs-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="saveConfirmModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header p-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h5 class="fw-semi mb-4">Do you want to save?</h5>
+                    <div class="d-flex justify-content-around">
+                        <button class="btn btn-confirm" onclick="submitForm()">Yes</button>
+                        <button type="button" class="btn btn-confirm" data-bs-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function submitForm() {
+            document.getElementById("addSchoolShiftForm").submit();
+        }
+    </script>
+@endpush

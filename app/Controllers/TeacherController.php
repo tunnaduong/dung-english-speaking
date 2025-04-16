@@ -324,7 +324,12 @@ class TeacherController extends Controller
             ->paginate();
         // if has search query
         if (request()->get('search')) {
-            $students = $this->studentInfo->where('name', 'LIKE', "%" . request()->get('search') . "%")->paginate();
+            $students = $this->studentInfo
+                ->orWhere('name', 'LIKE', "%" . request()->get('search') . "%")
+                ->orWhere('phone', 'LIKE', "%" . request()->get('search') . "%")
+                ->orWhere('email', 'LIKE', "%" . request()->get('search') . "%")
+                ->orWhere('class_name', 'LIKE', "%" . request()->get('search') . "%")
+                ->paginate();
         }
         if (session('user')['role'] === 'Academic Affair') {
             return view('admin.students', compact('students'));
@@ -363,7 +368,10 @@ class TeacherController extends Controller
         if (request()->isMethod('post')) {
             return redirect('/exercises');
         }
-        return view('teacher.create-exercise');
+        if (!request()->get('type')) {
+            return redirect('/exercises/create?type=reading');
+        }
+        return view('teacher.create-exercise--reading');
     }
 
     public function editExercise($id)

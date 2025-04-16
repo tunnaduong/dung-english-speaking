@@ -6,15 +6,14 @@
     <div class="w-100 my-4 bg-white rounded-4 p-4 border-line">
         <div>
             <h4 class="fw-bold"><a href="{{ route('exercises') }}" class="back-link">
-                    Exercises</a>/Edit</h4>
+                    Exercises</a>/Create</h4>
             <div class="line-bottom"></div>
         </div>
         <div class="border-line rounded-4 p-3 mt-3 d-flex align-items-center gap-3">
             <img src="{{ asset('menu_book_large.svg') }}">
             <div>
                 <div class="position-relative">
-                    <input class="fw-bold fs-5 mb-1 form-control px-2 py-0 w-200" placeholder="Enter name..."
-                        value="Reading Part 1"></input>
+                    <input class="fw-bold fs-5 mb-1 form-control px-2 py-0 w-200" placeholder="Enter name..."></input>
                     <img src="{{ asset('edit2.svg') }}" class="position-absolute edit-icon">
                 </div>
                 <div class="fw-semi text-gray">
@@ -25,38 +24,22 @@
                 </div>
                 <div class="fw-semi text-gray">
                     <label for="skill" style="width: 50px">Skill</label>
-                    <select name="skill" id="skill" class="rounded-1">
-                        <option value="Reading">Reading</option>
-                        <option value="Writing">Writing</option>
-                        <option value="Listening">Listening</option>
+                    <select name="skill" id="skill" class="rounded-1" onchange="changePageUrl(this)">
+                        <option value="reading">Reading</option>
+                        <option value="writing">Writing</option>
+                        <option value="listening">Listening</option>
                     </select>
                 </div>
             </div>
         </div>
-        <form action="" method="POST" id="editExerciseForm">
+        <form action="" method="POST" id="addExerciseForm">
             <div>
                 <label for="deBai" class="form-label fw-bold mt-3">Add topic</label>
-                <textarea name="deBai" id="deBai" class="form-control" rows="10">
-                    <strong>THE IMPORTANCE OF CHILDREN'S PLAY</strong>
-                    <p>Brick by brick, six-year-old Alice is building a magical kingdom. Imagining fairy-tale turrets and fire-breathing dragons, wicked witches and gallant heroes, she's creating an enchanting world. Although she isn't aware of it, this fantasy is helping her take her first steps towards her capacity for creativity and so it will have important repercussions in her adult life.Minutes later, Alice has abandoned the kingdom in favour of playing schools with her younger brother. When she bosses him around as his 'teacher', she's practising how to regulate her emotions through pretence. Later on, when they tire of this and settle down with a board game, she's learning about the need to</p>
-                </textarea>
+                <textarea name="deBai" id="deBai" class="form-control" rows="10"></textarea>
             </div>
             <div>
                 <label for="cauHoi" class="form-label fw-bold mt-3">Add question</label>
-                <textarea name="cauHoi" id="cauHoi" class="form-control" rows="10">
-                    <strong>Questions 1-8 Complete the notes below.<br>
-                        Choose ONE WORD ONLY from the passage for each answer.<br>
-                        Write your answers in boxes 1-8 on your answer sheet.</strong>
-                        <p>Children's play<br>
-                            Uses of children's play<br>
-                            building a 'magical kingdom' may help develop 1.......<br>
-                            board games involve 2 ....... and turn-taking<br>
-                            Recent changes affecting children's play<br>
-                            populations of 3....... have grown<br>
-                            opportunities for free play are limited due to<br>
-                            - fear of 4 .......<br>
-                            - fear of 5 .......</p>
-                </textarea>
+                <textarea name="cauHoi" id="cauHoi" class="form-control" rows="10"></textarea>
             </div>
             <div>
                 <label for="cauHoi" class="form-label fw-bold mt-3">Add answers</label>
@@ -71,7 +54,7 @@
         </form>
         <div class="d-flex justify-content-end mt-3 gap-4">
             <button class="btn-classroom" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel</button>
-            <button class="btn-classroom" data-bs-toggle="modal" data-bs-target="#saveConfirmModal">Save</button>
+            <button class="btn-classroom" data-bs-toggle="modal" data-bs-target="#saveConfirmModal">Create</button>
         </div>
     </div>
 @endsection
@@ -101,7 +84,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
-                    <h5 class="fw-semi mb-4">Do you want to save?</h5>
+                    <h5 class="fw-semi mb-4">Do you want to create?</h5>
                     <div class="d-flex justify-content-around">
                         <button class="btn btn-confirm" onclick="submitForm()">Yes</button>
                         <button type="button" class="btn btn-confirm" data-bs-dismiss="modal">No</button>
@@ -111,8 +94,16 @@
         </div>
     </div>
     <script>
+        function changePageUrl(selectElement) {
+            const selectedValue = selectElement.value; // Get the selected option value
+            const currentUrl = window.location.origin + window.location
+                .pathname; // Get the current URL without query params
+            const newUrl = `${currentUrl}?type=${selectedValue}`; // Append the selected value as a query parameter
+            window.location.href = newUrl; // Redirect to the new URL
+        }
+
         function submitForm() {
-            document.getElementById("editExerciseForm").submit();
+            document.getElementById("addExerciseForm").submit();
         }
         CKEDITOR.replace('deBai');
         CKEDITOR.replace('cauHoi');

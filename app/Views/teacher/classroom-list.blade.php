@@ -19,7 +19,7 @@
                     </h4>
                     <div class="line-bottom"></div>
                 </div>
-                <div class="number-of">NoS: {{ count($students) }}</div>
+                <div class="number-of">NoS: {{ count($students['data']) }}</div>
             </div>
             <div class="table-responsive table-limit-height my-3">
                 <table class="table table-custom table-big table-sticky">
@@ -34,7 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($students as $student)
+                        @foreach ($students['data'] as $student)
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $student['id'] }}</td>
