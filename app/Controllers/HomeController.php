@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Course;
+use App\Models\Result;
 use App\Models\Student;
 use App\Models\Employee;
 use App\Models\Exercise;
@@ -20,6 +21,7 @@ class HomeController extends Controller
   public $exercise;
   public $infoStudent;
   public $infoEmployee;
+  public $result;
 
   public function __construct()
   {
@@ -30,6 +32,7 @@ class HomeController extends Controller
     $this->exercise = new Exercise();
     $this->infoStudent = new InfoStudent();
     $this->infoEmployee = new InfoEmployee();
+    $this->result = new Result();
     if (!session('user')) {
       redirect('/login');
     }
@@ -122,8 +125,41 @@ class HomeController extends Controller
     if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
       return redirect('/');
     }
-    $homeworks = $this->homework->getHomeworks();
+    $homeworks = $this->result->getReadingHomeworks(session('user')['user_id']);
+    if (request()->input('type')) {
+      switch (request()->input('type')) {
+        case 'reading':
+          $homeworks = $this->result->getReadingHomeworks(session('user')['user_id']);
+          break;
+        case 'writing':
+          $homeworks = $this->result->getWritingHomeworks(session('user')['user_id'], 1);
+          break;
+        case 'listening':
+          $homeworks = $this->result->getListeningHomeworks(session('user')['user_id'], 0);
+          break;
+      }
+    }
     return view('exercises.homework', compact('homeworks'));
+  }
+
+  public function doHomework($id)
+  {
+    if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
+      return redirect('/');
+    }
+    $exercise = $this->homework->find(['id' => $id]);
+    switch ($exercise['skill_type']) {
+      case 'Reading':
+        return view('exercises.homework--start-reading', compact('id'));
+        break;
+      case 'Writing':
+        $homework = $this->homework->getWritingHomeworkById($id);
+        return view('exercises.homework--start-writing', compact('id', 'homework'));
+        break;
+      case 'Listening':
+        break;
+    }
+    return view('exercises.homework--start-writing', compact('id'));
   }
 
   public function test()

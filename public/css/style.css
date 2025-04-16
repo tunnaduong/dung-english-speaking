@@ -654,3 +654,17 @@ select option:checked {
 #data-table tbody tr {
   cursor: pointer;
 }
+
+.btn-skill {
+  background-color: #ededed;
+  color: #282828;
+  border-radius: 10px;
+  text-align: center;
+  padding: 7px 10px;
+  text-decoration: none;
+}
+
+.btn-skill-active {
+  background-color: #e9effd;
+  color: #2f80ed;
+}

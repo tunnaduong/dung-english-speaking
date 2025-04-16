@@ -16,4 +16,9 @@ class Homework extends Model
     {
         return (new self())->where('type', '=', 'Test')->get();
     }
+
+    public static function getWritingHomeworkById($id)
+    {
+        return (new self())->join('writing_topics', 'writing_topics.exercise_id = exercise.id')->where('exercise.id', '=', $id)->first();
+    }
 }

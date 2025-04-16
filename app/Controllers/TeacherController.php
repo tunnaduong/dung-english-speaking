@@ -315,7 +315,7 @@ class TeacherController extends Controller
         $students = $this->studentInfo->select(['info_student.id AS s_id', 'students.*', 'info_student.*', 'class.*'])
             ->join('class', 'info_student.class_id = class.id', 'INNER')
             ->join('students', 'info_student.id = students.student_id', 'LEFT')
-            ->paginate();
+            ->get();
         // if has search query
         if (request()->get('search')) {
             $students = $this->studentInfo->where('name', 'LIKE', "%" . request()->get('search') . "%")->paginate();

@@ -17,6 +17,7 @@ $route->get('/courses', [HomeController::class, 'courses']);
 $route->get('/courses/{id}', [HomeController::class, 'courseDetail']);
 $route->get('/exercises', [HomeController::class, 'exercise']);
 $route->get('/exercises/homeworks', [HomeController::class, 'homework']);
+$route->get('/exercises/homeworks/{id}', [HomeController::class, 'doHomework']);
 $route->get('/exercises/tests', [HomeController::class, 'test']);
 $route->get('/absence', [HomeController::class, 'absence']);
 $route->get('/absence/leave', [AbsenceController::class, 'leave']);
