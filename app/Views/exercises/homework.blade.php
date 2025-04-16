@@ -49,7 +49,8 @@
                             <td>{{ $homework['name'] }}</td>
                             <td>
                                 @if ($homework['date'])
-                                    {{ date('d/m/Y', strtotime($homework['date'])) }}
+                                    <div>{{ date('d/m/Y', strtotime($homework['date'])) }}</div>
+                                    <div class="text-muted">{{ date('H:i:s', strtotime($homework['date'])) }}</div>
                                 @else
                                     <span>Not Submitted</span>
                                 @endif

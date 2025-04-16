@@ -10,6 +10,7 @@ use App\Models\Exercise;
 use App\Models\Homework;
 use App\Models\InfoStudent;
 use App\Models\InfoEmployee;
+use App\Models\WritingAnswer;
 use App\Controllers\Controller;
 
 class HomeController extends Controller
@@ -22,6 +23,7 @@ class HomeController extends Controller
   public $infoStudent;
   public $infoEmployee;
   public $result;
+  public $writingAnswer;
 
   public function __construct()
   {
@@ -33,6 +35,7 @@ class HomeController extends Controller
     $this->infoStudent = new InfoStudent();
     $this->infoEmployee = new InfoEmployee();
     $this->result = new Result();
+    $this->writingAnswer = new WritingAnswer();
     if (!session('user')) {
       redirect('/login');
     }
@@ -132,10 +135,10 @@ class HomeController extends Controller
           $homeworks = $this->result->getReadingHomeworks(session('user')['user_id']);
           break;
         case 'writing':
-          $homeworks = $this->result->getWritingHomeworks(session('user')['user_id'], 1);
+          $homeworks = $this->result->getWritingHomeworks(session('user')['user_id']);
           break;
         case 'listening':
-          $homeworks = $this->result->getListeningHomeworks(session('user')['user_id'], 0);
+          $homeworks = $this->result->getListeningHomeworks(session('user')['user_id']);
           break;
       }
     }
@@ -150,16 +153,70 @@ class HomeController extends Controller
     $exercise = $this->homework->find(['id' => $id]);
     switch ($exercise['skill_type']) {
       case 'Reading':
-        return view('exercises.homework--start-reading', compact('id'));
+        $homework = $this->homework->getWritingHomeworkById($id);
+        return view('exercises.homework--start-reading', compact('id', 'homework'));
         break;
       case 'Writing':
         $homework = $this->homework->getWritingHomeworkById($id);
-        return view('exercises.homework--start-writing', compact('id', 'homework'));
+        if (!isset($_SESSION['writing_start_time'][$id])) {
+          $_SESSION['writing_start_time'][$id] = time();
+        }
+
+        $start_time = $_SESSION['writing_start_time'][$id];
+        $current_time = time();
+
+        $max_time = $homework['time_do_test']; // phút
+        $time_left = null;
+
+        if ($max_time !== null) {
+          $time_left = max(0, $max_time * 60 - ($current_time - $start_time));
+        }
+
+        // if time left is smaller or equal to 0 then unset the session
+        if ($time_left <= 0) {
+          unset($_SESSION['writing_start_time'][$id]);
+        }
+        return view('exercises.homework--start-writing', compact('id', 'homework', 'time_left', 'max_time'));
         break;
       case 'Listening':
         break;
     }
     return view('exercises.homework--start-writing', compact('id'));
+  }
+
+  public function submitWritingHomework($id)
+  {
+    if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
+      return redirect('/');
+    }
+    function convertToHours($time)
+    {
+      // Split the input time into minutes and seconds
+      list($minutes, $seconds) = explode(':', $time);
+
+      // Calculate hours, minutes, and seconds
+      $hours = floor($minutes / 60);
+      $remainingMinutes = $minutes % 60;
+
+      // Format the time as hh:mm:ss
+      return sprintf('%02d:%02d:%02d', $hours, $remainingMinutes, $seconds);
+    }
+    $homework = $this->homework->getWritingHomeworkById($id);
+    $this->writingAnswer->create([
+      'exercise_id' => $id,
+      'student_id' => session('user')['user_id'],
+      'topic_id' => $homework['topic_id'],
+      'content' => request()->input('content'),
+      'time_spent' => convertToHours(request()->input('time_spent')),
+      'word_count' => request()->input('word_count'),
+    ]);
+    $this->result->create([
+      'student_id' => session('user')['user_id'],
+      'exercise_id' => $id,
+      'time_spent' => convertToHours(request()->input('time_spent')),
+    ]);
+    unset($_SESSION['writing_start_time'][$id]);
+    return redirect('/exercises/homeworks?type=writing');
   }
 
   public function test()

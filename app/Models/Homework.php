@@ -19,6 +19,11 @@ class Homework extends Model
 
     public static function getWritingHomeworkById($id)
     {
-        return (new self())->join('writing_topics', 'writing_topics.exercise_id = exercise.id')->where('exercise.id', '=', $id)->first();
+        return (new self())->select(['exercise.*', 'writing_topics.*', 'writing_topics.id AS topic_id'])->join('writing_topics', 'writing_topics.exercise_id = exercise.id')->where('exercise.id', '=', $id)->first();
+    }
+
+    public static function getReadingHomeworkById($id)
+    {
+        return (new self())->select(['exercise.*', 'reading_topics.*', 'reading_topics.id AS topic_id'])->join('reading_topics', 'reading_topics.exercise_id = exercise.id')->where('exercise.id', '=', $id)->first();
     }
 }

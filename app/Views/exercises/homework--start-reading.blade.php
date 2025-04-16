@@ -6,7 +6,7 @@
     <div class="w-100 my-4 bg-white rounded-4 p-4">
         <div class="fs-5">
             <a class="text-decoration-none btn-back underline-hover" href="{{ route('exercises/homeworks') }}">
-                &lt; Reading</a>/Homework 1
+                &lt; Reading</a>/{{ $homework['name'] }}
         </div>
         <form action="" method="POST" class="m-0">
             <div class="border-line p-2 rounded-4 mt-4">

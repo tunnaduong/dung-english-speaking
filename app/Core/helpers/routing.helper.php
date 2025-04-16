@@ -61,6 +61,14 @@ function back(): never
   exit();
 }
 
+function previous($fallbackUrl = '/')
+{
+  // Đảm bảo fallbackUrl luôn bắt đầu bằng dấu '/'
+  $fallbackUrl = '/' . ltrim($fallbackUrl, '/');
+
+  return $_SERVER['HTTP_REFERER'] ?? env('APP_URL', '/') . $fallbackUrl;
+}
+
 /**
  * Tạo đường dẫn từ path và tham số
  * 
