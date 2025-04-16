@@ -10,8 +10,10 @@ use App\Models\Exercise;
 use App\Models\Homework;
 use App\Models\InfoStudent;
 use App\Models\InfoEmployee;
+use App\Models\ReadingAnswer;
 use App\Models\WritingAnswer;
 use App\Controllers\Controller;
+use App\Models\ListeningAnswer;
 
 class HomeController extends Controller
 {
@@ -24,6 +26,8 @@ class HomeController extends Controller
   public $infoEmployee;
   public $result;
   public $writingAnswer;
+  public $readingAnswer;
+  public $listeningAnswer;
 
   public function __construct()
   {
@@ -36,6 +40,8 @@ class HomeController extends Controller
     $this->infoEmployee = new InfoEmployee();
     $this->result = new Result();
     $this->writingAnswer = new WritingAnswer();
+    $this->readingAnswer = new ReadingAnswer();
+    $this->listeningAnswer = new ListeningAnswer();
     if (!session('user')) {
       redirect('/login');
     }
@@ -153,7 +159,7 @@ class HomeController extends Controller
     $exercise = $this->homework->find(['id' => $id]);
     switch ($exercise['skill_type']) {
       case 'Reading':
-        $homework = $this->homework->getWritingHomeworkById($id);
+        $homework = $this->homework->getReadingHomeworkById($id);
         return view('exercises.homework--start-reading', compact('id', 'homework'));
         break;
       case 'Writing':
@@ -171,17 +177,26 @@ class HomeController extends Controller
         if ($max_time !== null) {
           $time_left = max(0, $max_time * 60 - ($current_time - $start_time));
         }
-
-        // if time left is smaller or equal to 0 then unset the session
-        if ($time_left <= 0) {
-          unset($_SESSION['writing_start_time'][$id]);
-        }
         return view('exercises.homework--start-writing', compact('id', 'homework', 'time_left', 'max_time'));
         break;
       case 'Listening':
+        $homework = $this->homework->getListeningHomeworkById($id);
+        return view('exercises.homework--start-listening', compact('id', 'homework'));
         break;
     }
-    return view('exercises.homework--start-writing', compact('id'));
+  }
+
+  public function convertToHours($time)
+  {
+    // Split the input time into minutes and seconds
+    list($minutes, $seconds) = explode(':', $time);
+
+    // Calculate hours, minutes, and seconds
+    $hours = floor($minutes / 60);
+    $remainingMinutes = $minutes % 60;
+
+    // Format the time as hh:mm:ss
+    return sprintf('%02d:%02d:%02d', $hours, $remainingMinutes, $seconds);
   }
 
   public function submitWritingHomework($id)
@@ -189,34 +204,73 @@ class HomeController extends Controller
     if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
       return redirect('/');
     }
-    function convertToHours($time)
-    {
-      // Split the input time into minutes and seconds
-      list($minutes, $seconds) = explode(':', $time);
 
-      // Calculate hours, minutes, and seconds
-      $hours = floor($minutes / 60);
-      $remainingMinutes = $minutes % 60;
-
-      // Format the time as hh:mm:ss
-      return sprintf('%02d:%02d:%02d', $hours, $remainingMinutes, $seconds);
-    }
     $homework = $this->homework->getWritingHomeworkById($id);
     $this->writingAnswer->create([
       'exercise_id' => $id,
       'student_id' => session('user')['user_id'],
       'topic_id' => $homework['topic_id'],
       'content' => request()->input('content'),
-      'time_spent' => convertToHours(request()->input('time_spent')),
+      'time_spent' => $this->convertToHours(request()->input('time_spent')),
       'word_count' => request()->input('word_count'),
     ]);
     $this->result->create([
       'student_id' => session('user')['user_id'],
       'exercise_id' => $id,
-      'time_spent' => convertToHours(request()->input('time_spent')),
+      'time_spent' => $this->convertToHours(request()->input('time_spent')),
     ]);
     unset($_SESSION['writing_start_time'][$id]);
     return redirect('/exercises/homeworks?type=writing');
+  }
+
+  public function submitReadingHomework($id)
+  {
+    if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
+      return redirect('/');
+    }
+    $homework = $this->homework->getReadingHomeworkById($id);
+    $resultId = $this->result->create([
+      'student_id' => session('user')['user_id'],
+      'exercise_id' => $id,
+      'total_questions' => $homework['number_of_answers'],
+      'time_spent' => request()->input('time_spent'),
+    ]);
+    foreach (request()->input('answers') as $questionNumber => $answerText) {
+      $this->readingAnswer::create([
+        'student_id' => session('user')['user_id'],
+        'exercise_id' => $id,
+        'topic_id' => $homework['topic_id'],
+        'result_id' => $resultId,
+        'question_number' => $questionNumber,
+        'answer_text' => trim($answerText),
+      ]);
+    }
+    return redirect('/exercises/homeworks?type=reading');
+  }
+
+  public function submitListeningHomework($id)
+  {
+    if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
+      return redirect('/');
+    }
+    $homework = $this->homework->getListeningHomeworkById($id);
+    $resultId = $this->result->create([
+      'student_id' => session('user')['user_id'],
+      'exercise_id' => $id,
+      'total_questions' => $homework['number_of_answers'],
+      'time_spent' => request()->input('time_spent'),
+    ]);
+    foreach (request()->input('answers') as $questionNumber => $answerText) {
+      $this->listeningAnswer::create([
+        'student_id' => session('user')['user_id'],
+        'exercise_id' => $id,
+        'topic_id' => $homework['topic_id'],
+        'result_id' => $resultId,
+        'question_number' => $questionNumber,
+        'answer_text' => trim($answerText),
+      ]);
+    }
+    return redirect('/exercises/homeworks?type=listening');
   }
 
   public function test()
@@ -224,8 +278,129 @@ class HomeController extends Controller
     if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
       return redirect('/');
     }
-    $tests = $this->homework->getTests();
+    $tests = $this->result->getReadingTests(session('user')['user_id']);
+    if (request()->input('type')) {
+      switch (request()->input('type')) {
+        case 'reading':
+          $tests = $this->result->getReadingTests(session('user')['user_id']);
+          break;
+        case 'writing':
+          $tests = $this->result->getWritingTests(session('user')['user_id']);
+          break;
+        case 'listening':
+          $tests = $this->result->getListeningTests(session('user')['user_id']);
+          break;
+      }
+    }
     return view('exercises.test', compact('tests'));
+  }
+
+  public function doTest($id)
+  {
+    if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
+      return redirect('/');
+    }
+    $exercise = $this->homework->find(['id' => $id]);
+    switch ($exercise['skill_type']) {
+      case 'Reading':
+        $test = $this->homework->getReadingTestById($id);
+        return view('exercises.test--start-reading', compact('id', 'test'));
+        break;
+      case 'Writing':
+        $test = $this->homework->getWritingTestById($id);
+        if (!isset($_SESSION['writing_start_time'][$id])) {
+          $_SESSION['writing_start_time'][$id] = time();
+        }
+
+        $start_time = $_SESSION['writing_start_time'][$id];
+        $current_time = time();
+
+        $max_time = $test['time_do_test'] ?? null; // phút
+        $time_left = null;
+
+        if ($max_time !== null) {
+          $time_left = max(0, $max_time * 60 - ($current_time - $start_time));
+        }
+        return view('exercises.test--start-writing', compact('id', 'test', 'time_left', 'max_time'));
+        break;
+      case 'Listening':
+        $test = $this->homework->getListeningTestById($id);
+        return view('exercises.test--start-listening', compact('id', 'test'));
+        break;
+    }
+  }
+
+  public function submitReadingTest($id)
+  {
+    if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
+      return redirect('/');
+    }
+    $homework = $this->homework->getReadingTestById($id);
+    $resultId = $this->result->create([
+      'student_id' => session('user')['user_id'],
+      'exercise_id' => $id,
+      'total_questions' => $homework['number_of_answers'],
+      'time_spent' => request()->input('time_spent'),
+    ]);
+    foreach (request()->input('answers') as $questionNumber => $answerText) {
+      $this->readingAnswer::create([
+        'student_id' => session('user')['user_id'],
+        'exercise_id' => $id,
+        'topic_id' => $homework['topic_id'],
+        'result_id' => $resultId,
+        'question_number' => $questionNumber,
+        'answer_text' => trim($answerText),
+      ]);
+    }
+    return redirect('/exercises/tests?type=reading');
+  }
+
+  public function submitWritingTest($id)
+  {
+    if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
+      return redirect('/');
+    }
+    $homework = $this->homework->getWritingTestById($id);
+    $this->writingAnswer->create([
+      'exercise_id' => $id,
+      'student_id' => session('user')['user_id'],
+      'topic_id' => $homework['topic_id'],
+      'content' => request()->input('content'),
+      'time_spent' => $this->convertToHours(request()->input('time_spent')),
+      'word_count' => request()->input('word_count'),
+    ]);
+    $this->result->create([
+      'student_id' => session('user')['user_id'],
+      'exercise_id' => $id,
+      'time_spent' => $this->convertToHours(request()->input('time_spent')),
+    ]);
+    unset($_SESSION['writing_start_time'][$id]);
+    return redirect('/exercises/tests?type=writing');
+  }
+
+  public function submitListeningTest($id)
+  {
+    if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
+      return redirect('/');
+    }
+    $homework = $this->homework->getListeningTestById($id);
+    $resultId = $this->result->create([
+      'student_id' => session('user')['user_id'],
+      'exercise_id' => $id,
+      'total_questions' => $homework['number_of_answers'],
+      'time_spent' => request()->input('time_spent'),
+    ]);
+    foreach (request()->input('answers') as $questionNumber => $answerText) {
+      $this->listeningAnswer::create([
+        'student_id' => session('user')['user_id'],
+        'exercise_id' => $id,
+        'topic_id' => $homework['topic_id'],
+        'result_id' => $resultId,
+        'question_number' => $questionNumber,
+        'answer_text' => trim($answerText),
+      ]);
+    }
+    return redirect('/exercises/tests?type=listening');
   }
 
   public function absence()

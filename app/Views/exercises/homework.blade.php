@@ -64,14 +64,14 @@
                             </td>
                             <td>{{ $homework['score'] !== null ? round($homework['score'], 1) : '0' }}</td>
                             <td>
-                                @if ($homework['score'] !== null)
+                                @if ($homework['date'] !== null)
                                     <a href="{{ route('exercises/homeworks/' . $homework['exercise_id']) }}">Redo</a>
                                 @else
                                     <a href="{{ route('exercises/homeworks/' . $homework['exercise_id']) }}">Do</a>
                                 @endif
                             </td>
                             <td>
-                                @if ($homework['score'] !== null)
+                                @if ($homework['date'] !== null)
                                     <a href="#">Review</a>
                                 @endif
                             </td>

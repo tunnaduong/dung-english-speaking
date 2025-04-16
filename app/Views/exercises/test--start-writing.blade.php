@@ -1,15 +1,14 @@
 @extends('layouts.home', ['active' => 2])
 
-@section('title', 'Start Homework | DungES')
+@section('title', 'Start Test | DungES')
 
 @section('content')
     <div class="w-100 my-4 bg-white rounded-4 p-4">
         <div class="fs-5">
-            <a class="text-decoration-none btn-back underline-hover" href="{{ previous('exercises/homeworks') }}">
-                &lt; Writing</a>/{{ $homework['name'] }}
+            <a class="text-decoration-none btn-back underline-hover" href="{{ previous('exercises/tests') }}">
+                &lt; Writing</a>/{{ $test['name'] }}
         </div>
-        <form action="{{ route('exercises/homeworks/' . $id . '/submit-writing') }}" method="POST" class="m-0"
-            id="writingForm">
+        <form action="{{ route('exercises/tests/' . $id . '/submit-writing') }}" method="POST" class="m-0" id="writingForm">
             <div class="border-line p-2 rounded-4 mt-4 limit-height">
                 <div class="fw-bold">Topic:</div>
                 <div>{!! nl2br($test['topic']) !!}</div>
@@ -26,7 +25,7 @@
             <input type="hidden" name="time_spent" id="timeSpent" value="00:00">
             <input type="hidden" name="word_count" id="wordCountInput" value="0">
             <div class="d-flex justify-content-end mt-3 gap-4">
-                <a href="{{ previous('exercises/homeworks') }}" class="btn-classroom">Cancel</a>
+                <a href="{{ previous('exercises/tests') }}" class="btn-classroom">Cancel</a>
                 <button class="btn-classroom" type="submit">Submit</button>
             </div>
         </form>

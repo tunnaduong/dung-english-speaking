@@ -668,3 +668,8 @@ select option:checked {
   background-color: #e9effd;
   color: #2f80ed;
 }
+
+.limit-height {
+  max-height: 300px;
+  overflow-y: auto;
+}
