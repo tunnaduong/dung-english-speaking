@@ -72,9 +72,25 @@
                 </div>
             </div>
 
-            <div class="d-flex align-items-center justify-content-end">
-                <button type="submit" class="btn btn-light bg-white btn-update rounded-4">Update</button>
+            <div class="d-flex align-items-center justify-content-end gap-3">
+                <button type="button" class="btn btn-light bg-white btn-update rounded-4">Cancel</button>
+                <button type="submit" class="btn btn-classroom btn-edit btn-disabled px-3" id="submitBtn"><img
+                        src="{{ asset('edit.svg') }}" class="me-2" width="20">
+                    Edit</button>
             </div>
         </form>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        const inputs = document.querySelectorAll(".form-control");
+        const button = document.getElementById("submitBtn");
+
+        inputs.forEach(input => {
+            input.addEventListener("input", () => {
+                button.classList.remove("btn-disabled"); // chỉ cần có thay đổi là thêm class
+            });
+        });
+    </script>
+@endpush

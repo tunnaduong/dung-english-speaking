@@ -37,7 +37,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($students as $student)
+                    @foreach ($students['data'] as $student)
                         <tr>
                             <td><a href="{{ route('students/' . $student['s_id'] . '/profile') }}"
                                     class="text-black">{{ $student['name'] }}</a></td>
@@ -49,5 +49,9 @@
                 </tbody>
             </table>
         </div>
+        @include('components.pagination', [
+            'current_page' => $students['current_page'],
+            'last_page' => $students['last_page'],
+        ])
     </div>
 @endsection

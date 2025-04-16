@@ -104,7 +104,36 @@ class HomeController extends Controller
       return view('admin.courses', compact('courses'));
     }
     if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
-      $courses = $this->course::getCoursesByTeacherId(session('user')['user_id']);
+      $courses = $this->infoEmployee::query()
+        ->select([
+          'class.*',
+          'info_employee.*',
+          'c.*', // Alias for the course table
+          'COUNT(class.id) AS total_classes',
+          'c.id AS co_id',
+          'class.id AS c_id'
+        ])
+        ->join('class', 'class.teacher_id = info_employee.id', 'INNER') // Join with the class table
+        ->join('course', 'class.id_course = c.id', 'INNER', 'c') // Alias the course table as 'c'
+        ->where('info_employee.id', '=', session('user')['user_id']) // Filter by teacher ID
+        ->groupBy(['c.id', 'c.course_name']) // Group by course ID and course name
+        ->get();
+      if (request()->input('search')) {
+        $courses = $this->infoEmployee->select([
+          'class.*',
+          'info_employee.*',
+          'c.*', // Alias for the course table
+          'COUNT(class.id) AS total_classes',
+          'c.id AS co_id',
+          'class.id AS c_id'
+        ])
+          ->join('class', 'class.teacher_id = info_employee.id', 'INNER') // Join with the class table
+          ->join('course', 'class.id_course = c.id', 'INNER', 'c') // Alias the course table as 'c'
+          ->where('info_employee.id', '=', session('user')['user_id']) // Filter by teacher ID
+          ->groupBy(['c.id', 'c.course_name'])
+          ->where('course_name', 'LIKE', "%" . request()->input('search') . "%")
+          ->get();
+      }
       return view('teacher.courses', compact('courses'));
     }
     $courses = $this->course::getCoursesByStudentId(session('user')['user_id']);

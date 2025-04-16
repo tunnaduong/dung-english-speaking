@@ -25,7 +25,9 @@
                 <div class="fw-semi text-gray">
                     <label for="skill" style="width: 50px">Skill</label>
                     <select name="skill" id="skill" class="rounded-1">
-                        <option value="reading">Reading</option>
+                        <option value="Reading">Reading</option>
+                        <option value="Writing">Writing</option>
+                        <option value="Listening">Listening</option>
                     </select>
                 </div>
             </div>

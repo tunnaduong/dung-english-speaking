@@ -30,6 +30,8 @@ class Model
   /** @var array|null Sắp xếp theo cột */
   protected ?array $orderBy = null;
 
+  protected $groupBy = null;
+
   /** @var array Các bảng JOIN */
   protected array $joins = [];
 
@@ -41,6 +43,12 @@ class Model
   public static function query(): static
   {
     return new static();
+  }
+
+  public function groupBy(array $columns): self
+  {
+    $this->groupBy = $columns;
+    return $this;
   }
 
   /**
@@ -181,7 +189,6 @@ class Model
 
     // Điều kiện WHERE
     $whereParts = [];
-    $params = [];
 
     if (!empty($this->whereConditions)) {
       foreach ($this->whereConditions as $condition) {
@@ -199,7 +206,6 @@ class Model
         $params[] = $condition['value'];
       }
 
-      // Nếu có where trước đó thì nối bằng AND, ngược lại thì là WHERE
       if (!empty($whereParts)) {
         $whereParts[] = '(' . implode(' OR ', $orParts) . ')';
       } else {
@@ -211,6 +217,10 @@ class Model
       $sql .= " WHERE " . implode(' AND ', $whereParts);
     }
 
+    // Thêm GROUP BY
+    if (!empty($this->groupBy)) {
+      $sql .= " GROUP BY " . implode(', ', $this->groupBy);
+    }
 
     // Sắp xếp ORDER BY
     if ($this->orderBy !== null) {

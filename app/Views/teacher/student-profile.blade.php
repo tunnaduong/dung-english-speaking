@@ -95,9 +95,9 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Pre IELTS 01</td>
-                        <td>01/02/2025</td>
-                        <td><a href="{{ route('students/1/class/1') }}">View</a></td>
+                        <td>{{ $class['class_name'] }}</td>
+                        <td>{{ date('d/m/Y', strtotime($class['start_date'])) }}</td>
+                        <td><a href="{{ route('students/' . $id . '/class/' . $class['id']) }}">View</a></td>
                     </tr>
                 </tbody>
             </table>

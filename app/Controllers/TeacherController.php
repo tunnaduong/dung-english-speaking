@@ -43,7 +43,13 @@ class TeacherController extends Controller
             }
             return view('admin.classrooms', compact('classrooms'));
         }
-        $classrooms = $this->classroom->getClasses(session('user')['user_id']);
+        $classrooms = $this->classroom->select(['class.id AS class_id', 'class.*', 'info_employee.*', 'course.*'])->where('teacher_id', '=', session('user')['user_id'])
+            ->join('info_employee', 'class.teacher_id = info_employee.id', 'INNER')
+            ->join('course', 'class.id_course = course.id', 'INNER')
+            ->get();
+        if (request()->get('search')) {
+            $classrooms = $this->classroom->where('class_name', 'LIKE', "%" . request()->get('search') . "%")->get();
+        }
         return view('teacher.classrooms', compact('classrooms'));
     }
 
@@ -315,7 +321,7 @@ class TeacherController extends Controller
         $students = $this->studentInfo->select(['info_student.id AS s_id', 'students.*', 'info_student.*', 'class.*'])
             ->join('class', 'info_student.class_id = class.id', 'INNER')
             ->join('students', 'info_student.id = students.student_id', 'LEFT')
-            ->get();
+            ->paginate();
         // if has search query
         if (request()->get('search')) {
             $students = $this->studentInfo->where('name', 'LIKE', "%" . request()->get('search') . "%")->paginate();
@@ -329,17 +335,26 @@ class TeacherController extends Controller
     public function studentProfile($id)
     {
         $student = $this->studentInfo::getStudentById($id);
-        return view('teacher.student-profile', compact('id', 'student'));
+        $class = $this->classroom::find(['id' => $student['class_id']]);
+        return view('teacher.student-profile', compact('id', 'student', 'class'));
     }
 
     public function studentProfileClassDetail($id, $classId)
     {
-        return view('teacher.student-profile-class-detail', compact('id'));
+        $student = $this->studentInfo::getStudentById($id);
+        $class = $this->classroom::find(['id' => $student['class_id']]);
+        return view('teacher.student-profile-class-detail', compact('id', 'classId', 'student', 'class'));
     }
 
     public function correction()
     {
-        $classrooms = $this->classroom->getClasses(session('user')['user_id']);
+        $classrooms = $this->classroom->select(['class.id AS class_id', 'class.*', 'info_employee.*', 'course.*'])->where('teacher_id', '=', session('user')['user_id'])
+            ->join('info_employee', 'class.teacher_id = info_employee.id', 'INNER')
+            ->join('course', 'class.id_course = course.id', 'INNER')
+            ->get();
+        if (request()->get('search')) {
+            $classrooms = $this->classroom->where('class_name', 'LIKE', "%" . request()->get('search') . "%")->get();
+        }
         return view('teacher.correction', compact('classrooms'));
     }
 
