@@ -509,13 +509,21 @@ class TeacherController extends Controller
             return redirect('/exercises');
         }
         $exercise = $this->exercise::find(['id' => $id]);
-        $topic = ReadingTopic::find(['exercise_id' => $id]);
-        if (!$topic) {
-            // Handle the case where no topic is found
-            return redirect('/exercises');
+        switch ($exercise['skill_type']) {
+            case 'Writing':
+                return view('teacher.edit-exercise--writing');
+            case 'Listening':
+                return view('teacher.edit-exercise--listening');
+            case 'Reading':
+                $topic = ReadingTopic::find(['exercise_id' => $id]);
+                if (!$topic) {
+                    // Handle the case where no topic is found
+                    return redirect('/exercises');
+                }
+                $answers = ReadingQuestion::query()->where('topic_id', '=', $topic['id'])->get();
+                return view('teacher.edit-exercise--reading', compact('id', 'exercise', 'topic', 'answers'));
         }
-        $answers = ReadingQuestion::query()->where('topic_id', '=', $topic['id'])->get();
-        return view('teacher.edit-exercise--reading', compact('id', 'exercise', 'topic', 'answers'));
+        return;
     }
 
     public function deleteExercise($id)
