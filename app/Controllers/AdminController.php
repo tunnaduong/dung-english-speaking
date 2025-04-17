@@ -130,9 +130,10 @@ class AdminController extends Controller
         if (request()->isMethod('post')) {
             $data = request()->post();
             $rules = [
-                'start_time' => 'required',
-                'end_time' => 'required',
-                'day_of_week' => 'required',
+                'shift1' => 'required',
+                'shift2' => 'required',
+                'day_of_week1' => 'required',
+                'day_of_week2' => 'required',
             ];
             if (!request()->validate($rules, $data)) {
                 return back();
@@ -148,9 +149,10 @@ class AdminController extends Controller
         if (request()->isMethod('post')) {
             $data = request()->post();
             $rules = [
-                'start_time' => 'required',
-                'end_time' => 'required',
-                'day_of_week' => 'required',
+                'shift1' => 'required',
+                'shift2' => 'required',
+                'day_of_week1' => 'required',
+                'day_of_week2' => 'required',
             ];
             if (!request()->validate($rules, $data)) {
                 return back();

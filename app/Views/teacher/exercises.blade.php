@@ -20,6 +20,7 @@
                 <thead class="overflow-hidden">
                     <tr>
                         <th>No.</th>
+                        <th>ID</th>
                         <th>Type</th>
                         <th>Exercise name</th>
                         <th>Level</th>
@@ -31,6 +32,7 @@
                     @foreach ($exercises as $exercise)
                         <tr>
                             <td>{{ $loop->index + 1 }}</td>
+                            <td>{{ $exercise['id'] }}</td>
                             <td>{{ $exercise['type'] }}</td>
                             <td>{{ $exercise['name'] }}</td>
                             <td>{{ $exercise['level'] }}</td>

@@ -20,50 +20,53 @@
                     </h4>
                     <div class="line-bottom"></div>
                 </div>
-                <div class="number-of">NoS: {{ count($students) }}</div>
+                <div class="number-of">NoS: {{ count($studentData) }}</div>
             </div>
             <div class="table-responsive table-limit-height my-3">
                 <table class="table table-custom table-big table-sticky table-horizontal" style="white-space: nowrap">
                     <thead class="overflow-hidden">
                         <tr>
                             <th>No.</th>
-                            <th style="width: 100px">ID Student</th>
-                            <th style="width: 200px">Full name</th>
-                            <th style="width: 100px">Day 1</th>
-                            <th style="width: 100px">Day 2</th>
-                            <th style="width: 100px">Day 3</th>
-                            <th>Day 4</th>
-                            <th>Day 5</th>
-                            <th>Day 6</th>
-                            <th>Day 7</th>
-                            <th>Day 8</th>
-                            <th>Day 9</th>
-                            <th>Day 10</th>
+                            <th>ID Student</th>
+                            <th>Full name</th>
+                            @for ($i = 1; $i <= $course['NoL']; $i++)
+                                <th style="min-width: 135px">Day {{ $i }}</th>
+                            @endfor
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($students as $student)
+                        @foreach ($studentData as $student)
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
-                                <td>{{ $student['id'] }}</td>
+                                <td>{{ $student['student_id'] }}</td>
                                 <td>{{ $student['name'] }}</td>
-                                <td>{{ $student['day_1'] }}</td>
-                                <td>{{ $student['day_2'] }}</td>
-                                <td>{{ $student['day_3'] }}</td>
-                                <td>{{ $student['day_4'] }}</td>
-                                <td>{{ $student['day_5'] }}</td>
-                                <td>{{ $student['day_6'] }}</td>
-                                <td>{{ $student['day_7'] }}</td>
-                                <td>{{ $student['day_8'] }}</td>
-                                <td>{{ $student['day_9'] }}</td>
-                                <td>{{ $student['day_10'] }}</td>
+                                @for ($i = 1; $i <= $course['NoL']; $i++)
+                                    <td>
+                                        <select name="attendance[{{ $student['student_id'] }}][day_{{ $i }}]"
+                                            class="form-select form-select-sm w-100">
+                                            <option value="present"
+                                                {{ ($student['days']['day_' . $i] ?? 'present') === 'present' ? 'selected' : '' }}>
+                                                Có</option>
+                                            <option value="absent"
+                                                {{ ($student['days']['day_' . $i] ?? '') === 'absent' ? 'selected' : '' }}>
+                                                Vắng</option>
+                                            <option value="late"
+                                                {{ ($student['days']['day_' . $i] ?? '') === 'late' ? 'selected' : '' }}>Đi
+                                                muộn</option>
+                                            <option value="excused"
+                                                {{ ($student['days']['day_' . $i] ?? '') === 'excused' ? 'selected' : '' }}>
+                                                Có phép</option>
+                                        </select>
+                                    </td>
+                                @endfor
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
             <div class="d-flex justify-content-end">
-                <a href="{{ route('classrooms/' . $id . '/attendance/submit') }}" class="btn-classroom px-3 w-auto">Submit</a>
+                <a href="{{ route('classrooms/' . $id . '/attendance/submit') }}"
+                    class="btn-classroom px-3 w-auto">Submit</a>
             </div>
         </div>
     </div>

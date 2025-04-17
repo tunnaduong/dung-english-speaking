@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Core\Asset\Asset;
+use App\Models\Attendance;
+use App\Models\ClassProgress;
 use App\Models\Course;
 use App\Models\Exercise;
 use App\Models\Classroom;
@@ -12,6 +14,7 @@ use App\Models\ListeningQuestion;
 use App\Models\ListeningTopic;
 use App\Models\ReadingQuestion;
 use App\Models\ReadingTopic;
+use App\Models\Student;
 use App\Models\WritingTopic;
 
 class TeacherController extends Controller
@@ -95,149 +98,72 @@ class TeacherController extends Controller
 
     public function classroomAttendance($id)
     {
-        $students = [
-            [
-                'id' => 'S00236',
-                'name' => 'Nguyễn Tiến Dũng',
-                'day_1' => 'Không phép',
-                'day_2' => 'Có',
-                'day_3' => 'Có phép',
-                'day_4' => 'Có',
-                'day_5' => 'Có',
-                'day_6' => 'Có',
-                'day_7' => 'Có',
-                'day_8' => 'Có',
-                'day_9' => 'Có',
-                'day_10' => 'Có',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Nguyễn Minh Đức',
-                'day_1' => 'Có',
-                'day_2' => 'Có',
-                'day_3' => 'Không phép',
-                'day_4' => 'Có',
-                'day_5' => 'Có',
-                'day_6' => 'Có',
-                'day_7' => 'Có',
-                'day_8' => 'Có',
-                'day_9' => 'Có',
-                'day_10' => 'Có',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Trần Thu Hà',
-                'day_1' => 'Có phép',
-                'day_2' => 'Có',
-                'day_3' => 'Có',
-                'day_4' => 'Có',
-                'day_5' => 'Có',
-                'day_6' => 'Có',
-                'day_7' => 'Có',
-                'day_8' => 'Có',
-                'day_9' => 'Có',
-                'day_10' => 'Có',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Trịnh Duy Hoàng',
-                'day_1' => 'Có',
-                'day_2' => 'Không phép',
-                'day_3' => 'Có',
-                'day_4' => 'Có',
-                'day_5' => 'Có',
-                'day_6' => 'Có',
-                'day_7' => 'Có',
-                'day_8' => 'Có',
-                'day_9' => 'Có',
-                'day_10' => 'Có',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Phạm Anh Kiên',
-                'day_1' => 'Có',
-                'day_2' => 'Có',
-                'day_3' => 'Có',
-                'day_4' => 'Có',
-                'day_5' => 'Có',
-                'day_6' => 'Có',
-                'day_7' => 'Có',
-                'day_8' => 'Có',
-                'day_9' => 'Có',
-                'day_10' => 'Có',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Nguyễn Tấn Lộc',
-                'day_1' => 'Có',
-                'day_2' => 'Có',
-                'day_3' => 'Có',
-                'day_4' => 'Có',
-                'day_5' => 'Có',
-                'day_6' => 'Có',
-                'day_7' => 'Có',
-                'day_8' => 'Có',
-                'day_9' => 'Có',
-                'day_10' => 'Có',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Nguyễn Nam Phong',
-                'day_1' => 'Có',
-                'day_2' => 'Có',
-                'day_3' => 'Có',
-                'day_4' => 'Có',
-                'day_5' => 'Có',
-                'day_6' => 'Có',
-                'day_7' => 'Có',
-                'day_8' => 'Có',
-                'day_9' => 'Có',
-                'day_10' => 'Có',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Nguyễn Hà Phương',
-                'day_1' => 'Có',
-                'day_2' => 'Có',
-                'day_3' => 'Có',
-                'day_4' => 'Có',
-                'day_5' => 'Có',
-                'day_6' => 'Có',
-                'day_7' => 'Có',
-                'day_8' => 'Có',
-                'day_9' => 'Có',
-                'day_10' => 'Có',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Lê Minh Trang',
-                'day_1' => 'Có',
-                'day_2' => 'Có',
-                'day_3' => 'Có',
-                'day_4' => 'Có',
-                'day_5' => 'Có',
-                'day_6' => 'Có',
-                'day_7' => 'Có',
-                'day_8' => 'Có',
-                'day_9' => 'Có',
-                'day_10' => 'Có',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Trịnh Thị Phi Yến',
-                'day_1' => 'Có',
-                'day_2' => 'Có',
-                'day_3' => 'Có',
-                'day_4' => 'Có',
-                'day_5' => 'Có',
-                'day_6' => 'Có',
-                'day_7' => 'Có',
-                'day_8' => 'Có',
-                'day_9' => 'Có',
-                'day_10' => 'Có',
-            ],
-        ];
-        return view('teacher.classroom-attendance', compact('students', 'id'));
+        $days = ClassProgress::query()
+            ->where('class_id', '=', $id)
+            ->orderBy('date')
+            ->get();
+
+        $students = InfoStudent::query()
+            ->where('class_id', '=', $id)
+            ->get();
+
+        $classProgressIds = [];
+        foreach ($days as $day) {
+            $classProgressIds[] = $day['id']; // nếu dùng array, dùng ->id nếu là object
+        }
+
+        $allAttendances = Attendance::query()->get();
+
+        $attendances = [];
+        foreach ($allAttendances as $att) {
+            if (in_array($att['class_progress_id'], $classProgressIds)) {
+                $key = $att['student_id'] . '_' . $att['class_progress_id'];
+                $attendances[$key] = $att;
+            }
+        }
+
+        $studentData = [];
+
+        foreach ($students as $student) {
+            $row = [
+                'student_id' => $student['id'],
+                'name' => $student['name'],
+                'days' => [],
+            ];
+
+            foreach ($days as $index => $day) {
+                $key = $student['id'] . '_' . $day['id'];
+                $attendance = $attendances[$key][0] ?? null;
+
+                if ($attendance) {
+                    switch ($attendance['status']) {
+                        case 'absent':
+                            $row['days'][] = 'Không phép';
+                            break;
+                        case 'late':
+                            $row['days'][] = 'Đi muộn';
+                            break;
+                        case 'present':
+                            $row['days'][] = 'Có';
+                            break;
+                        case 'excused':
+                            $row['days'][] = 'Có phép';
+                            break;
+                        default:
+                            $row['days'][] = $attendance['status'];
+                            break;
+                    }
+                } else {
+                    $row['days'][] = 'Có'; // Mặc định nếu không có điểm danh
+                }
+            }
+
+            $studentData[] = $row;
+        }
+
+        $course = Course::getCourseByClassId($id);
+
+        return view('teacher.classroom-attendance', compact('studentData', 'id', 'course'));
     }
 
     public function editCurriculum($id, $curriculumId)

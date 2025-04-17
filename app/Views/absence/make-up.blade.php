@@ -34,16 +34,31 @@
                 </thead>
                 <tbody>
                     @foreach ($makeUpData as $class)
-                        <tr>
-                            <td>{{ $class['class_id'] }}</td>
-                            <td>{{ $class['class_name'] }}</td>
-                            <td>{{ date('d/m/Y', strtotime($class['date'])) }}</td>
-                            <td>{{ $class['shift'] }}</td>
-                            <td><a href="#" class="text-decoration-none" data-bs-toggle="modal"
-                                    data-bs-target="#enrollModal{{ $class['class_id'] }}">Enroll</a></td>
-                        </tr>
+                        @if (!empty($class['shift1']))
+                            <tr>
+                                <td>{{ $class['class_id'] }}</td>
+                                <td>{{ $class['class_name'] }}</td>
+                                <td>{{ date('d/m/Y', strtotime($class['date'])) }}</td>
+                                <td>{{ $class['shift1'] }}</td>
+                                <td>
+                                    <a href="#" class="text-decoration-none" data-bs-toggle="modal"
+                                        data-bs-target="#enrollModal{{ $class['class_id'] }}">Enroll</a>
+                                </td>
+                            </tr>
+                        @endif
+                        @if (!empty($class['shift2']))
+                            <tr>
+                                <td>{{ $class['class_id'] }}</td>
+                                <td>{{ $class['class_name'] }}</td>
+                                <td>{{ date('d/m/Y', strtotime($class['date'])) }}</td>
+                                <td>{{ $class['shift2'] }}</td>
+                                <td>
+                                    <a href="#" class="text-decoration-none" data-bs-toggle="modal"
+                                        data-bs-target="#enrollModal{{ $class['class_id'] }}">Enroll</a>
+                                </td>
+                            </tr>
+                        @endif
                         @push('scripts')
-                            <!-- Bootstrap 5 Modal -->
                             <div class="modal fade" id="enrollModal{{ $class['class_id'] }}" tabindex="-1"
                                 aria-labelledby="enrollModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">

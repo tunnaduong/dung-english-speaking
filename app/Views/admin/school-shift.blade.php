@@ -25,10 +25,10 @@
                     <thead class="overflow-hidden">
                         <tr>
                             <th>No.</th>
-                            <th>ID School Shift</th>
-                            <th>Day of Week</th>
-                            <th>Start Time</th>
-                            <th>End Time</th>
+                            <th>Session 1</th>
+                            <th>Shift 1</th>
+                            <th>Session 2</th>
+                            <th>Shift 2</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -36,10 +36,10 @@
                         @foreach ($shifts as $shift)
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
-                                <td>{{ $shift['id'] }}</td>
-                                <td>{{ $shift['day_of_week'] }}</td>
-                                <td>{{ $shift['start_time'] }}</td>
-                                <td>{{ $shift['end_time'] }}</td>
+                                <td>{{ $shift['day_of_week1'] }}</td>
+                                <td>{{ $shift['shift1'] }}</td>
+                                <td>{{ $shift['day_of_week2'] }}</td>
+                                <td>{{ $shift['shift2'] }}</td>
                                 <td><a href="{{ route('school-shift/' . $shift['id'] . '/edit') }}" class="me-2">
                                         <img src="{{ asset('edit.svg') }}" /></a><button class="btn-custom"
                                         data-bs-toggle="modal" data-bs-target="#deleteModal{{ $loop->index }}"><img

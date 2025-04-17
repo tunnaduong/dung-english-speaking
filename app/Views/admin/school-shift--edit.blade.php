@@ -22,41 +22,66 @@
                 <div class="row gy-3">
                     <div class="col-md-6">
                         <div>
-                            <label for="start_time" class="form-label fs-09"><img src="{{ asset('person_outline.svg') }}">
-                                Start Time</label>
-                            <input type="time" name="start_time" id="start_time" class="form-control"
-                                value="{{ $shift['start_time'] }}">
+                            <label for="shift1" class="form-label fs-09"><img src="{{ asset('calendar_month.svg') }}">
+                                Shift 1</label>
+                            <input type="number" min="1" max="10" name="shift1" id="shift1"
+                                class="form-control" value="{{ $shift['shift1'] }}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div>
-                            <label for="end_time" class="form-label fs-09"><img src="{{ asset('calendar_month.svg') }}">
-                                End Time</label>
-                            <input type="time" name="end_time" id="end_time" class="form-control"
-                                value="{{ $shift['end_time'] }}">
+                            <label for="shift2" class="form-label fs-09"><img src="{{ asset('calendar_month.svg') }}">
+                                Shift 2</label>
+                            <input type="number" min="1" max="10" name="shift2" id="shift2"
+                                class="form-control" value="{{ $shift['shift2'] }}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div>
                             <label for="day_of_week" class="form-label fs-09"><img src="{{ asset('calendar_month.svg') }}">
-                                Day of Week</label>
-                            <select name="day_of_week" id="day_of_week" class="form-select">
+                                Day of Week 1</label>
+                            <select name="day_of_week1" id="day_of_week" class="form-select">
                                 <option value="" disabled selected>Select Day of Week</option>
-                                <option value="Monday" {{ $shift['day_of_week'] == 'Monday' ? 'selected' : '' }}>Monday
+                                <option value="Monday" {{ $shift['day_of_week1'] == 'Monday' ? 'selected' : '' }}>Monday
                                 </option>
-                                <option value="Tuesday" {{ $shift['day_of_week'] == 'Tuesday' ? 'selected' : '' }}>Tuesday
+                                <option value="Tuesday" {{ $shift['day_of_week1'] == 'Tuesday' ? 'selected' : '' }}>Tuesday
                                 </option>
-                                <option value="Wednesday" {{ $shift['day_of_week'] == 'Wednesday' ? 'selected' : '' }}>
+                                <option value="Wednesday" {{ $shift['day_of_week1'] == 'Wednesday' ? 'selected' : '' }}>
                                     Wednesday</option>
-                                <option value="Thursday" {{ $shift['day_of_week'] == 'Thursday' ? 'selected' : '' }}>
+                                <option value="Thursday" {{ $shift['day_of_week1'] == 'Thursday' ? 'selected' : '' }}>
                                     Thursday
                                 </option>
-                                <option value="Friday" {{ $shift['day_of_week'] == 'Friday' ? 'selected' : '' }}>Friday
+                                <option value="Friday" {{ $shift['day_of_week1'] == 'Friday' ? 'selected' : '' }}>Friday
                                 </option>
-                                <option value="Saturday" {{ $shift['day_of_week'] == 'Saturday' ? 'selected' : '' }}>
+                                <option value="Saturday" {{ $shift['day_of_week1'] == 'Saturday' ? 'selected' : '' }}>
                                     Saturday
                                 </option>
-                                <option value="Sunday" {{ $shift['day_of_week'] == 'Sunday' ? 'selected' : '' }}>Sunday
+                                <option value="Sunday" {{ $shift['day_of_week1'] == 'Sunday' ? 'selected' : '' }}>Sunday
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <label for="day_of_week" class="form-label fs-09"><img src="{{ asset('calendar_month.svg') }}">
+                                Day of Week 2</label>
+                            <select name="day_of_week2" id="day_of_week" class="form-select">
+                                <option value="" disabled selected>Select Day of Week</option>
+                                <option value="Monday" {{ $shift['day_of_week2'] == 'Monday' ? 'selected' : '' }}>Monday
+                                </option>
+                                <option value="Tuesday" {{ $shift['day_of_week2'] == 'Tuesday' ? 'selected' : '' }}>Tuesday
+                                </option>
+                                <option value="Wednesday" {{ $shift['day_of_week2'] == 'Wednesday' ? 'selected' : '' }}>
+                                    Wednesday</option>
+                                <option value="Thursday" {{ $shift['day_of_week2'] == 'Thursday' ? 'selected' : '' }}>
+                                    Thursday
+                                </option>
+                                <option value="Friday" {{ $shift['day_of_week2'] == 'Friday' ? 'selected' : '' }}>Friday
+                                </option>
+                                <option value="Saturday" {{ $shift['day_of_week2'] == 'Saturday' ? 'selected' : '' }}>
+                                    Saturday
+                                </option>
+                                <option value="Sunday" {{ $shift['day_of_week2'] == 'Sunday' ? 'selected' : '' }}>Sunday
                                 </option>
                             </select>
                         </div>

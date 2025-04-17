@@ -286,14 +286,14 @@ class HomeController extends Controller
         WHERE student_id = ? AND exercise_id = ?", [$score, $studentId, $exerciseId]);
   }
 
-  public function chamDiemVaCapNhatResultListening(int $studentId, int $exerciseId): void
+  public function chamDiemVaCapNhatResultListening(int $studentId, int $exerciseId, $resultId): void
   {
     // Lấy tất cả câu trả lời của học viên
     $answers = DB::query("SELECT ra.question_number, ra.answer_text, rq.answer_key
         FROM listening_answers AS ra
         JOIN listening_questions AS rq
           ON ra.topic_id = rq.topic_id AND ra.question_number = rq.question_number
-        WHERE ra.student_id = ? AND ra.exercise_id = ?", [$studentId, $exerciseId])->fetchAll();
+        WHERE ra.student_id = ? AND ra.exercise_id = ? AND ra.result_id = ?", [$studentId, $exerciseId, $resultId])->fetchAll();
 
     $total = count($answers);
     $correct = 0;
@@ -310,7 +310,7 @@ class HomeController extends Controller
     // Cập nhật điểm vào bảng result
     DB::exec("UPDATE result
         SET score = ?
-        WHERE student_id = ? AND exercise_id = ?", [$score, $studentId, $exerciseId]);
+        WHERE student_id = ? AND exercise_id = ? AND id = ?", [$score, $studentId, $exerciseId, $resultId]);
   }
 
   public function submitReadingHomework($id)
@@ -361,7 +361,7 @@ class HomeController extends Controller
         'answer_text' => trim($answerText),
       ]);
     }
-    $this->chamDiemVaCapNhatResultListening(session('user')['user_id'], $id);
+    $this->chamDiemVaCapNhatResultListening(session('user')['user_id'], $id, $resultId);
     return redirect('/exercises/homeworks?type=listening');
   }
 
@@ -444,6 +444,7 @@ class HomeController extends Controller
         'answer_text' => trim($answerText),
       ]);
     }
+    $this->chamDiemVaCapNhatResultReading(session('user')['user_id'], $id);
     return redirect('/exercises/tests?type=reading');
   }
 
@@ -492,6 +493,7 @@ class HomeController extends Controller
         'answer_text' => trim($answerText),
       ]);
     }
+    $this->chamDiemVaCapNhatResultListening(session('user')['user_id'], $id, $resultId);
     return redirect('/exercises/tests?type=listening');
   }
 

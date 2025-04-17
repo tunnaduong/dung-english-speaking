@@ -64,15 +64,6 @@ class AbsenceController extends Controller
         return view('absence.make-up', compact('makeUpData'));
     }
 
-    public function history()
-    {
-        if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
-            return redirect('/');
-        }
-        $historyData = $this->absence->getAbsenceHistory(session('user')['id']);
-        return view('absence.history', compact('historyData'));
-    }
-
     public function makeUpClass($id)
     {
         if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
@@ -92,5 +83,14 @@ class AbsenceController extends Controller
         ], ['absence_id' => request()->input('id')]);
 
         return redirect('/absence/history');
+    }
+
+    public function history()
+    {
+        if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
+            return redirect('/');
+        }
+        $historyData = $this->absence->getAbsenceHistory(session('user')['id']);
+        return view('absence.history', compact('historyData'));
     }
 }
