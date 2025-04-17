@@ -464,49 +464,120 @@ class TeacherController extends Controller
     public function editExercise($id)
     {
         if (request()->isMethod('post')) {
-            $topic = ReadingTopic::find(['exercise_id' => $id]);
-            $this->exercise::update([
-                'name' => request()->input('name'),
-                'type' => request()->input('type'),
-                'level' => request()->input('level'),
-            ], ['id' => $id]);
-            ReadingTopic::update([
-                'title' => request()->input('title'),
-                'content' => request()->input('topic'),
-                'question' => request()->input('question'),
-                'number_of_answers' => count(request()->input('answers')),
-            ], ['exercise_id' => $id]);
-            // Handle answers
-            $submittedAnswers = request()->input('answers', []); // Submitted answers
-            $existingAnswers = ReadingQuestion::query()->where('topic_id', '=', $topic['id'])->get(); // Existing answers in DB
+            $exercise = $this->exercise::find(['id' => $id]);
+            switch ($exercise['skill_type']) {
+                case 'Writing':
+                    $topic = WritingTopic::find(['exercise_id' => $id]);
+                    $this->exercise::update([
+                        'name' => request()->input('name'),
+                        'type' => request()->input('type'),
+                        'level' => request()->input('level'),
+                    ], ['id' => $id]);
+                    WritingTopic::update([
+                        'topic' => request()->input('topic'),
+                    ], ['exercise_id' => $id]);
+                    break;
+                case 'Listening':
+                    if (request()->hasFile('audio')) {
+                        $audio_url = Asset::uploadFile(request()->file('audio'), 10, ['mp3', 'wav']);
+                        if ($audio_url['success'] === false) {
+                            return die($audio_url['message']);
+                        }
+                        ListeningTopic::update([
+                            'audio_url' => $audio_url['fileName'],
+                        ], ['exercise_id' => $id]);
+                    }
+                    $topic = ListeningTopic::find(['exercise_id' => $id]);
+                    $this->exercise::update([
+                        'name' => request()->input('name'),
+                        'type' => request()->input('type'),
+                        'level' => request()->input('level'),
+                    ], ['id' => $id]);
+                    ListeningTopic::update([
+                        'title' => request()->input('title'),
+                        'content' => request()->input('topic'),
+                        'question' => request()->input('question'),
+                        'audio_url' => $audio_url['fileName'] ?? $topic['audio_url'],
+                        'number_of_answers' => count(request()->input('answers')),
+                    ], ['exercise_id' => $id]);
+                    // Handle answers
+                    $submittedAnswers = request()->input('answers', []); // Submitted answers
+                    $existingAnswers = ListeningQuestion::query()->where('topic_id', '=', $topic['id'])->get(); // Existing answers in DB
 
-            $existingAnswerIds = array_column($existingAnswers, 'id'); // IDs of existing answers
-            $submittedAnswerIds = array_filter(array_column($submittedAnswers, 'id')); // IDs of submitted answers
+                    $existingAnswerIds = array_column($existingAnswers, 'id'); // IDs of existing answers
+                    $submittedAnswerIds = array_filter(array_column($submittedAnswers, 'id')); // IDs of submitted answers
 
-            // Update or create answers
-            foreach ($submittedAnswers as $questionNumber => $answerData) {
-                if (isset($answerData) && in_array($questionNumber, $existingAnswerIds)) {
-                    // Update existing answer
-                    ReadingQuestion::update([
-                        'question_number' => $questionNumber + 1,
-                        'answer_key' => $answerData,
-                    ], ['topic_id' => $topic['id'], 'question_number' => $questionNumber + 1]);
-                } else {
-                    // Create new answer
-                    ReadingQuestion::create([
-                        'topic_id' => $topic['id'],
-                        'question_number' => $questionNumber + 1,
-                        'answer_key' => $answerData,
-                    ]);
-                }
+                    // Update or create answers
+                    foreach ($submittedAnswers as $questionNumber => $answerData) {
+                        if (isset($answerData) && in_array($questionNumber, $existingAnswerIds)) {
+                            // Update existing answer
+                            ListeningQuestion::update([
+                                'question_number' => $questionNumber + 1,
+                                'answer_key' => $answerData,
+                            ], ['topic_id' => $topic['id'], 'question_number' => $questionNumber + 1]);
+                        } else {
+                            // Create new answer
+                            ListeningQuestion::create([
+                                'topic_id' => $topic['id'],
+                                'question_number' => $questionNumber + 1,
+                                'answer_key' => $answerData,
+                            ]);
+                        }
+                    }
+
+                    // Delete removed answers
+                    $answersToDelete = array_diff($existingAnswerIds, $submittedAnswerIds);
+                    foreach ($answersToDelete as $answerId) {
+                        ListeningQuestion::delete(['id' => $answerId]);
+                    }
+                    return redirect('/exercises');
+                    break;
+                case 'Reading':
+                    $topic = ReadingTopic::find(['exercise_id' => $id]);
+                    $this->exercise::update([
+                        'name' => request()->input('name'),
+                        'type' => request()->input('type'),
+                        'level' => request()->input('level'),
+                    ], ['id' => $id]);
+                    ReadingTopic::update([
+                        'title' => request()->input('title'),
+                        'content' => request()->input('topic'),
+                        'question' => request()->input('question'),
+                        'number_of_answers' => count(request()->input('answers')),
+                    ], ['exercise_id' => $id]);
+                    // Handle answers
+                    $submittedAnswers = request()->input('answers', []); // Submitted answers
+                    $existingAnswers = ReadingQuestion::query()->where('topic_id', '=', $topic['id'])->get(); // Existing answers in DB
+
+                    $existingAnswerIds = array_column($existingAnswers, 'id'); // IDs of existing answers
+                    $submittedAnswerIds = array_filter(array_column($submittedAnswers, 'id')); // IDs of submitted answers
+
+                    // Update or create answers
+                    foreach ($submittedAnswers as $questionNumber => $answerData) {
+                        if (isset($answerData) && in_array($questionNumber, $existingAnswerIds)) {
+                            // Update existing answer
+                            ReadingQuestion::update([
+                                'question_number' => $questionNumber + 1,
+                                'answer_key' => $answerData,
+                            ], ['topic_id' => $topic['id'], 'question_number' => $questionNumber + 1]);
+                        } else {
+                            // Create new answer
+                            ReadingQuestion::create([
+                                'topic_id' => $topic['id'],
+                                'question_number' => $questionNumber + 1,
+                                'answer_key' => $answerData,
+                            ]);
+                        }
+                    }
+
+                    // Delete removed answers
+                    $answersToDelete = array_diff($existingAnswerIds, $submittedAnswerIds);
+                    foreach ($answersToDelete as $answerId) {
+                        ReadingQuestion::delete(['id' => $answerId]);
+                    }
+                    return redirect('/exercises');
+                    break;
             }
-
-            // Delete removed answers
-            $answersToDelete = array_diff($existingAnswerIds, $submittedAnswerIds);
-            foreach ($answersToDelete as $answerId) {
-                ReadingQuestion::delete(['id' => $answerId]);
-            }
-            return redirect('/exercises');
         }
         $exercise = $this->exercise::find(['id' => $id]);
         switch ($exercise['skill_type']) {

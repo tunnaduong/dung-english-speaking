@@ -55,14 +55,6 @@
                     </div>
                     <div class="col-md-6">
                         <div>
-                            <label for="address" class="form-label fs-09"><img src="{{ asset('location_on.svg') }}">
-                                Address</label>
-                            <input type="text" name="address" id="address" class="form-control"
-                                value="{{ $employee['address'] }}">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div>
                             <label for="role" class="form-label fs-09"><img src="{{ asset('info.svg') }}">
                                 Role</label>
                             <select name="role_id" id="role" class="form-select">

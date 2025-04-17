@@ -7,7 +7,7 @@ use finfo;
 class Asset
 {
   private static string $assetDir = '';
-  private static string $uploadDir = 'mp3';
+  private static string $uploadDir = '';
   private static array $allowedFolders = ['img', 'js', 'css', 'uploads'];
 
   // Bảng ánh xạ extension sang MIME type
@@ -29,8 +29,8 @@ class Asset
   private static function init(): void
   {
     if (empty(self::$assetDir)) {
-      self::$assetDir = basePath('app/assets/');
-      self::$uploadDir = self::$assetDir . 'uploads/';
+      self::$assetDir = basePath('public/mp3/');
+      self::$uploadDir = self::$assetDir . '';
 
       if (! is_dir(self::$uploadDir)) {
         mkdir(self::$uploadDir, 0755, true);

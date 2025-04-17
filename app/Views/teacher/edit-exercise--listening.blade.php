@@ -6,7 +6,7 @@
     <div class="w-100 my-4 bg-white rounded-4 p-4 border-line">
         <div>
             <h4 class="fw-bold"><a href="{{ route('exercises') }}" class="back-link">
-                    Exercises</a>/Create</h4>
+                    Exercises</a>/Edit</h4>
             <div class="line-bottom"></div>
         </div>
         <form action="" method="POST" id="addExerciseForm" enctype="multipart/form-data">
@@ -76,7 +76,7 @@
         </form>
         <div class="d-flex justify-content-end mt-3 gap-4">
             <button class="btn-classroom" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel</button>
-            <button class="btn-classroom" data-bs-toggle="modal" data-bs-target="#saveConfirmModal">Create</button>
+            <button class="btn-classroom" data-bs-toggle="modal" data-bs-target="#saveConfirmModal">Save</button>
         </div>
     </div>
 @endsection
@@ -106,7 +106,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
-                    <h5 class="fw-semi mb-4">Do you want to create?</h5>
+                    <h5 class="fw-semi mb-4">Do you want to save?</h5>
                     <div class="d-flex justify-content-around">
                         <button class="btn btn-confirm" onclick="submitForm()">Yes</button>
                         <button type="button" class="btn btn-confirm" data-bs-dismiss="modal">No</button>
