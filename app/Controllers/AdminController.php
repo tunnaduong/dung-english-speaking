@@ -61,7 +61,6 @@ class AdminController extends Controller
                 'gender' => 'required',
                 'personal_id' => 'required|min:8|max:12',
                 'DoB' => 'required',
-                'address' => 'required',
                 'phone' => 'required|min:10|max:11',
                 'role_id' => 'required',
             ];
