@@ -511,13 +511,21 @@ class TeacherController extends Controller
         $exercise = $this->exercise::find(['id' => $id]);
         switch ($exercise['skill_type']) {
             case 'Writing':
-                return view('teacher.edit-exercise--writing');
+                $topic = WritingTopic::find(['exercise_id' => $id]);
+                if (!$topic) {
+                    return redirect('/exercises');
+                }
+                return view('teacher.edit-exercise--writing', compact('id', 'exercise', 'topic'));
             case 'Listening':
-                return view('teacher.edit-exercise--listening');
+                $topic = ListeningTopic::find(['exercise_id' => $id]);
+                if (!$topic) {
+                    return redirect('/exercises');
+                }
+                $answers = ListeningQuestion::query()->where('topic_id', '=', $topic['id'])->get();
+                return view('teacher.edit-exercise--listening', compact('id', 'exercise', 'topic', 'answers'));
             case 'Reading':
                 $topic = ReadingTopic::find(['exercise_id' => $id]);
                 if (!$topic) {
-                    // Handle the case where no topic is found
                     return redirect('/exercises');
                 }
                 $answers = ReadingQuestion::query()->where('topic_id', '=', $topic['id'])->get();

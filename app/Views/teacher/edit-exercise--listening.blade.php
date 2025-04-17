@@ -15,7 +15,7 @@
                 <div>
                     <div class="position-relative">
                         <input class="fw-bold fs-5 mb-1 form-control px-2 py-0 w-200" placeholder="Enter name..."
-                            name="name"></input>
+                            name="name" value="{{ $exercise['name'] }}"></input>
                         <img src="{{ asset('edit2.svg') }}" class="position-absolute edit-icon">
                     </div>
                     <div class="fw-semi text-gray">
@@ -27,16 +27,15 @@
                     <div class="fw-semi text-gray">
                         <label for="skill" style="width: 50px">Skill</label>
                         <select name="skill" id="skill" class="rounded-1" onchange="changePageUrl(this)">
-                            <option value="reading">Reading</option>
-                            <option value="writing">Writing</option>
                             <option value="listening" selected>Listening</option>
                         </select>
                     </div>
                     <div class="fw-semi text-gray">
                         <label for="type" style="width: 50px">Type</label>
                         <select name="type" id="type" class="rounded-1">
-                            <option value="Homework">Homework</option>
-                            <option value="Test">Test</option>
+                            <option value="Homework" {{ $exercise['type'] == 'Homework' ? 'selected' : '' }}>Homework
+                            </option>
+                            <option value="Test" {{ $exercise['type'] == 'Test' ? 'selected' : '' }}>Test</option>
                         </select>
                     </div>
                 </div>
@@ -44,26 +43,30 @@
             <div class="row">
                 <div class="col-md-6">
                     <label for="title" class="form-label fw-bold mt-3">Add title</label>
-                    <input name="title" id="title" class="form-control" placeholder="Enter title..."></input>
+                    <input name="title" id="title" class="form-control" placeholder="Enter title..."
+                        value="{{ $topic['title'] }}"></input>
                 </div>
                 <div class="col-md-6">
                     <label for="audio" class="form-label fw-bold mt-3">Add audio</label>
                     <input type="file" name="audio" id="audio" class="form-control" accept=".mp3, .wav, .ogg">
+                    <input type="hidden" name="oldAudio" value="{{ $topic['audio_url'] }}">
                 </div>
             </div>
             <div>
                 <label for="cauHoi" class="form-label fw-bold mt-3">Add question</label>
-                <textarea name="question" id="cauHoi" class="form-control" rows="10"></textarea>
+                <textarea name="question" id="cauHoi" class="form-control" rows="10">{{ $topic['question'] }}</textarea>
             </div>
             <div>
                 <label for="deBai" class="form-label fw-bold mt-3">Add content</label>
-                <textarea name="topic" id="deBai" class="form-control" rows="10"></textarea>
+                <textarea name="topic" id="deBai" class="form-control" rows="10">{{ $topic['content'] }}</textarea>
             </div>
             <div>
                 <label for="answersContainer" class="form-label fw-bold mt-3">Add answers</label>
                 <div class="border-line rounded-4 px-3 py-2" id="answersContainer">
-                    <div>1. <input type="text" class="no-border-input" name="answers[]"></div>
-                    <div>2. <input type="text" class="no-border-input" name="answers[]"></div>
+                    @foreach ($answers as $answer)
+                        <div>{{ $answer['question_number'] }}. <input type="text" class="no-border-input"
+                                name="answers[]" value="{{ $answer['answer_key'] }}"></div>
+                    @endforeach
                     <a href="javascript:void(0)" class="text-decoration-none text-black" style="margin-left: -5px"
                         onclick="addAnotherAnswer()">
                         <img src="{{ asset('plus.svg') }}" class="add-icon"> Add another answer

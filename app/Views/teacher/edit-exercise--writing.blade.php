@@ -15,7 +15,7 @@
                 <div>
                     <div class="position-relative">
                         <input class="fw-bold fs-5 mb-1 form-control px-2 py-0 w-200" placeholder="Enter name..."
-                            name="name"></input>
+                            name="name" value="{{ $exercise['name'] }}"></input>
                         <img src="{{ asset('edit2.svg') }}" class="position-absolute edit-icon">
                     </div>
                     <div class="fw-semi text-gray">
@@ -33,15 +33,16 @@
                     <div class="fw-semi text-gray">
                         <label for="type" style="width: 50px">Type</label>
                         <select name="type" id="type" class="rounded-1">
-                            <option value="Homework">Homework</option>
-                            <option value="Test">Test</option>
+                            <option value="Homework" {{ $exercise['type'] == 'Homework' ? 'selected' : '' }}>Homework
+                            </option>
+                            <option value="Test" {{ $exercise['type'] == 'Test' ? 'selected' : '' }}>Test</option>
                         </select>
                     </div>
                 </div>
             </div>
             <div>
                 <label for="deBai" class="form-label fw-bold mt-3">Add topic</label>
-                <textarea name="topic" id="deBai" class="form-control" rows="10"></textarea>
+                <textarea name="topic" id="deBai" class="form-control" rows="10">{{ $topic['topic'] }}</textarea>
             </div>
         </form>
         <div class="d-flex justify-content-end mt-3 gap-4">
