@@ -9,7 +9,7 @@
                     Exercises</a>/Create</h4>
             <div class="line-bottom"></div>
         </div>
-        <form action="" method="POST" id="addExerciseForm">
+        <form action="" method="POST" id="addExerciseForm" enctype="multipart/form-data">
             <div class="border-line rounded-4 p-3 mt-3 d-flex align-items-center gap-3">
                 <img src="{{ asset('menu_book_large.svg') }}">
                 <div>
@@ -29,7 +29,7 @@
                         <select name="skill" id="skill" class="rounded-1" onchange="changePageUrl(this)">
                             <option value="reading">Reading</option>
                             <option value="writing">Writing</option>
-                            <option value="listening">Listening</option>
+                            <option value="listening" selected>Listening</option>
                         </select>
                     </div>
                     <div class="fw-semi text-gray">
@@ -41,17 +41,23 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <label for="title" class="form-label fw-bold mt-3">Add title</label>
-                <input name="title" id="title" class="form-control w-50" placeholder="Enter title..."></input>
-            </div>
-            <div>
-                <label for="deBai" class="form-label fw-bold mt-3">Add topic</label>
-                <textarea name="topic" id="deBai" class="form-control" rows="10"></textarea>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="title" class="form-label fw-bold mt-3">Add title</label>
+                    <input name="title" id="title" class="form-control" placeholder="Enter title..."></input>
+                </div>
+                <div class="col-md-6">
+                    <label for="audio" class="form-label fw-bold mt-3">Add audio</label>
+                    <input type="file" name="audio" id="audio" class="form-control" accept=".mp3, .wav, .ogg">
+                </div>
             </div>
             <div>
                 <label for="cauHoi" class="form-label fw-bold mt-3">Add question</label>
                 <textarea name="question" id="cauHoi" class="form-control" rows="10"></textarea>
+            </div>
+            <div>
+                <label for="deBai" class="form-label fw-bold mt-3">Add content</label>
+                <textarea name="topic" id="deBai" class="form-control" rows="10"></textarea>
             </div>
             <div>
                 <label for="answersContainer" class="form-label fw-bold mt-3">Add answers</label>

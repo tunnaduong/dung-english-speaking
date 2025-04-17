@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Core\DB;
 use App\Models\Course;
 use App\Models\Result;
 use App\Models\Student;
@@ -258,6 +259,60 @@ class HomeController extends Controller
     return redirect('/exercises/homeworks?type=writing');
   }
 
+  public function chamDiemVaCapNhatResultReading(int $studentId, int $exerciseId): void
+  {
+    // Lấy tất cả câu trả lời của học viên
+    $answers = DB::query("SELECT ra.question_number, ra.answer_text, rq.answer_key
+        FROM reading_answers AS ra
+        JOIN reading_questions AS rq
+          ON ra.topic_id = rq.topic_id AND ra.question_number = rq.question_number
+        WHERE ra.student_id = ? AND ra.exercise_id = ?", [$studentId, $exerciseId])->fetchAll();
+
+    $total = count($answers);
+    $correct = 0;
+
+    foreach ($answers as $row) {
+      if (strtolower(trim($row['answer_text'])) === strtolower(trim($row['answer_key']))) {
+        $correct++;
+      }
+    }
+
+    // Tính điểm theo thang 10
+    $score = $total > 0 ? round(($correct / $total) * 10, 2) : 0;
+
+    // Cập nhật điểm vào bảng result
+    DB::exec("UPDATE result
+        SET score = ?
+        WHERE student_id = ? AND exercise_id = ?", [$score, $studentId, $exerciseId]);
+  }
+
+  public function chamDiemVaCapNhatResultListening(int $studentId, int $exerciseId): void
+  {
+    // Lấy tất cả câu trả lời của học viên
+    $answers = DB::query("SELECT ra.question_number, ra.answer_text, rq.answer_key
+        FROM listening_answers AS ra
+        JOIN listening_questions AS rq
+          ON ra.topic_id = rq.topic_id AND ra.question_number = rq.question_number
+        WHERE ra.student_id = ? AND ra.exercise_id = ?", [$studentId, $exerciseId])->fetchAll();
+
+    $total = count($answers);
+    $correct = 0;
+
+    foreach ($answers as $row) {
+      if (strtolower(trim($row['answer_text'])) === strtolower(trim($row['answer_key']))) {
+        $correct++;
+      }
+    }
+
+    // Tính điểm theo thang 10
+    $score = $total > 0 ? round(($correct / $total) * 10, 2) : 0;
+
+    // Cập nhật điểm vào bảng result
+    DB::exec("UPDATE result
+        SET score = ?
+        WHERE student_id = ? AND exercise_id = ?", [$score, $studentId, $exerciseId]);
+  }
+
   public function submitReadingHomework($id)
   {
     if (session('user')['role'] === 'Teacher' || session('user')['role'] === 'Teaching Assistant') {
@@ -280,6 +335,7 @@ class HomeController extends Controller
         'answer_text' => trim($answerText),
       ]);
     }
+    $this->chamDiemVaCapNhatResultReading(session('user')['user_id'], $id);
     return redirect('/exercises/homeworks?type=reading');
   }
 
@@ -305,6 +361,7 @@ class HomeController extends Controller
         'answer_text' => trim($answerText),
       ]);
     }
+    $this->chamDiemVaCapNhatResultListening(session('user')['user_id'], $id);
     return redirect('/exercises/homeworks?type=listening');
   }
 

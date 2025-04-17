@@ -11,7 +11,7 @@
         <form action="{{ route('exercises/tests/' . $id . '/submit-writing') }}" method="POST" class="m-0" id="writingForm">
             <div class="border-line p-2 rounded-4 mt-4 limit-height">
                 <div class="fw-bold">Topic:</div>
-                <div>{!! nl2br($test['topic']) !!}</div>
+                <div>{!! $test['topic'] !!}</div>
             </div>
             <div class="border-line p-2 rounded-4 mt-3">
                 <div>Type here</div>

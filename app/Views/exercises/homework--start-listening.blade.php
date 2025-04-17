@@ -17,11 +17,11 @@
         <form action="{{ route('exercises/homeworks/' . $id . '/submit-listening') }}" method="POST" class="m-0"
             id="listeningForm">
             <div class="border-line p-2 rounded-4 mt-3 limit-height">
-                <div class="fw-bold">{!! nl2br($homework['question']) !!}</div>
+                <div class="fw-bold">{!! $homework['question'] !!}</div>
             </div>
             <div class="border-line p-2 rounded-4 mt-4 limit-height">
                 <div class="fw-bold text-center fs-5">{{ $homework['title'] }}</div>
-                <div>{!! nl2br($homework['content']) !!}</div>
+                <div>{!! $homework['content'] !!}</div>
             </div>
             <div class="border-line p-2 rounded-4 mt-3 limit-height">
                 @foreach (range(1, $homework['number_of_answers']) as $answer)

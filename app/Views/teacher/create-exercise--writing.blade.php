@@ -28,7 +28,7 @@
                         <label for="skill" style="width: 50px">Skill</label>
                         <select name="skill" id="skill" class="rounded-1" onchange="changePageUrl(this)">
                             <option value="reading">Reading</option>
-                            <option value="writing">Writing</option>
+                            <option value="writing" selected>Writing</option>
                             <option value="listening">Listening</option>
                         </select>
                     </div>
@@ -42,27 +42,8 @@
                 </div>
             </div>
             <div>
-                <label for="title" class="form-label fw-bold mt-3">Add title</label>
-                <input name="title" id="title" class="form-control w-50" placeholder="Enter title..."></input>
-            </div>
-            <div>
                 <label for="deBai" class="form-label fw-bold mt-3">Add topic</label>
                 <textarea name="topic" id="deBai" class="form-control" rows="10"></textarea>
-            </div>
-            <div>
-                <label for="cauHoi" class="form-label fw-bold mt-3">Add question</label>
-                <textarea name="question" id="cauHoi" class="form-control" rows="10"></textarea>
-            </div>
-            <div>
-                <label for="answersContainer" class="form-label fw-bold mt-3">Add answers</label>
-                <div class="border-line rounded-4 px-3 py-2" id="answersContainer">
-                    <div>1. <input type="text" class="no-border-input" name="answers[]"></div>
-                    <div>2. <input type="text" class="no-border-input" name="answers[]"></div>
-                    <a href="javascript:void(0)" class="text-decoration-none text-black" style="margin-left: -5px"
-                        onclick="addAnotherAnswer()">
-                        <img src="{{ asset('plus.svg') }}" class="add-icon"> Add another answer
-                    </a>
-                </div>
             </div>
         </form>
         <div class="d-flex justify-content-end mt-3 gap-4">

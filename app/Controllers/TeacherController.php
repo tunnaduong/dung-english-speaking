@@ -2,11 +2,17 @@
 
 namespace App\Controllers;
 
+use App\Core\Asset\Asset;
 use App\Models\Course;
 use App\Models\Exercise;
 use App\Models\Classroom;
 use App\Models\Curriculum;
 use App\Models\InfoStudent;
+use App\Models\ListeningQuestion;
+use App\Models\ListeningTopic;
+use App\Models\ReadingQuestion;
+use App\Models\ReadingTopic;
+use App\Models\WritingTopic;
 
 class TeacherController extends Controller
 {
@@ -366,10 +372,91 @@ class TeacherController extends Controller
     public function createExercise()
     {
         if (request()->isMethod('post')) {
+            switch (request()->input('skill')) {
+                case 'writing':
+                    $exerciseId = $this->exercise::create([
+                        'name' => request()->input('name'),
+                        'type' => request()->input('type'),
+                        'skill_type' => ucfirst(request()->input('skill')),
+                        'level' => request()->input('level'),
+                        'max_score' => 10,
+                        'created_by' => session('user')['user_id'],
+                    ]);
+                    $topicId = WritingTopic::create([
+                        'exercise_id' => $exerciseId,
+                        'topic' => request()->input('topic'),
+                        'level' => request()->input('level'),
+                        'created_by' => session('user')['user_id'],
+                    ]);
+                    break;
+                case 'listening':
+                    $audio_url = Asset::uploadFile(request()->file('audio'), 10, ['mp3', 'wav']);
+                    if ($audio_url['success'] === false) {
+                        return die($audio_url['message']);
+                    }
+                    $exersiseId = $this->exercise::create([
+                        'name' => request()->input('name'),
+                        'type' => request()->input('type'),
+                        'skill_type' => ucfirst(request()->input('skill')),
+                        'level' => request()->input('level'),
+                        'max_score' => 10,
+                        'created_by' => session('user')['user_id'],
+                    ]);
+                    $topicId = ListeningTopic::create([
+                        'exercise_id' => $exersiseId,
+                        'title' => request()->input('title'),
+                        'content' => request()->input('topic'),
+                        'question' => request()->input('question'),
+                        'number_of_answers' => count(request()->input('answers')),
+                        'audio_url' => $audio_url['fileName'],
+                        'created_by' => session('user')['user_id'],
+                    ]);
+                    foreach (request()->input('answers') as $questionNumber => $answerText) {
+                        ListeningQuestion::create([
+                            'topic_id' => $topicId,
+                            'question_number' => $questionNumber + 1,
+                            'answer_key' => $answerText,
+                        ]);
+                    }
+                    break;
+                case 'reading':
+                    $exersiseId = $this->exercise::create([
+                        'name' => request()->input('name'),
+                        'type' => request()->input('type'),
+                        'skill_type' => ucfirst(request()->input('skill')),
+                        'level' => request()->input('level'),
+                        'max_score' => 10,
+                        'created_by' => session('user')['user_id'],
+                    ]);
+                    $topicId = ReadingTopic::create([
+                        'exercise_id' => $exersiseId,
+                        'title' => request()->input('title'),
+                        'content' => request()->input('topic'),
+                        'question' => request()->input('question'),
+                        'number_of_answers' => count(request()->input('answers')),
+                        'created_by' => session('user')['user_id'],
+                    ]);
+                    foreach (request()->input('answers') as $questionNumber => $answerText) {
+                        ReadingQuestion::create([
+                            'topic_id' => $topicId,
+                            'question_number' => $questionNumber + 1,
+                            'answer_key' => $answerText,
+                        ]);
+                    }
+                    break;
+            }
             return redirect('/exercises');
         }
         if (!request()->get('type')) {
             return redirect('/exercises/create?type=reading');
+        }
+        switch (request()->input('type')) {
+            case 'writing':
+                return view('teacher.create-exercise--writing');
+            case 'listening':
+                return view('teacher.create-exercise--listening');
+            case 'reading':
+                return view('teacher.create-exercise--reading');
         }
         return view('teacher.create-exercise--reading');
     }
@@ -377,13 +464,63 @@ class TeacherController extends Controller
     public function editExercise($id)
     {
         if (request()->isMethod('post')) {
+            $topic = ReadingTopic::find(['exercise_id' => $id]);
+            $this->exercise::update([
+                'name' => request()->input('name'),
+                'type' => request()->input('type'),
+                'level' => request()->input('level'),
+            ], ['id' => $id]);
+            ReadingTopic::update([
+                'title' => request()->input('title'),
+                'content' => request()->input('topic'),
+                'question' => request()->input('question'),
+                'number_of_answers' => count(request()->input('answers')),
+            ], ['exercise_id' => $id]);
+            // Handle answers
+            $submittedAnswers = request()->input('answers', []); // Submitted answers
+            $existingAnswers = ReadingQuestion::query()->where('topic_id', '=', $topic['id'])->get(); // Existing answers in DB
+
+            $existingAnswerIds = array_column($existingAnswers, 'id'); // IDs of existing answers
+            $submittedAnswerIds = array_filter(array_column($submittedAnswers, 'id')); // IDs of submitted answers
+
+            // Update or create answers
+            foreach ($submittedAnswers as $questionNumber => $answerData) {
+                if (isset($answerData) && in_array($questionNumber, $existingAnswerIds)) {
+                    // Update existing answer
+                    ReadingQuestion::update([
+                        'question_number' => $questionNumber + 1,
+                        'answer_key' => $answerData,
+                    ], ['topic_id' => $topic['id'], 'question_number' => $questionNumber + 1]);
+                } else {
+                    // Create new answer
+                    ReadingQuestion::create([
+                        'topic_id' => $topic['id'],
+                        'question_number' => $questionNumber + 1,
+                        'answer_key' => $answerData,
+                    ]);
+                }
+            }
+
+            // Delete removed answers
+            $answersToDelete = array_diff($existingAnswerIds, $submittedAnswerIds);
+            foreach ($answersToDelete as $answerId) {
+                ReadingQuestion::delete(['id' => $answerId]);
+            }
             return redirect('/exercises');
         }
-        return view('teacher.edit-exercise', compact('id'));
+        $exercise = $this->exercise::find(['id' => $id]);
+        $topic = ReadingTopic::find(['exercise_id' => $id]);
+        if (!$topic) {
+            // Handle the case where no topic is found
+            return redirect('/exercises');
+        }
+        $answers = ReadingQuestion::query()->where('topic_id', '=', $topic['id'])->get();
+        return view('teacher.edit-exercise--reading', compact('id', 'exercise', 'topic', 'answers'));
     }
 
     public function deleteExercise($id)
     {
+        $this->exercise::delete(['id' => $id]);
         return redirect('/exercises');
     }
 

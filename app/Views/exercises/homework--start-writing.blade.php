@@ -12,7 +12,7 @@
             id="writingForm">
             <div class="border-line p-2 rounded-4 mt-4 limit-height">
                 <div class="fw-bold">Topic:</div>
-                <div>{!! nl2br($homework['topic']) !!}</div>
+                <div>{!! $homework['topic'] !!}</div>
             </div>
             <div class="border-line p-2 rounded-4 mt-3">
                 <div>Type here</div>

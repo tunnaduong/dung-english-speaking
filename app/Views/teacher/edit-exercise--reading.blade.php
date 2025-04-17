@@ -1,12 +1,12 @@
 @extends('layouts.teacher', ['active' => 4])
 
-@section('title', 'Create Exercise | DungES')
+@section('title', 'Edit Exercise | DungES')
 
 @section('content')
     <div class="w-100 my-4 bg-white rounded-4 p-4 border-line">
         <div>
             <h4 class="fw-bold"><a href="{{ route('exercises') }}" class="back-link">
-                    Exercises</a>/Create</h4>
+                    Exercises</a>/Edit</h4>
             <div class="line-bottom"></div>
         </div>
         <form action="" method="POST" id="addExerciseForm">
@@ -15,7 +15,7 @@
                 <div>
                     <div class="position-relative">
                         <input class="fw-bold fs-5 mb-1 form-control px-2 py-0 w-200" placeholder="Enter name..."
-                            name="name"></input>
+                            name="name" value="{{ $exercise['name'] }}"></input>
                         <img src="{{ asset('edit2.svg') }}" class="position-absolute edit-icon">
                     </div>
                     <div class="fw-semi text-gray">
@@ -28,36 +28,38 @@
                         <label for="skill" style="width: 50px">Skill</label>
                         <select name="skill" id="skill" class="rounded-1" onchange="changePageUrl(this)">
                             <option value="reading">Reading</option>
-                            <option value="writing">Writing</option>
-                            <option value="listening">Listening</option>
                         </select>
                     </div>
                     <div class="fw-semi text-gray">
                         <label for="type" style="width: 50px">Type</label>
                         <select name="type" id="type" class="rounded-1">
-                            <option value="Homework">Homework</option>
-                            <option value="Test">Test</option>
+                            <option value="Homework" {{ $exercise['type'] == 'Homework' ? 'selected' : '' }}>Homework
+                            </option>
+                            <option value="Test" {{ $exercise['type'] == 'Test' ? 'selected' : '' }}>Test</option>
                         </select>
                     </div>
                 </div>
             </div>
             <div>
                 <label for="title" class="form-label fw-bold mt-3">Add title</label>
-                <input name="title" id="title" class="form-control w-50" placeholder="Enter title..."></input>
+                <input name="title" id="title" class="form-control w-50" placeholder="Enter title..."
+                    value="{{ $topic['title'] }}"></input>
             </div>
             <div>
                 <label for="deBai" class="form-label fw-bold mt-3">Add topic</label>
-                <textarea name="topic" id="deBai" class="form-control" rows="10"></textarea>
+                <textarea name="topic" id="deBai" class="form-control" rows="10">{{ $topic['content'] }}</textarea>
             </div>
             <div>
                 <label for="cauHoi" class="form-label fw-bold mt-3">Add question</label>
-                <textarea name="question" id="cauHoi" class="form-control" rows="10"></textarea>
+                <textarea name="question" id="cauHoi" class="form-control" rows="10">{{ $topic['question'] }}</textarea>
             </div>
             <div>
                 <label for="answersContainer" class="form-label fw-bold mt-3">Add answers</label>
                 <div class="border-line rounded-4 px-3 py-2" id="answersContainer">
-                    <div>1. <input type="text" class="no-border-input" name="answers[]"></div>
-                    <div>2. <input type="text" class="no-border-input" name="answers[]"></div>
+                    @foreach ($answers as $answer)
+                        <div>{{ $answer['question_number'] }}. <input type="text" class="no-border-input"
+                                name="answers[]" value="{{ $answer['answer_key'] }}"></div>
+                    @endforeach
                     <a href="javascript:void(0)" class="text-decoration-none text-black" style="margin-left: -5px"
                         onclick="addAnotherAnswer()">
                         <img src="{{ asset('plus.svg') }}" class="add-icon"> Add another answer
@@ -67,7 +69,7 @@
         </form>
         <div class="d-flex justify-content-end mt-3 gap-4">
             <button class="btn-classroom" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel</button>
-            <button class="btn-classroom" data-bs-toggle="modal" data-bs-target="#saveConfirmModal">Create</button>
+            <button class="btn-classroom" data-bs-toggle="modal" data-bs-target="#saveConfirmModal">Save</button>
         </div>
     </div>
 @endsection
@@ -97,7 +99,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
-                    <h5 class="fw-semi mb-4">Do you want to create?</h5>
+                    <h5 class="fw-semi mb-4">Do you want to save?</h5>
                     <div class="d-flex justify-content-around">
                         <button class="btn btn-confirm" onclick="submitForm()">Yes</button>
                         <button type="button" class="btn btn-confirm" data-bs-dismiss="modal">No</button>

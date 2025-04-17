@@ -12,10 +12,10 @@
             id="readingForm">
             <div class="border-line p-2 rounded-4 mt-4 limit-height">
                 <div class="fw-bold text-center fs-5">{{ $homework['title'] }}</div>
-                <div>{!! nl2br($homework['content']) !!}</div>
+                <div>{!! $homework['content'] !!}</div>
             </div>
             <div class="border-line p-2 rounded-4 mt-3 limit-height">
-                <div>{!! nl2br($homework['question']) !!}</div>
+                <div>{!! $homework['question'] !!}</div>
             </div>
             <div class="border-line p-2 rounded-4 mt-3 limit-height">
                 @foreach (range(1, $homework['number_of_answers']) as $answer)
