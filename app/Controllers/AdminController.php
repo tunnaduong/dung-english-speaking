@@ -257,10 +257,23 @@ class AdminController extends Controller
             unset($data['email']);
             unset($data['password']);
             $this->infoStudent->update($data, ['id' => $id]);
-            $this->student->update([
-                'email' => $email,
-                'password' => $password,
-            ], ['student_id' => $id]);
+            // Check if the student account exists
+            $studentAccount = $this->student->find(['student_id' => $id]);
+
+            if ($studentAccount) {
+                // Update existing account
+                $this->student->update([
+                    'email' => $email,
+                    'password' => $password,
+                ], ['student_id' => $id]);
+            } else {
+                // Create a new account if it doesn't exist
+                $this->student->create([
+                    'student_id' => $id,
+                    'email' => $email,
+                    'password' => $password,
+                ]);
+            }
             return redirect('/students');
         }
         return view('admin.students--edit', compact('id', 'student', 'classes'));
