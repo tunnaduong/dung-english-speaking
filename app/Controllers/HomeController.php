@@ -116,7 +116,8 @@ class HomeController extends Controller
         ])
         ->join('class', 'class.teacher_id = info_employee.id', 'INNER') // Join with the class table
         ->join('course', 'class.id_course = c.id', 'INNER', 'c') // Alias the course table as 'c'
-        ->where('info_employee.id', '=', session('user')['user_id']) // Filter by teacher ID
+        ->orWhere('class.assistant_id', '=', session('user')['user_id']) // Filter by teacher ID
+        ->orWhere('info_employee.id', '=', session('user')['user_id']) // Filter by teacher ID
         ->groupBy(['c.id', 'c.course_name']) // Group by course ID and course name
         ->get();
       if (request()->input('search')) {

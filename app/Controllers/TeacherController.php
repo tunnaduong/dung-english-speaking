@@ -52,7 +52,7 @@ class TeacherController extends Controller
             }
             return view('admin.classrooms', compact('classrooms'));
         }
-        $classrooms = $this->classroom->select(['class.id AS class_id', 'class.*', 'info_employee.*', 'course.*'])->where('teacher_id', '=', session('user')['user_id'])
+        $classrooms = $this->classroom->select(['class.id AS class_id', 'class.*', 'info_employee.*', 'course.*'])->orWhere('assistant_id', '=', session('user')['user_id'])->orWhere('teacher_id', '=', session('user')['user_id'])
             ->join('info_employee', 'class.teacher_id = info_employee.id', 'INNER')
             ->join('course', 'class.id_course = course.id', 'INNER')
             ->get();
@@ -285,7 +285,9 @@ class TeacherController extends Controller
 
     public function correction()
     {
-        $classrooms = $this->classroom->select(['class.id AS class_id', 'class.*', 'info_employee.*', 'course.*'])->where('teacher_id', '=', session('user')['user_id'])
+        $classrooms = $this->classroom->select(['class.id AS class_id', 'class.*', 'info_employee.*', 'course.*'])
+            ->orWhere('assistant_id', '=', session('user')['user_id'])
+            ->orWhere('teacher_id', '=', session('user')['user_id'])
             ->join('info_employee', 'class.teacher_id = info_employee.id', 'INNER')
             ->join('course', 'class.id_course = course.id', 'INNER')
             ->get();
