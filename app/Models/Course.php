@@ -17,7 +17,7 @@ class Course extends Model
 
     public static function getCourseByClassId($classId)
     {
-        return (new self())->where('id', '=', $classId)->first();
+        return (new self())->join('class', 'class.id_course = course.id')->where('class.id', '=', $classId)->first();
     }
 
     public static function getAllCourses()
