@@ -11,7 +11,7 @@ class Classroom extends Model
 
     public static function getMakeupClasses()
     {
-        $sql = "SELECT c.id AS class_id, c.class_name, s.day_of_week1, s.day_of_week2, s.shift1, s.shift2 FROM class c JOIN course co ON co.id = c.id_course JOIN curriculum cu ON cu.course_id = co.id JOIN schedules sc ON sc.id = cu.exercise_id LEFT JOIN schedules s ON s.id = sc.id WHERE cu.date IS NOT NULL";
+        $sql = "SELECT c.id AS class_id, c.class_name, s.day_of_week1, s.day_of_week2, s.shift1, s.shift2 FROM class c JOIN course co ON co.id = c.id_course JOIN curriculum cu ON cu.course_id = co.id JOIN schedules sc ON sc.id = cu.exercise_id LEFT JOIN schedules s ON s.id = sc.id";
         return DB::query($sql)->fetchAll();
     }
 
