@@ -217,6 +217,12 @@ class Request
                 $errors[] = "Trường $field không được vượt quá $param ký tự!";
               }
               break;
+
+            case 'numeric': // New rule for numeric validation
+              if (! $isEmpty && ! is_numeric($value)) {
+                $errors[] = "Trường $field phải là số!";
+              }
+              break;
           }
         }
       }
