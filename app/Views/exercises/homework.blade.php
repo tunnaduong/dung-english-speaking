@@ -7,8 +7,7 @@
         <div class="hero-content d-flex align-items-center justify-content-between">
             <div class="flex-fill text-white">
                 <h2 class="fw-bold zoom">Dũng English Speaking</h2>
-                <p class="m-0 zoom">You can do your homeworks and tests here.<br>
-                    Keep it up and improve your progress.</p>
+                <p>&nbsp;</p>
             </div>
             <div>
                 <img src="{{ asset('hero.png') }}" class="hero-img img-fluid">
