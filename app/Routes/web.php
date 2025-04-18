@@ -40,6 +40,7 @@ $route->any('/classrooms/{id}/curriculum/add', [TeacherController::class, 'addCu
 $route->any('/classrooms/{id}/curriculum/{curriculumId}/edit', [TeacherController::class, 'editCurriculum']);
 $route->get('/classrooms/{id}/curriculum/{curriculumId}/delete', [TeacherController::class, 'deleteCurriculum']);
 $route->get('/classrooms/{id}/attendance', [TeacherController::class, 'classroomAttendance']);
+$route->post('/classrooms/{id}/attendance/submit', [TeacherController::class, 'submitAttendance']);
 $route->any('/courses/{id}/edit', [TeacherController::class, 'editCourse']);
 $route->get('/students', [TeacherController::class, 'students']);
 $route->get('/students/{id}/profile', [TeacherController::class, 'studentProfile']);

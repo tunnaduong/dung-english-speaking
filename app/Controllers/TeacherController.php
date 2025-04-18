@@ -133,12 +133,12 @@ class TeacherController extends Controller
 
             foreach ($days as $index => $day) {
                 $key = $student['id'] . '_' . $day['id'];
-                $attendance = $attendances[$key][0] ?? null;
+                $attendance = $attendances[$key] ?? null;
 
                 if ($attendance) {
                     switch ($attendance['status']) {
                         case 'absent':
-                            $row['days'][] = 'Không phép';
+                            $row['days'][] = 'Vắng';
                             break;
                         case 'late':
                             $row['days'][] = 'Đi muộn';
@@ -165,6 +165,57 @@ class TeacherController extends Controller
 
         return view('teacher.classroom-attendance', compact('studentData', 'id', 'course'));
     }
+
+    public function submitAttendance($id)
+    {
+        $attendanceData = request()->input('attendance', []);
+
+        if (empty($attendanceData)) {
+            echo "Không có dữ liệu điểm danh.";
+            return;
+        }
+
+        // Lấy toàn bộ các buổi học (class_progress) đã có để map vào từng buổi (day_1 => id)
+        $progressList = ClassProgress::query()
+            ->where('class_id', '=', $id)
+            ->orderBy('date')
+            ->get();
+
+        // Tạo map: day_1 => class_progress_id
+        $dayMap = [];
+        foreach ($progressList as $index => $progress) {
+            $dayMap['day_' . ($index + 1)] = $progress['id'];
+        }
+
+        // Tạo mới nếu chưa có buổi học nào hôm nay
+        if (count($dayMap) === 0 || !in_array(date('Y-m-d'), array_column($progressList, 'date'))) {
+            $newProgressId = ClassProgress::query()->create([
+                'class_id' => $id,
+                'date' => date('Y-m-d'),
+            ]);
+            $dayMap['day_' . (count($dayMap) + 1)] = $newProgressId;
+        }
+
+        // Duyệt qua từng học viên và từng buổi học
+        foreach ($attendanceData as $studentId => $days) {
+            foreach ($days as $dayKey => $status) {
+                $classProgressId = $dayMap[$dayKey] ?? null;
+
+                if ($classProgressId && in_array($status, ['present', 'absent', 'late', 'excused'])) {
+                    Attendance::query()->create([
+                        'student_id' => $studentId,
+                        'class_progress_id' => $classProgressId,
+                        'status' => $status,
+                        'created_by' => $_SESSION['user']['user_id'] ?? null,
+                    ]);
+                }
+            }
+        }
+
+
+        return redirect("/classrooms/$id/attendance");
+    }
+
 
     public function editCurriculum($id, $curriculumId)
     {
