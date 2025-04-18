@@ -19,12 +19,6 @@
                         <img src="{{ asset('edit2.svg') }}" class="position-absolute edit-icon">
                     </div>
                     <div class="fw-semi text-gray">
-                        <label for="level" style="width: 50px">Level</label>
-                        <select name="level" id="level" class="rounded-1">
-                            <option value="3.0-4.0">3.0-4.0</option>
-                        </select>
-                    </div>
-                    <div class="fw-semi text-gray">
                         <label for="skill" style="width: 50px">Skill</label>
                         <select name="skill" id="skill" class="rounded-1">
                             <option value="writing" selected>Writing</option>

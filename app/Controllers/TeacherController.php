@@ -306,14 +306,14 @@ class TeacherController extends Controller
                         'name' => request()->input('name'),
                         'type' => request()->input('type'),
                         'skill_type' => ucfirst(request()->input('skill')),
-                        'level' => request()->input('level'),
+                        'level' => request()->input('level', ''),
                         'max_score' => 10,
                         'created_by' => session('user')['user_id'],
                     ]);
                     $topicId = WritingTopic::create([
                         'exercise_id' => $exerciseId,
                         'topic' => request()->input('topic'),
-                        'level' => request()->input('level'),
+                        'level' => request()->input('level', ''),
                         'created_by' => session('user')['user_id'],
                     ]);
                     break;
@@ -326,7 +326,7 @@ class TeacherController extends Controller
                         'name' => request()->input('name'),
                         'type' => request()->input('type'),
                         'skill_type' => ucfirst(request()->input('skill')),
-                        'level' => request()->input('level'),
+                        'level' => request()->input('level', ''),
                         'max_score' => 10,
                         'created_by' => session('user')['user_id'],
                     ]);
@@ -352,7 +352,7 @@ class TeacherController extends Controller
                         'name' => request()->input('name'),
                         'type' => request()->input('type'),
                         'skill_type' => ucfirst(request()->input('skill')),
-                        'level' => request()->input('level'),
+                        'level' => request()->input('level', ''),
                         'max_score' => 10,
                         'created_by' => session('user')['user_id'],
                     ]);
@@ -399,7 +399,6 @@ class TeacherController extends Controller
                     $this->exercise::update([
                         'name' => request()->input('name'),
                         'type' => request()->input('type'),
-                        'level' => request()->input('level'),
                     ], ['id' => $id]);
                     WritingTopic::update([
                         'topic' => request()->input('topic'),
@@ -419,7 +418,6 @@ class TeacherController extends Controller
                     $this->exercise::update([
                         'name' => request()->input('name'),
                         'type' => request()->input('type'),
-                        'level' => request()->input('level'),
                     ], ['id' => $id]);
                     ListeningTopic::update([
                         'title' => request()->input('title'),
@@ -465,7 +463,6 @@ class TeacherController extends Controller
                     $this->exercise::update([
                         'name' => request()->input('name'),
                         'type' => request()->input('type'),
-                        'level' => request()->input('level'),
                     ], ['id' => $id]);
                     ReadingTopic::update([
                         'title' => request()->input('title'),
