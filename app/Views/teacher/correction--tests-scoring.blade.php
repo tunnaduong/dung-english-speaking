@@ -42,8 +42,7 @@
                 <div class="position-relative">
                     <div class="position-absolute score-text">Scores:</div>
                     <input type="text" class="form-control w-200 score" id="score" name="score"
-                        value="{{ $answer['score'] }}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                        maxlength="2">
+                        value="{{ $answer['score'] }}">
                 </div>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#cancelModal"
                     class="btn-classroom">Cancel</button>
