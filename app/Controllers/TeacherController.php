@@ -2,21 +2,22 @@
 
 namespace App\Controllers;
 
-use App\Core\Asset\Asset;
-use App\Models\Attendance;
-use App\Models\ClassProgress;
 use App\Models\Course;
+use App\Models\Result;
+use App\Models\Student;
 use App\Models\Exercise;
+use App\Core\Asset\Asset;
 use App\Models\Classroom;
+use App\Models\Attendance;
 use App\Models\Curriculum;
 use App\Models\InfoStudent;
-use App\Models\ListeningQuestion;
+use App\Models\ReadingTopic;
+use App\Models\WritingTopic;
+use App\Models\ClassProgress;
+use App\Models\WritingAnswer;
 use App\Models\ListeningTopic;
 use App\Models\ReadingQuestion;
-use App\Models\ReadingTopic;
-use App\Models\Student;
-use App\Models\WritingAnswer;
-use App\Models\WritingTopic;
+use App\Models\ListeningQuestion;
 
 class TeacherController extends Controller
 {
@@ -649,6 +650,15 @@ class TeacherController extends Controller
                 'score' => request()->input('score'),
                 'feedback' => request()->input('feedback'),
             ], ['id' => request()->input('answer_id')]);
+            // Get the related result_id
+            $writingAnswer = WritingAnswer::find(['id' => request()->input('answer_id')]);
+            $resultId = $writingAnswer['result_id'];
+            // Update result only if result_id is present
+            if ($resultId) {
+                Result::update([
+                    'score' => request()->input('score'),
+                ], ['id' => $resultId]);
+            }
             return redirect("/correction/$id/homeworks/$homeworkId");
         }
         $answerId = request()->input('answer_id');

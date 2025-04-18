@@ -243,19 +243,21 @@ class HomeController extends Controller
     }
 
     $homework = $this->homework->getWritingHomeworkById($id);
+    $resultId = $this->result->create([
+      'student_id' => session('user')['user_id'],
+      'exercise_id' => $id,
+      'time_spent' => $this->convertToHours(request()->input('time_spent')),
+    ]);
     $this->writingAnswer->create([
       'exercise_id' => $id,
+      'result_id' => $resultId,
       'student_id' => session('user')['user_id'],
       'topic_id' => $homework['topic_id'],
       'content' => request()->input('content'),
       'time_spent' => $this->convertToHours(request()->input('time_spent')),
       'word_count' => request()->input('word_count'),
     ]);
-    $this->result->create([
-      'student_id' => session('user')['user_id'],
-      'exercise_id' => $id,
-      'time_spent' => $this->convertToHours(request()->input('time_spent')),
-    ]);
+
     unset($_SESSION['writing_start_time'][$id]);
     return redirect('/exercises/homeworks?type=writing');
   }
