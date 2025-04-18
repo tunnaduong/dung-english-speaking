@@ -609,6 +609,14 @@ class TeacherController extends Controller
                 'date' => '2025-02-28',
             ],
         ];
+        $exercises = Exercise::query()
+            ->select(['exercise.*'])
+            ->join('curriculum', 'curriculum.exercise_id = exercise.id', 'INNER')
+            ->join('course', 'curriculum.course_id = course.id', 'INNER')
+            ->join('class', 'class.id_course = course.id', 'INNER')
+            ->orWhere('class.id', '=', $id)
+            // ->orWhere('exercise.type', '=', 'Homework')
+            ->get();
         return view('teacher.correction--homeworks', compact('id', 'exercises'));
     }
 

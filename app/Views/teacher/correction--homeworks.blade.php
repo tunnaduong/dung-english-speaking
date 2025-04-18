@@ -31,7 +31,6 @@
                             <th>No.</th>
                             <th>ID Exercise</th>
                             <th>Exercise Name</th>
-                            <th>Level</th>
                             <th>Date</th>
                             <th></th>
                         </tr>
@@ -42,8 +41,7 @@
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $exercise['id'] }}</td>
                                 <td>{{ $exercise['name'] }}</td>
-                                <td>{{ $exercise['level'] }}</td>
-                                <td>{{ date('d/m/Y', strtotime($exercise['date'])) }}</td>
+                                <td>{{ date('d/m/Y', strtotime($exercise['created_at'])) }}</td>
                                 <td><a href="{{ route("correction/$id/homeworks/" . $exercise['id']) }}">View</a>
                                 </td>
                             </tr>
