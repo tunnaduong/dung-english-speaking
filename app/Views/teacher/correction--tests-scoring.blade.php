@@ -16,41 +16,81 @@
             </form>
         </div>
         <div class="d-flex justify-content-center mb-3">
-            <h4 class="fw-bold m-0 flex-shrink-0">Pre IELTS 01 - Tests</h4>
+            <h4 class="fw-bold m-0 flex-shrink-0">{{ $classroom['class_name'] }} - Tests</h4>
         </div>
-        <form action="" method="POST" class="m-0">
+        <form action="" method="POST" class="m-0" id="homeworkForm">
             <div>
                 <h4 class="fw-bold"><a href="{{ route("correction/$id/tests") }}" class="back-link">
-                        < Tests</a>/<a href="{{ route("correction/$id/tests/$homeworkId") }}" class="back-link">Writing
-                                1</a>/Trịnh Duy Hoàng
+                        < Tests</a>/<a href="{{ route("correction/$id/tests/$homeworkId") }}"
+                                class="back-link">{{ $exercise['name'] }}</a>/{{ $answer['name'] }}</h4>
                 </h4>
                 <div class="line-bottom"></div>
             </div>
-            <div class="border-line p-2 rounded-4 mt-4">
+            <div class="border-line p-2 rounded-4 mt-4 limit-height">
                 <div class="fw-bold">Topic:</div>
-                <div>Many people prefer to live in big cities, while others enjoy living in the countryside.<br>
-                    Write about the advantages and disadvantages of both lifestyles. Give your own opinion. (150-200 words)
-                </div>
+                <div>{!! $answer['topic'] !!}</div>
             </div>
-            <div class="border-line p-2 rounded-4 mt-3">
-                <div>Many people choose to live in big cities because they offer many opportunities. In cities, there are
-                    good jobs, modern facilities, and many entertainment options. People can find better schools and
-                    hospitals, which help improve their quality of life. However, city life can be stressful. It is often
-                    noisy, crowded, and expensive. Traffic jams and pollution are also big problems.
-                    On the other hand, living in the countryside is more peaceful. The environment </div>
+            <div class="border-line p-2 rounded-4 mt-3 limit-height">
+                <div>{!! nl2br($answer['content']) !!}</div>
             </div>
+            <input type="hidden" name="answer_id" value="{{ $answer['answer_id'] }}">
             <div class="border-line p-2 rounded-4 mt-3">
                 <div>Comments:</div>
-                <textarea name="comment" id="comment" rows="5" class="form-control border-0 shadow-none ps-0"></textarea>
+                <textarea name="feedback" id="comment" rows="5" class="form-control border-0 shadow-none ps-0">{{ $answer['feedback'] }}</textarea>
             </div>
             <div class="d-flex justify-content-end mt-3 gap-4">
                 <div class="position-relative">
                     <div class="position-absolute score-text">Scores:</div>
-                    <input type="text" class="form-control w-200 score" id="score" name="score">
+                    <input type="text" class="form-control w-200 score" id="score" name="score"
+                        value="{{ $answer['score'] }}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                        maxlength="2">
                 </div>
-                <a href="{{ route("correction/$id/tests/$homeworkId") }}" class="btn-classroom">Cancel</a>
-                <button class="btn-classroom" type="submit">Save</button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#cancelModal"
+                    class="btn-classroom">Cancel</button>
+                <button class="btn-classroom" data-bs-toggle="modal" data-bs-target="#saveConfirmModal"
+                    type="button">Save</button>
             </div>
         </form>
     </div>
 @endsection
+
+@push('scripts')
+    <!-- Bootstrap 5 Modal -->
+    <div class="modal fade" id="cancelModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header p-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h5 class="fw-semi mb-4">Do you want to cancel?</h5>
+                    <div class="d-flex justify-content-around">
+                        <a class="btn btn-confirm" href="{{ route("correction/$id/tests/$homeworkId") }}">Yes</a>
+                        <button type="button" class="btn btn-confirm" data-bs-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="saveConfirmModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header p-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h5 class="fw-semi mb-4">Do you want to save?</h5>
+                    <div class="d-flex justify-content-around">
+                        <button class="btn btn-confirm" onclick="submitForm()">Yes</button>
+                        <button type="button" class="btn btn-confirm" data-bs-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function submitForm() {
+            document.getElementById("homeworkForm").submit();
+        }
+    </script>
+@endpush

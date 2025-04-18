@@ -16,7 +16,7 @@
             </form>
         </div>
         <div class="d-flex justify-content-center mb-3">
-            <h4 class="fw-bold m-0 flex-shrink-0">Pre IELTS 01 - Homeworks</h4>
+            <h4 class="fw-bold m-0 flex-shrink-0">{{ $classroom['class_name'] }} - Homeworks</h4>
         </div>
         <div>
             <div>

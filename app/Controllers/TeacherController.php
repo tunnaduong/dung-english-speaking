@@ -15,6 +15,7 @@ use App\Models\ListeningTopic;
 use App\Models\ReadingQuestion;
 use App\Models\ReadingTopic;
 use App\Models\Student;
+use App\Models\WritingAnswer;
 use App\Models\WritingTopic;
 
 class TeacherController extends Controller
@@ -589,187 +590,97 @@ class TeacherController extends Controller
 
     public function correctionHomework($id)
     {
-        $exercises = [
-            [
-                'id' => 'E00001',
-                'name' => 'Writing 1',
-                'level' => '3.5',
-                'date' => '2025-02-14',
-            ],
-            [
-                'id' => 'E00002',
-                'name' => 'Reading 1',
-                'level' => '3.5',
-                'date' => '2025-02-21',
-            ],
-            [
-                'id' => 'E00003',
-                'name' => 'Listening 1',
-                'level' => '4.0',
-                'date' => '2025-02-28',
-            ],
-        ];
         $exercises = Exercise::query()
             ->select(['exercise.*'])
             ->join('curriculum', 'curriculum.exercise_id = exercise.id', 'INNER')
             ->join('course', 'curriculum.course_id = course.id', 'INNER')
             ->join('class', 'class.id_course = course.id', 'INNER')
-            ->orWhere('class.id', '=', $id)
-            // ->orWhere('exercise.type', '=', 'Homework')
+            ->where('class.id', '=', $id)
+            ->where('exercise.type', '=', 'Homework')
+            ->where('exercise.skill_type', '=', 'Writing')
             ->get();
-        return view('teacher.correction--homeworks', compact('id', 'exercises'));
+        $classroom = $this->classroom::find(['id' => $id]);
+        return view('teacher.correction--homeworks', compact('id', 'exercises', 'classroom'));
     }
 
     public function correctionTest($id)
     {
-        $exercises = [
-            [
-                'id' => 'E00001',
-                'name' => 'Writing 1',
-                'level' => '3.5',
-                'date' => '2025-02-14',
-            ],
-            [
-                'id' => 'E00002',
-                'name' => 'Reading 1',
-                'level' => '3.5',
-                'date' => '2025-02-21',
-            ],
-            [
-                'id' => 'E00003',
-                'name' => 'Listening 1',
-                'level' => '4.0',
-                'date' => '2025-02-28',
-            ],
-        ];
-        return view('teacher.correction--tests', compact('id', 'exercises'));
+        $exercises = Exercise::query()
+            ->select(['exercise.*'])
+            ->join('curriculum', 'curriculum.exercise_id = exercise.id', 'INNER')
+            ->join('course', 'curriculum.course_id = course.id', 'INNER')
+            ->join('class', 'class.id_course = course.id', 'INNER')
+            ->where('class.id', '=', $id)
+            ->where('exercise.type', '=', 'Test')
+            ->where('exercise.skill_type', '=', 'Writing')
+            ->get();
+        $classroom = $this->classroom::find(['id' => $id]);
+        return view('teacher.correction--tests', compact('id', 'exercises', 'classroom'));
     }
 
     public function correctionHomeworkView($id, $homeworkId)
     {
-        $students = [
-            [
-                'id' => 'S00236',
-                'name' => 'Nguyễn Tiến Dũng',
-                'gender' => 'Male',
-                'birth_date' => '2003-05-25',
-                'score' => '10.0',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Nguyễn Minh Đức',
-                'gender' => 'Male',
-                'birth_date' => '2002-02-02',
-                'score' => '9.0',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Trần Thu Hà',
-                'gender' => 'Female',
-                'birth_date' => '2006-12-15',
-                'score' => '8.0',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Trịnh Duy Hoàng',
-                'gender' => 'Male',
-                'birth_date' => '2004-09-28',
-                'score' => 'N/A',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Phạm Anh Kiên',
-                'gender' => 'Male',
-                'birth_date' => '2009-01-24',
-                'score' => 'N/A',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Nguyễn Tấn Lộc',
-                'gender' => 'Male',
-                'birth_date' => '2005-08-14',
-                'score' => 'N/A',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Nguyễn Nam Phong',
-                'gender' => 'Male',
-                'birth_date' => '2006-09-23',
-                'score' => 'N/A',
-            ],
-        ];
-        return view('teacher.correction--homeworks-view', compact('id', 'homeworkId', 'students'));
+        $students = WritingAnswer::query()
+            ->select(['writing_answers.*', 'info_student.*', 'info_student.id AS student_id', 'writing_answers.id AS answer_id'])
+            ->where('exercise_id', '=', $homeworkId)
+            ->join('info_student', 'info_student.id = writing_answers.student_id', 'INNER')
+            ->get();
+        $classroom = $this->classroom::find(['id' => $id]);
+        $exercise = Exercise::find(['id' => $homeworkId]);
+        return view('teacher.correction--homeworks-view', compact('id', 'homeworkId', 'students', 'classroom', 'exercise'));
     }
 
     public function correctionTestView($id, $homeworkId)
     {
-        $students = [
-            [
-                'id' => 'S00236',
-                'name' => 'Nguyễn Tiến Dũng',
-                'gender' => 'Male',
-                'birth_date' => '2003-05-25',
-                'score' => '10.0',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Nguyễn Minh Đức',
-                'gender' => 'Male',
-                'birth_date' => '2002-02-02',
-                'score' => '9.0',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Trần Thu Hà',
-                'gender' => 'Female',
-                'birth_date' => '2006-12-15',
-                'score' => '8.0',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Trịnh Duy Hoàng',
-                'gender' => 'Male',
-                'birth_date' => '2004-09-28',
-                'score' => 'N/A',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Phạm Anh Kiên',
-                'gender' => 'Male',
-                'birth_date' => '2009-01-24',
-                'score' => 'N/A',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Nguyễn Tấn Lộc',
-                'gender' => 'Male',
-                'birth_date' => '2005-08-14',
-                'score' => 'N/A',
-            ],
-            [
-                'id' => 'S00236',
-                'name' => 'Nguyễn Nam Phong',
-                'gender' => 'Male',
-                'birth_date' => '2006-09-23',
-                'score' => 'N/A',
-            ],
-        ];
-        return view('teacher.correction--tests-view', compact('id', 'homeworkId', 'students'));
+        $students = WritingAnswer::query()
+            ->select(['writing_answers.*', 'info_student.*', 'info_student.id AS student_id', 'writing_answers.id AS answer_id'])
+            ->where('exercise_id', '=', $homeworkId)
+            ->join('info_student', 'info_student.id = writing_answers.student_id', 'INNER')
+            ->get();
+        $classroom = $this->classroom::find(['id' => $id]);
+        $exercise = Exercise::find(['id' => $homeworkId]);
+        return view('teacher.correction--tests-view', compact('id', 'homeworkId', 'students', 'classroom', 'exercise'));
     }
 
     public function correctionHomeworkScoring($id, $homeworkId, $studentId)
     {
         if (request()->isMethod('post')) {
+            WritingAnswer::update([
+                'score' => request()->input('score'),
+                'feedback' => request()->input('feedback'),
+            ], ['id' => request()->input('answer_id')]);
             return redirect("/correction/$id/homeworks/$homeworkId");
         }
-        return view('teacher.correction--homeworks-scoring', compact('id', 'homeworkId', 'studentId'));
+        $answerId = request()->input('answer_id');
+        $classroom = $this->classroom::find(['id' => $id]);
+        $answer = WritingAnswer::query()
+            ->select(['writing_answers.*', 'info_student.*', 'writing_topics.topic', 'writing_answers.id AS answer_id'])
+            ->where('writing_answers.id', '=', $answerId)
+            ->join('info_student', 'info_student.id = writing_answers.student_id', 'INNER')
+            ->join('writing_topics', 'writing_topics.id = writing_answers.topic_id', 'INNER')
+            ->first();
+        $exercise = Exercise::find(['id' => $homeworkId]);
+        return view('teacher.correction--homeworks-scoring', compact('id', 'homeworkId', 'studentId', 'classroom', 'answer', 'exercise'));
     }
 
     public function correctionTestScoring($id, $homeworkId, $studentId)
     {
         if (request()->isMethod('post')) {
+            WritingAnswer::update([
+                'score' => request()->input('score'),
+                'feedback' => request()->input('feedback'),
+            ], ['id' => request()->input('answer_id')]);
             return redirect("/correction/$id/tests/$homeworkId");
         }
-        return view('teacher.correction--tests-scoring', compact('id', 'homeworkId', 'studentId'));
+        $answerId = request()->input('answer_id');
+        $classroom = $this->classroom::find(['id' => $id]);
+        $answer = WritingAnswer::query()
+            ->select(['writing_answers.*', 'info_student.*', 'writing_topics.topic', 'writing_answers.id AS answer_id'])
+            ->where('writing_answers.id', '=', $answerId)
+            ->join('info_student', 'info_student.id = writing_answers.student_id', 'INNER')
+            ->join('writing_topics', 'writing_topics.id = writing_answers.topic_id', 'INNER')
+            ->first();
+        $exercise = Exercise::find(['id' => $homeworkId]);
+        return view('teacher.correction--tests-scoring', compact('id', 'homeworkId', 'studentId', 'classroom', 'answer', 'exercise'));
     }
 }

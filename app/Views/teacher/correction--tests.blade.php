@@ -16,7 +16,7 @@
             </form>
         </div>
         <div class="d-flex justify-content-center mb-3">
-            <h4 class="fw-bold m-0 flex-shrink-0">Pre IELTS 01 - Tests</h4>
+            <h4 class="fw-bold m-0 flex-shrink-0">{{ $classroom['class_name'] }} - Tests</h4>
         </div>
         <div>
             <div>
@@ -41,7 +41,7 @@
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $exercise['id'] }}</td>
                                 <td>{{ $exercise['name'] }}</td>
-                                <td>{{ date('d/m/Y', strtotime($exercise['date'])) }}</td>
+                                <td>{{ date('d/m/Y', strtotime($exercise['created_at'])) }}</td>
                                 <td><a href="{{ route("correction/$id/tests/" . $exercise['id']) }}">View</a>
                                 </td>
                             </tr>

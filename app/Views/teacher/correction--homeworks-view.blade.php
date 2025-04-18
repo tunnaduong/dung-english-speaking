@@ -16,13 +16,13 @@
             </form>
         </div>
         <div class="d-flex justify-content-center mb-3">
-            <h4 class="fw-bold m-0 flex-shrink-0">Pre IELTS 01 - Homeworks</h4>
+            <h4 class="fw-bold m-0 flex-shrink-0">{{ $classroom['class_name'] }} - Homeworks</h4>
         </div>
         <div>
             <div class="d-flex justify-content-between">
                 <div>
                     <h4 class="fw-bold"><a href="{{ route("correction/$id/homeworks") }}" class="back-link">
-                            < Homeworks</a>/Writing 1
+                            < Homeworks</a>/{{ $exercise['name'] }}
                     </h4>
                     <div class="line-bottom"></div>
                 </div>
@@ -37,6 +37,7 @@
                             <th>Full name</th>
                             <th>Gender</th>
                             <th>Birth Date</th>
+                            <th>Time Spent</th>
                             <th>Score</th>
                             <th></th>
                         </tr>
@@ -48,11 +49,16 @@
                                 <td>{{ $student['id'] }}</td>
                                 <td>{{ $student['name'] }}</td>
                                 <td>{{ $student['gender'] }}</td>
-                                <td>{{ date('d/m/Y', strtotime($student['birth_date'])) }}</td>
-                                <td>{!! $student['score'] == 'N/A'
-                                    ? "<a href='" . route("correction/$id/homeworks/$homeworkId/" . $student['id']) . "'>N/A</a>"
+                                <td>{{ date('d/m/Y', strtotime($student['DoB'])) }}</td>
+                                <td>{{ $student['time_spent'] }}</td>
+                                <td>{!! $student['score'] == null
+                                    ? "<a href='" .
+                                        route("correction/$id/homeworks/$homeworkId/" . $student['id']) .
+                                        '?answer_id=' .
+                                        $student['answer_id'] .
+                                        "'>N/A</a>"
                                     : $student['score'] !!}</td>
-                                <td><a href="{{ route("correction/$id/homeworks/$homeworkId/" . $student['id']) }}"
+                                <td><a href="{{ route("correction/$id/homeworks/$homeworkId/" . $student['student_id'] . '?answer_id=' . $student['answer_id']) }}"
                                         class="me-2">
                                         <img src="{{ asset('edit.svg') }}" width="25" /></a></td>
                             </tr>
