@@ -40,10 +40,28 @@
                                 <td>{{ $employee['gender'] }}</td>
                                 <td>0{{ $employee['phone'] }}</td>
                                 <td>{{ $employee['role'] }}</td>
-                                <td><a href="{{ route('employees/' . $employee['id'] . '/edit') }}" class="me-2">
-                                        <img src="{{ asset('edit.svg') }}" /></a><button class="btn-custom"
-                                        data-bs-toggle="modal" data-bs-target="#deleteModal{{ $loop->index }}"><img
-                                            src="{{ asset('delete.svg') }}" /></button>
+                                <td>
+                                    @php
+                                        $demoEmails = [
+                                            'admin@tunnaduong.com',
+                                            'teacher@tunnaduong.com',
+                                            'student@tunnaduong.com',
+                                        ];
+                                        $isCurrentUser = session('user')['user_id'] == $employee['id'];
+                                        $isDemoAccount = in_array($employee['email'] ?? '', $demoEmails);
+                                        $canEdit = !$isCurrentUser && !$isDemoAccount;
+                                        $canDelete = !$isCurrentUser && !$isDemoAccount;
+                                    @endphp
+                                    @if ($canEdit)
+                                        <a href="{{ route('employees/' . $employee['id'] . '/edit') }}" class="me-2">
+                                            <img src="{{ asset('edit.svg') }}" />
+                                        </a>
+                                    @endif
+                                    @if ($canDelete)
+                                        <button class="btn-custom" data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal{{ $loop->index }}"><img
+                                                src="{{ asset('delete.svg') }}" /></button>
+                                    @endif
                                 </td>
                             </tr>
                             @push('scripts')

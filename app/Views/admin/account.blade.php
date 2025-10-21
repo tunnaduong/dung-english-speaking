@@ -40,11 +40,29 @@
                                 <td>{{ $account['email'] }}</td>
                                 <td>{{ $account['role'] }}</td>
                                 <td>Activate</td>
-                                <td><a href="{{ $account['role'] == 'Student' ? route('account/' . $account['id'] . '/edit-student') : route('account/' . $account['id'] . '/edit-employee') }}"
-                                        class="me-2">
-                                        <img src="{{ asset('edit.svg') }}" /></a><button class="btn-custom"
-                                        data-bs-toggle="modal" data-bs-target="#deleteModal{{ $loop->index }}"><img
-                                            src="{{ asset('delete.svg') }}" /></button>
+                                <td>
+                                    @php
+                                        $demoEmails = [
+                                            'admin@tunnaduong.com',
+                                            'teacher@tunnaduong.com',
+                                            'student@tunnaduong.com',
+                                        ];
+                                        $isCurrentUser = session('user')['user_id'] == $account['id'];
+                                        $isDemoAccount = in_array($account['email'] ?? '', $demoEmails);
+                                        $canEdit = !$isCurrentUser && !$isDemoAccount;
+                                        $canDelete = !$isCurrentUser && !$isDemoAccount;
+                                    @endphp
+                                    @if ($canEdit)
+                                        <a href="{{ $account['role'] == 'Student' ? route('account/' . $account['id'] . '/edit-student') : route('account/' . $account['id'] . '/edit-employee') }}"
+                                            class="me-2">
+                                            <img src="{{ asset('edit.svg') }}" />
+                                        </a>
+                                    @endif
+                                    @if ($canDelete)
+                                        <button class="btn-custom" data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal{{ $loop->index }}"><img
+                                                src="{{ asset('delete.svg') }}" /></button>
+                                    @endif
                                 </td>
                             </tr>
                             @push('scripts')
